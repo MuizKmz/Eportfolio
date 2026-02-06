@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ScrollStick from "./components/ScrollStick";
+import SideNavBar from "./components/SideNavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +30,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <ScrollStick height={220} delay={5.5} />
+        <SideNavBar height={800} delay={5.5}/>
       </body>
     </html>
   );

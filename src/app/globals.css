@@ -1,8 +1,84 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Yozakura';
+  src: url('/fonts/Yozakura-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Yozakura';
+  src: url('/fonts/Yozakura-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FF Identification';
+  src: url('/fonts/Identification05CRegular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Showcase Sans mini';
+  src: url('/fonts/ShowcaseSansMini.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Karasu';
+  src: url('/fonts/Karasu.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+.text-shadow-soft {
+  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.text-shadow-glow {
+  text-shadow:
+    0 4px 10px rgba(0,0,0,0.35),
+    0 0 30px rgba(180,120,255,0.4);
+}
+.font-showcase { font-family: 'Showcase Sans mini', sans-serif; }
+
+.no-wrap { white-space: nowrap; }
+
+/* Disable text selection and image dragging globally */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+}
+
+/* Social Icons Ticker Animation */
+@keyframes ticker {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }
 
 
