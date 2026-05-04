@@ -12,7 +12,7 @@ type Props = {
 export default function ScrollStick({ height = 220, delay = 5.5, className = "" }: Props) {
   return (
     <motion.div
-      className={`absolute bottom-10 right-10 flex flex-row items-center gap-4 z-30 ${className}`}
+      className={`fixed bottom-10 right-10 flex flex-row items-center gap-4 z-30 ${className}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 5, duration: 1 }}

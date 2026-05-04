@@ -41,6 +41,11 @@
   --background: #ffffff;
   --foreground: #171717;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
 .text-shadow-soft {
   text-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
@@ -79,6 +84,67 @@ img {
   100% {
     transform: translateX(0%);
   }
+}
+
+/* Glitch clip-path animations */
+@keyframes glitch-clip-red {
+  0%   { clip-path: inset(20% 0 65% 0); transform: translate(-4px, 0) skew(-1deg); }
+  16%  { clip-path: inset(60% 0 15% 0); transform: translate(4px, 0) skew(1deg); }
+  33%  { clip-path: inset(5%  0 85% 0); transform: translate(-3px, 0); }
+  50%  { clip-path: inset(78% 0 5%  0); transform: translate(3px, 0) skew(-1deg); }
+  66%  { clip-path: inset(40% 0 45% 0); transform: translate(-4px, 0) skew(1deg); }
+  83%  { clip-path: inset(15% 0 72% 0); transform: translate(4px, 0); }
+  100% { clip-path: inset(20% 0 65% 0); transform: translate(0, 0); }
+}
+
+@keyframes glitch-clip-cyan {
+  0%   { clip-path: inset(72% 0 8%  0); transform: translate(4px, 0) skew(1deg); }
+  16%  { clip-path: inset(28% 0 55% 0); transform: translate(-4px, 0) skew(-1deg); }
+  33%  { clip-path: inset(52% 0 30% 0); transform: translate(3px, 0); }
+  50%  { clip-path: inset(8%  0 78% 0); transform: translate(-3px, 0) skew(1deg); }
+  66%  { clip-path: inset(88% 0 2%  0); transform: translate(4px, 0) skew(-1deg); }
+  83%  { clip-path: inset(35% 0 48% 0); transform: translate(-4px, 0); }
+  100% { clip-path: inset(72% 0 8%  0); transform: translate(0, 0); }
+}
+
+.glitch-r,
+.glitch-c {
+  opacity: 0;
+  color: inherit;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.glitch-r {
+  color: #ff0080;
+}
+
+.glitch-c {
+  color: #00ffff;
+}
+
+/* Permanent glitch - always animating */
+.nav-glitch-always .glitch-r {
+  opacity: 1;
+  animation: glitch-clip-red 0.35s steps(1) infinite;
+}
+
+.nav-glitch-always .glitch-c {
+  opacity: 1;
+  animation: glitch-clip-cyan 0.35s steps(1) infinite 0.12s;
+}
+
+/* Only animate on hover - trigger from parent li or nav-glitch itself */
+.sl-item:hover .glitch-r,
+.nav-glitch:hover .glitch-r {
+  opacity: 1;
+  animation: glitch-clip-red 0.35s steps(1) infinite;
+}
+
+.sl-item:hover .glitch-c,
+.nav-glitch:hover .glitch-c {
+  opacity: 1;
+  animation: glitch-clip-cyan 0.35s steps(1) infinite 0.12s;
 }
 
 

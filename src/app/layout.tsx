@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         {children}
         <ScrollStick height={220} delay={5.5} />
-        <SideNavBar height={800} delay={5.5}/>
+        <SideNavBar delay={5.5}/>
       </body>
     </html>
   );
