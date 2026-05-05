@@ -14,6 +14,7 @@ import WorkExperience from "./page/workexperience";
 import StaffCast from "./page/staffcast";
 import Music from "./page/music";
 import BlurayDVD from "./page/bluraydvd";
+import SectionHUDFrame from "./components/SectionHUDFrame";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -206,14 +207,40 @@ export default function Home() {
         </div>
       </motion.main>
 
-      <AboutMe />
-      <Education />
-      <Skills />
-      <Project />
-      <WorkExperience />
-      <StaffCast />
-      <Music />
-      <BlurayDVD />
+      {/* marginTop: 100vh pushes the first section below the fixed hero */}
+      <div style={{ marginTop: "100vh" }}>
+        <SectionHUDFrame code="ABOUT" label="ABOUT ME" num="001">
+          <AboutMe />
+        </SectionHUDFrame>
+      </div>
+
+      <SectionHUDFrame code="EDU"   label="EDUCATION"     num="002">
+        <Education />
+      </SectionHUDFrame>
+
+      <SectionHUDFrame code="SKILL" label="SKILLS"        num="003">
+        <Skills />
+      </SectionHUDFrame>
+
+      <SectionHUDFrame code="PROJ"  label="PROJECT"       num="004">
+        <Project />
+      </SectionHUDFrame>
+
+      <SectionHUDFrame code="WORK"  label="WORK EXP"      num="005">
+        <WorkExperience />
+      </SectionHUDFrame>
+
+      <SectionHUDFrame code="CAST"  label="STAFF & CAST"  num="006">
+        <StaffCast />
+      </SectionHUDFrame>
+
+      <SectionHUDFrame code="OST"   label="MUSIC"         num="007">
+        <Music />
+      </SectionHUDFrame>
+
+      <SectionHUDFrame code="MEDIA" label="BLU-RAY & DVD" num="008">
+        <BlurayDVD />
+      </SectionHUDFrame>
     </>
   );
 }
