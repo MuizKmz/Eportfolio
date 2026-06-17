@@ -24,11 +24,12 @@ const SECTIONS = [
   { id: "bluray-dvd",      label: "BLU-RAY & DVD" },
 ];
 
+// TODO: replace Twitter / LinkedIn / GitHub with your real handles
 const SOCIALS = [
-  { Icon: Instagram, href: "https://www.instagram.com/muizkmz/?hl=en" },
-  { Icon: Twitter,   href: "https://twitter.com/..." },
-  { Icon: Linkedin,  href: "https://linkedin.com/..." },
-  { Icon: Github,    href: "https://github.com/..." },
+  { Icon: Instagram, href: "https://www.instagram.com/muizkmz/" },
+  { Icon: Twitter,   href: "https://x.com/muizzuddin" },
+  { Icon: Linkedin,  href: "https://linkedin.com/in/muizzuddin-kamarozamaan" },
+  { Icon: Github,    href: "https://github.com/muizkamarozaman" },
 ];
 
 // Hover-only glitch wrapper (glitch-r/glitch-c are opacity:0 by default, shown via CSS :hover)

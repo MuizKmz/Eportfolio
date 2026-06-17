@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useGSAP } from "@gsap/react";
@@ -15,6 +15,7 @@ import StaffCast from "./page/staffcast";
 import Music from "./page/music";
 import BlurayDVD from "./page/bluraydvd";
 import SectionHUDFrame from "./components/SectionHUDFrame";
+import Footer from "./components/Footer";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -23,17 +24,6 @@ export default function Home() {
   const heroBarRef = useRef<HTMLDivElement>(null);
   const heroImageWrapRef = useRef<HTMLDivElement>(null);
   const chevronRef = useRef<HTMLDivElement>(null);
-
-  // Force scroll to top on page load/refresh
-  useEffect(() => {
-    // Immediately scroll to top
-    window.scrollTo(0, 0);
-    
-    // Prevent browser from restoring scroll position
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
-    }
-  }, []);
 
   useGSAP(() => {
     const tl = gsap.timeline({
@@ -79,7 +69,7 @@ export default function Home() {
         <div ref={heroImageWrapRef} className="absolute left-20 top-0 z-10">
           <motion.img
             src="/images/image1.1.png"
-            alt="Profile"
+            alt="Muhammad Muizzuddin Kamarozaman"
             className="h-[200vh] max-h-[800px] w-auto object-contain"
             style={{ transform: "scale(2)", transformOrigin: "top left" }}
             initial={{ opacity: 0, x: -50, scale: 2 }}
@@ -241,6 +231,8 @@ export default function Home() {
       <SectionHUDFrame code="MEDIA" label="BLU-RAY & DVD" num="008">
         <BlurayDVD />
       </SectionHUDFrame>
+
+      <Footer />
     </>
   );
 }
