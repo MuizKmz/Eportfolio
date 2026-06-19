@@ -19,9 +19,8 @@ const SECTIONS = [
   { id: "skills",          label: "SKILLS" },
   { id: "project",         label: "PROJECT" },
   { id: "work-experience", label: "WORK EXPERIENCE" },
-  { id: "staff-cast",      label: "STAFF&CAST" },
-  { id: "music",           label: "MUSIC" },
-  { id: "bluray-dvd",      label: "BLU-RAY & DVD" },
+  { id: "achievements",    label: "ACHIEVEMENTS" },
+  { id: "contact",         label: "CONTACT" },
 ];
 
 // TODO: replace Twitter / LinkedIn / GitHub with your real handles

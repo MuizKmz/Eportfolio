@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <ScrollStick height={220} delay={5.5} />
+        <ScrollStick delay={5.5} />
         <SideNavBar delay={5.5}/>
       </body>
     </html>

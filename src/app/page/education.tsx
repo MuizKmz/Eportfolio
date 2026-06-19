@@ -83,9 +83,9 @@ function CGPABar({ cgpa }: { cgpa: number }) {
         <span
           style={{
             fontFamily: "Karasu, sans-serif",
-            fontSize: "10px",
+            fontSize: "11.5px",
             letterSpacing: "0.22em",
-            color: "rgba(168,85,247,0.65)",
+            color: "rgba(168,85,247,0.75)",
           }}
         >
           CGPA SCORE
@@ -148,10 +148,10 @@ function CGPABar({ cgpa }: { cgpa: number }) {
 
       {/* Scale */}
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
-        <span style={{ fontFamily: "Karasu, sans-serif", fontSize: "8px", color: "rgba(168,85,247,0.3)", letterSpacing: "0.1em" }}>
+        <span style={{ fontFamily: "Karasu, sans-serif", fontSize: "9.5px", color: "rgba(168,85,247,0.4)", letterSpacing: "0.1em" }}>
           0.00
         </span>
-        <span style={{ fontFamily: "Karasu, sans-serif", fontSize: "8px", color: "rgba(168,85,247,0.3)", letterSpacing: "0.1em" }}>
+        <span style={{ fontFamily: "Karasu, sans-serif", fontSize: "9.5px", color: "rgba(168,85,247,0.4)", letterSpacing: "0.1em" }}>
           / 4.00
         </span>
       </div>
@@ -230,11 +230,11 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
         <span
           style={{
             fontFamily: "Karasu, sans-serif",
-            fontSize: "10px",
-            letterSpacing: "0.2em",
+            fontSize: "11.5px",
+            letterSpacing: "0.18em",
             background: "rgba(133,39,227,0.22)",
             border: "1px solid rgba(168,85,247,0.45)",
-            padding: "4px 12px",
+            padding: "5px 13px",
             color: "rgba(168,85,247,1)",
           }}
         >
@@ -243,9 +243,9 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
         <span
           style={{
             fontFamily: "Karasu, sans-serif",
-            fontSize: "9px",
-            letterSpacing: "0.18em",
-            color: "rgba(168,85,247,0.32)",
+            fontSize: "10.5px",
+            letterSpacing: "0.16em",
+            color: "rgba(168,85,247,0.42)",
           }}
         >
           {item.id}
@@ -269,8 +269,8 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
       <p
         style={{
           fontFamily: "Showcase Sans mini, sans-serif",
-          fontSize: "14px",
-          color: "rgba(168,85,247,0.8)",
+          fontSize: "15.5px",
+          color: "rgba(168,85,247,0.85)",
           marginBottom: 14,
           letterSpacing: "0.01em",
         }}
@@ -291,9 +291,9 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
       <p
         style={{
           fontFamily: "Showcase Sans mini, sans-serif",
-          fontSize: "13px",
-          color: "rgba(255,255,255,0.45)",
-          lineHeight: 1.8,
+          fontSize: "14.5px",
+          color: "rgba(255,255,255,0.6)",
+          lineHeight: 1.85,
           marginBottom: 22,
         }}
       >
@@ -310,12 +310,12 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
             key={tag}
             style={{
               fontFamily: "Karasu, sans-serif",
-              fontSize: "9px",
-              letterSpacing: "0.12em",
-              padding: "3px 9px",
+              fontSize: "10.5px",
+              letterSpacing: "0.1em",
+              padding: "4px 10px",
               background: "rgba(133,39,227,0.1)",
               border: "1px solid rgba(168,85,247,0.18)",
-              color: "rgba(168,85,247,0.6)",
+              color: "rgba(168,85,247,0.72)",
             }}
           >
             {tag}
@@ -404,9 +404,9 @@ export default function Education() {
               className="hidden md:inline"
               style={{
                 fontFamily: "Karasu, sans-serif",
-                fontSize: "10px",
+                fontSize: "12px",
                 letterSpacing: "0.22em",
-                color: "rgba(168,85,247,0.6)",
+                color: "rgba(168,85,247,0.7)",
                 paddingBottom: "8px",
               }}
             >
@@ -417,9 +417,9 @@ export default function Education() {
           <span
             style={{
               fontFamily: "Karasu, sans-serif",
-              fontSize: "10px",
+              fontSize: "12px",
               letterSpacing: "0.2em",
-              color: "rgba(168,85,247,0.32)",
+              color: "rgba(168,85,247,0.42)",
               paddingBottom: "8px",
             }}
           >

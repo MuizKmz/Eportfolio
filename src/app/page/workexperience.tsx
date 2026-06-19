@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Briefcase } from "lucide-react";
+import { Play, Pause } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -46,6 +46,24 @@ const experiences: Experience[] = [
     description:
       "Designed and built a Flutter mobile app promoting sustainable waste management practices. Managed project lifecycle with Jira and GitHub; implemented Enterprise Architecture testing in Android Studio.",
   },
+  {
+    id: "EXP · 004",
+    dateRange: "2024 – Present",
+    company: "IoT & Enterprise Platform Development",
+    role: "Software Engineer",
+    type: "Professional",
+    description:
+      "Delivered production-grade systems: PoleSyncTech Smart Pole IoT (MQTT · Socket.IO · MySQL · React · React Native), iottix RFID retail demo (Spring Boot · MongoDB · WebSocket/TCP hardware protocol), WMS (NestJS · Prisma · Vue 3 · React Native with native Android RFID modules), and MES manufacturing system design.",
+  },
+  {
+    id: "EXP · 005",
+    dateRange: "2024 – 2025",
+    company: "HappiSafe Ai Sdn Bhd",
+    role: "Full-Stack Developer",
+    type: "Professional",
+    description:
+      "Built a Malaysian insurtech platform over 6+ months (400+ backend commits): two live insurer integrations (Chubb REST/JWT · Pacific SOAP/mTLS), Razer Pay & PayDollar gateways with RSA card tokenization, AI chatbot 'Creamy' (GPT-4o-mini, two-agent verification pattern), Redis session management, and CI/CD pipeline rebuilt from scratch after vendor dissolution.",
+  },
 ];
 
 const SLIDE_DURATION = 5000;
@@ -60,12 +78,12 @@ function HUDFrame({ topLeft, topRight }: { topLeft: string; topRight: string }) 
     <>
       <div className="absolute top-2 left-2 flex items-center gap-1.5 pointer-events-none" style={{ zIndex: 2 }}>
         <div style={{ width: sz, height: sz, borderTop: `1px solid ${c}`, borderLeft: `1px solid ${c}`, flexShrink: 0 }} />
-        <span style={{ fontSize: 7, letterSpacing: "0.2em", color: c, fontFamily: "Karasu, sans-serif", whiteSpace: "nowrap" }}>
+        <span style={{ fontSize: 9.5, letterSpacing: "0.18em", color: c, fontFamily: "Karasu, sans-serif", whiteSpace: "nowrap" }}>
           {topLeft}
         </span>
       </div>
       <div className="absolute top-2 right-2 flex items-center gap-1.5 pointer-events-none" style={{ zIndex: 2 }}>
-        <span style={{ fontSize: 7, letterSpacing: "0.2em", color: "rgba(168,85,247,0.4)", fontFamily: "Karasu, sans-serif", whiteSpace: "nowrap" }}>
+        <span style={{ fontSize: 9.5, letterSpacing: "0.18em", color: "rgba(168,85,247,0.5)", fontFamily: "Karasu, sans-serif", whiteSpace: "nowrap" }}>
           {topRight}
         </span>
         <div style={{ width: sz, height: sz, borderTop: `1px solid ${c}`, borderRight: `1px solid ${c}`, flexShrink: 0 }} />
@@ -244,7 +262,7 @@ export default function WorkExperience() {
 
         {/* ── Header ── */}
         <motion.div
-          className="we-reveal flex items-end justify-between mb-3 gap-4 flex-wrap"
+          className="flex items-end justify-between mb-3 gap-4 flex-wrap"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -260,22 +278,22 @@ export default function WorkExperience() {
               WORK EXP
             </h2>
             <span className="hidden md:inline" style={{
-              fontFamily: "Karasu, sans-serif", fontSize: "10px",
-              letterSpacing: "0.22em", color: "rgba(168,85,247,0.6)", paddingBottom: "8px",
+              fontFamily: "Karasu, sans-serif", fontSize: "12px",
+              letterSpacing: "0.22em", color: "rgba(168,85,247,0.7)", paddingBottom: "8px",
             }}>
               _ WKE.005
             </span>
           </div>
           <span style={{
-            fontFamily: "Karasu, sans-serif", fontSize: "10px",
-            letterSpacing: "0.2em", color: "rgba(168,85,247,0.32)", paddingBottom: "8px",
+            fontFamily: "Karasu, sans-serif", fontSize: "12px",
+            letterSpacing: "0.2em", color: "rgba(168,85,247,0.42)", paddingBottom: "8px",
           }}>
             // CAREER_LOG
           </span>
         </motion.div>
 
         {/* Divider */}
-        <motion.div className="we-reveal w-full h-px mb-10"
+        <motion.div className="w-full h-px mb-10"
           style={{
             background: "linear-gradient(90deg, rgba(168,85,247,0.85), rgba(99,102,241,0.55), transparent)",
             transformOrigin: "left",
@@ -330,38 +348,68 @@ export default function WorkExperience() {
 
                         {isCenter ? (
                           <>
-                            {/* Briefcase icon */}
+                            {/* Portrait image */}
                             <div style={{
-                              width: 36, height: 36, marginBottom: 4,
-                              display: "flex", alignItems: "center", justifyContent: "center",
-                              border: "1px solid rgba(168,85,247,0.3)",
-                              background: "rgba(133,39,227,0.12)",
+                              position: "relative",
+                              width: 100, height: 100, marginBottom: 8, flexShrink: 0,
                             }}>
-                              <Briefcase size={16} strokeWidth={1.4} color="rgba(168,85,247,0.7)" />
+                              {/* HUD corner accents */}
+                              {(["tl","tr","bl","br"] as const).map(c => {
+                                const isT = c[0]==="t", isL = c[1]==="l";
+                                return (
+                                  <div key={c} style={{
+                                    position: "absolute",
+                                    [isT?"top":"bottom"]: -3, [isL?"left":"right"]: -3,
+                                    width: 10, height: 10,
+                                    borderTop:    isT  ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
+                                    borderBottom: !isT ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
+                                    borderLeft:   isL  ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
+                                    borderRight:  !isL ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
+                                    zIndex: 2, pointerEvents: "none",
+                                  }} />
+                                );
+                              })}
+                              {/* Glow behind image */}
+                              <div style={{
+                                position: "absolute", inset: -6, borderRadius: "50%",
+                                background: "radial-gradient(circle, rgba(133,39,227,0.35) 0%, transparent 70%)",
+                                pointerEvents: "none",
+                              }} />
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src="/images/beru.png"
+                                alt="portrait"
+                                style={{
+                                  width: "100%", height: "100%",
+                                  objectFit: "cover",
+                                  display: "block",
+                                  filter: "drop-shadow(0 0 8px rgba(168,85,247,0.6))",
+                                }}
+                              />
                             </div>
 
                             <p className="text-center" style={{
-                              fontFamily: "Yozakura, sans-serif", fontSize: "clamp(14px,2vw,20px)",
+                              fontFamily: "Yozakura, sans-serif", fontSize: "clamp(17px,2.4vw,24px)",
                               color: "rgba(255,255,255,0.95)",
                               textShadow: "0 0 16px rgba(168,85,247,0.4)",
-                              letterSpacing: "0.04em", lineHeight: 1.1,
+                              letterSpacing: "0.04em", lineHeight: 1.15,
                               textAlign: "center",
                             }}>
                               {e.company.toUpperCase()}
                             </p>
 
                             <p style={{
-                              fontFamily: "Karasu, sans-serif", fontSize: "9px",
-                              letterSpacing: "0.18em", color: "rgba(168,85,247,0.85)",
+                              fontFamily: "Karasu, sans-serif", fontSize: "12px",
+                              letterSpacing: "0.16em", color: "rgba(168,85,247,0.9)",
                               textAlign: "center",
                             }}>
                               {e.role}
                             </p>
 
                             <p style={{
-                              fontFamily: "Karasu, sans-serif", fontSize: "8px",
-                              letterSpacing: "0.2em", color: "rgba(168,85,247,0.4)",
-                              marginTop: 6,
+                              fontFamily: "Karasu, sans-serif", fontSize: "10.5px",
+                              letterSpacing: "0.18em", color: "rgba(168,85,247,0.5)",
+                              marginTop: 7,
                             }}>
                               {e.dateRange}
                             </p>
@@ -422,16 +470,16 @@ export default function WorkExperience() {
               {/* Status label */}
               <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 <span style={{
-                  fontFamily: "Karasu, sans-serif", fontSize: "8px",
-                  letterSpacing: "0.2em",
-                  color: playing ? "rgba(168,85,247,0.9)" : "rgba(168,85,247,0.3)",
+                  fontFamily: "Karasu, sans-serif", fontSize: "10px",
+                  letterSpacing: "0.18em",
+                  color: playing ? "rgba(168,85,247,0.9)" : "rgba(168,85,247,0.35)",
                   transition: "color 0.3s",
                 }}>
                   {playing ? "AUTO.PLAY" : "PAUSED"}
                 </span>
                 <span style={{
-                  fontFamily: "Karasu, sans-serif", fontSize: "7.5px",
-                  letterSpacing: "0.14em", color: "rgba(168,85,247,0.25)",
+                  fontFamily: "Karasu, sans-serif", fontSize: "9px",
+                  letterSpacing: "0.14em", color: "rgba(168,85,247,0.35)",
                 }}>
                   {String(current + 1).padStart(2, "0")} / {String(len).padStart(2, "0")}
                 </span>
@@ -450,8 +498,8 @@ export default function WorkExperience() {
               >
                 <p style={{
                   fontFamily: "Showcase Sans mini, sans-serif",
-                  fontSize: "15px", lineHeight: 1.85,
-                  color: "rgba(255,255,255,0.62)",
+                  fontSize: "16px", lineHeight: 1.9,
+                  color: "rgba(255,255,255,0.72)",
                 }}>
                   {exp.description}
                 </p>

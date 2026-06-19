@@ -3,11 +3,13 @@
 import { Instagram, Linkedin, Github, Mail, Phone, MapPin, ArrowUp } from "lucide-react";
 
 const NAV_LINKS = [
-  { label: "About",      id: "about-me"        },
-  { label: "Education",  id: "education"       },
-  { label: "Skills",     id: "skills"          },
-  { label: "Projects",   id: "project"         },
-  { label: "Experience", id: "work-experience" },
+  { label: "About",        id: "about-me"        },
+  { label: "Education",    id: "education"       },
+  { label: "Skills",       id: "skills"          },
+  { label: "Projects",     id: "project"         },
+  { label: "Experience",   id: "work-experience" },
+  { label: "Achievements", id: "achievements"    },
+  { label: "Contact",      id: "contact"         },
 ];
 
 const SOCIALS = [

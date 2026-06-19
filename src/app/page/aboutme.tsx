@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Download, Mail } from "lucide-react";
+// lucide icons no longer needed here
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -87,6 +87,132 @@ function PortraitCorner({ corner }: { corner: "tl" | "tr" | "bl" | "br" }) {
   );
 }
 
+// ── Circular CTA badge ──────────────────────────────────────────────────────
+function CircleCTA() {
+  const [hovered, setHovered]       = useState(false);
+  const [hoveredTop, setHoveredTop] = useState(false);
+  const [hoveredBot, setHoveredBot] = useState(false);
+
+  return (
+    <div
+      className="about-cta"
+      style={{ flexShrink: 0, animation: "about-float 3s ease-in-out infinite" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <svg width="196" height="196" viewBox="0 0 196 196">
+        <defs>
+          <path id="about-top"    d="M 12,98 A 86,86 0 0,1 184,98" />
+          <path id="about-bottom" d="M 184,98 A 86,86 0 0,1 12,98" />
+          <clipPath id="jinwoo-clip">
+            <circle cx="98" cy="98" r="43" />
+          </clipPath>
+          <style>{`
+            @keyframes about-float   { 0%,100% { transform: translateY(0);  } 50% { transform: translateY(-8px); } }
+            @keyframes about-ring-cw { to { transform: rotate(360deg);  } }
+            @keyframes about-ring-ccw{ to { transform: rotate(-360deg); } }
+            @keyframes about-wave {
+              0%   { transform: scale(1);    opacity: 0.65; }
+              100% { transform: scale(1.85); opacity: 0;    }
+            }
+            .about-ring-cw  { transform-origin: 98px 98px; animation: about-ring-cw  24s linear infinite; }
+            .about-ring-ccw { transform-origin: 98px 98px; animation: about-ring-ccw 16s linear infinite; }
+            .about-w1 { transform-origin: 98px 98px; animation: about-wave 2.6s ease-out infinite; }
+            .about-w2 { transform-origin: 98px 98px; animation: about-wave 2.6s ease-out infinite 0.87s; }
+            .about-w3 { transform-origin: 98px 98px; animation: about-wave 2.6s ease-out infinite 1.73s; }
+          `}</style>
+        </defs>
+
+        {/* Bouncy wave rings — draw attention */}
+        <circle cx="98" cy="98" r="48" fill="none" stroke="rgba(168,85,247,0.55)" strokeWidth="1.5" className="about-w1" />
+        <circle cx="98" cy="98" r="48" fill="none" stroke="rgba(168,85,247,0.38)" strokeWidth="1"   className="about-w2" />
+        <circle cx="98" cy="98" r="48" fill="none" stroke="rgba(168,85,247,0.22)" strokeWidth="0.5" className="about-w3" />
+
+        {/* Clockwise spinning outer dashed ring */}
+        <circle cx="98" cy="98" r="86" fill="none"
+          stroke={hovered ? "rgba(168,85,247,0.72)" : "rgba(168,85,247,0.22)"}
+          strokeWidth={hovered ? 1.5 : 1} strokeDasharray="3 5"
+          className="about-ring-cw"
+          style={{ transition: "stroke 0.3s, stroke-width 0.3s" }} />
+
+        {/* Counter-clockwise spinning inner dashed ring */}
+        <circle cx="98" cy="98" r="79" fill="none"
+          stroke={hovered ? "rgba(168,85,247,0.4)" : "rgba(168,85,247,0.12)"}
+          strokeWidth="0.75" strokeDasharray="2 7"
+          className="about-ring-ccw"
+          style={{ transition: "stroke 0.3s" }} />
+
+        {/* Centre background */}
+        <circle cx="98" cy="98" r="44"
+          fill={hovered ? "rgba(133,39,227,0.28)" : "rgba(133,39,227,0.1)"}
+          stroke={hovered ? "rgba(168,85,247,0.9)" : "rgba(168,85,247,0.32)"}
+          strokeWidth={hovered ? 2 : 1}
+          style={{
+            transition: "all 0.3s",
+            filter: hovered ? "drop-shadow(0 0 12px rgba(168,85,247,0.75))" : "none",
+          }} />
+
+        {/* Jinwoo image clipped to circle */}
+        <image
+          href="/images/jinwoo.png"
+          x="55" y="55"
+          width="86" height="86"
+          clipPath="url(#jinwoo-clip)"
+          preserveAspectRatio="xMidYMid slice"
+          style={{
+            transition: "filter 0.35s",
+            filter: hovered
+              ? "brightness(1.3) saturate(1.2) drop-shadow(0 0 12px rgba(168,85,247,0.9))"
+              : "brightness(1) drop-shadow(0 0 5px rgba(168,85,247,0.35))",
+          }}
+        />
+
+        {/* Separator dots */}
+        <circle cx="12"  cy="98" r="2.5"
+          fill={hovered ? "rgba(210,150,255,1)" : "rgba(168,85,247,0.55)"}
+          style={{ transition: "fill 0.3s" }} />
+        <circle cx="184" cy="98" r="2.5"
+          fill={hovered ? "rgba(210,150,255,1)" : "rgba(168,85,247,0.55)"}
+          style={{ transition: "fill 0.3s" }} />
+
+        {/* Top arc — DOWNLOAD RESUME */}
+        <a href="/Muizzuddin_Resume.pdf" target="_blank" rel="noopener noreferrer"
+          onMouseEnter={() => setHoveredTop(true)}
+          onMouseLeave={() => setHoveredTop(false)}>
+          <text fontFamily="Karasu, sans-serif" letterSpacing="3"
+            style={{
+              cursor: "pointer",
+              fontSize: hoveredTop ? "12px" : "9.5px",
+              fill: hoveredTop ? "rgba(168,85,247,1)" : "rgba(255,255,255,0.85)",
+              transition: "font-size 0.25s, fill 0.25s",
+            }}>
+            <textPath href="#about-top" startOffset="50%" textAnchor="middle">
+              DOWNLOAD  RESUME  ↗
+            </textPath>
+          </text>
+        </a>
+
+        {/* Bottom arc — GET IN TOUCH (upside-down badge style) */}
+        <a href="mailto:muizkamarozaman@gmail.com"
+          onMouseEnter={() => setHoveredBot(true)}
+          onMouseLeave={() => setHoveredBot(false)}>
+          <text fontFamily="Karasu, sans-serif" letterSpacing="3"
+            style={{
+              cursor: "pointer",
+              fontSize: hoveredBot ? "12px" : "9.5px",
+              fill: hoveredBot ? "rgba(255,255,255,1)" : "rgba(168,85,247,0.85)",
+              transition: "font-size 0.25s, fill 0.25s",
+            }}>
+            <textPath href="#about-bottom" startOffset="50%" textAnchor="middle">
+              GET  IN  TOUCH  ✦
+            </textPath>
+          </text>
+        </a>
+      </svg>
+    </div>
+  );
+}
+
 export default function AboutMe() {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef  = useRef<HTMLDivElement>(null);
@@ -164,9 +290,9 @@ export default function AboutMe() {
               className="about-header-tag hidden md:inline"
               style={{
                 fontFamily: "Karasu, sans-serif",
-                fontSize: "10px",
+                fontSize: "12px",
                 letterSpacing: "0.22em",
-                color: "rgba(168,85,247,0.6)",
+                color: "rgba(168,85,247,0.7)",
                 paddingBottom: "8px",
               }}
             >
@@ -190,9 +316,9 @@ export default function AboutMe() {
               className="about-header-tag"
               style={{
                 fontFamily: "Karasu, sans-serif",
-                fontSize: "10px",
+                fontSize: "12px",
                 letterSpacing: "0.22em",
-                color: "rgba(168,85,247,0.7)",
+                color: "rgba(168,85,247,0.75)",
               }}
             >
               [ S-CLASS ]
@@ -234,8 +360,8 @@ export default function AboutMe() {
               <span
                 style={{
                   fontFamily: "Karasu, sans-serif",
-                  fontSize: "9px",
-                  letterSpacing: "0.22em",
+                  fontSize: "11px",
+                  letterSpacing: "0.2em",
                   color: "rgba(168,85,247,0.85)",
                 }}
               >
@@ -244,9 +370,9 @@ export default function AboutMe() {
               <span
                 style={{
                   fontFamily: "Karasu, sans-serif",
-                  fontSize: "9px",
-                  letterSpacing: "0.22em",
-                  color: "rgba(168,85,247,0.5)",
+                  fontSize: "11px",
+                  letterSpacing: "0.2em",
+                  color: "rgba(168,85,247,0.55)",
                 }}
               >
                 HUNTER
@@ -344,14 +470,61 @@ export default function AboutMe() {
                 className="flex items-center gap-2"
                 style={{
                   fontFamily: "Karasu, sans-serif",
-                  fontSize: "9px",
-                  letterSpacing: "0.22em",
+                  fontSize: "11px",
+                  letterSpacing: "0.2em",
                   color: "rgba(168,85,247,0.85)",
                 }}
               >
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(168,85,247,1)", boxShadow: "0 0 8px rgba(168,85,247,0.8)" }} />
                 RANK · S-CLASS
               </p>
+            </div>
+
+            {/* Languages */}
+            <div style={{
+              marginTop: 14,
+              paddingTop: 14,
+              borderTop: "1px solid rgba(168,85,247,0.15)",
+            }}>
+              <span style={{
+                fontFamily: "Karasu, sans-serif",
+                fontSize: "9px",
+                letterSpacing: "0.26em",
+                color: "rgba(168,85,247,0.5)",
+                display: "block",
+                marginBottom: 8,
+              }}>
+                LANGUAGES
+              </span>
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                {[
+                  { lang: "Bahasa Melayu", level: "Native", dot: "rgba(168,85,247,1)" },
+                  { lang: "English",       level: "Proficient", dot: "rgba(107,143,212,1)" },
+                ].map(({ lang, level, dot }) => (
+                  <div key={lang} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                      <span style={{ width: 5, height: 5, borderRadius: "50%", background: dot, boxShadow: `0 0 6px ${dot}`, flexShrink: 0 }} />
+                      <span style={{
+                        fontFamily: "Showcase Sans mini, sans-serif",
+                        fontSize: "13px",
+                        color: "rgba(255,255,255,0.82)",
+                        letterSpacing: "0.03em",
+                      }}>
+                        {lang}
+                      </span>
+                    </div>
+                    <span style={{
+                      fontFamily: "Karasu, sans-serif",
+                      fontSize: "9px",
+                      letterSpacing: "0.18em",
+                      color: dot,
+                      opacity: 0.75,
+                    }}>
+                      {level}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -362,9 +535,9 @@ export default function AboutMe() {
             <p
               style={{
                 fontFamily: "Showcase Sans mini, sans-serif",
-                fontSize: "17px",
-                lineHeight: 1.85,
-                color: "rgba(255,255,255,0.72)",
+                fontSize: "19px",
+                lineHeight: 1.9,
+                color: "rgba(255,255,255,0.8)",
               }}
             >
               A dedicated and enthusiastic Software Engineering graduate from
@@ -379,8 +552,8 @@ export default function AboutMe() {
             <p
               style={{
                 fontFamily: "Showcase Sans mini, sans-serif",
-                fontSize: "17px",
-                lineHeight: 1.7,
+                fontSize: "19px",
+                lineHeight: 1.75,
                 color: "rgba(168,85,247,0.95)",
                 textShadow: "0 0 20px rgba(168,85,247,0.35)",
                 paddingLeft: "16px",
@@ -431,60 +604,43 @@ export default function AboutMe() {
               }}
             />
 
-            {/* Detail rows */}
-            <div className="flex flex-col">
-              {details.map((d) => (
-                <div
-                  key={d.label}
-                  className="about-detail flex items-start gap-6 py-3"
-                  style={{ borderBottom: "1px solid rgba(168,85,247,0.08)" }}
-                >
-                  <span
-                    style={{
-                      fontFamily: "Karasu, sans-serif",
-                      fontSize: "11px",
-                      letterSpacing: "0.18em",
-                      color: "rgba(168,85,247,0.75)",
-                      minWidth: "92px",
-                      paddingTop: "2px",
-                      flexShrink: 0,
-                    }}
+            {/* Detail rows + circular CTA badge */}
+            <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+              <div className="flex flex-col" style={{ flex: 1 }}>
+                {details.map((d) => (
+                  <div
+                    key={d.label}
+                    className="about-detail flex items-start gap-6 py-3"
+                    style={{ borderBottom: "1px solid rgba(168,85,247,0.08)" }}
                   >
-                    {d.label}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "Showcase Sans mini, sans-serif",
-                      fontSize: "16px",
-                      color: "rgba(255,255,255,0.88)",
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    {d.value}
-                  </span>
-                </div>
-              ))}
-            </div>
+                    <span
+                      style={{
+                        fontFamily: "Karasu, sans-serif",
+                        fontSize: "11px",
+                        letterSpacing: "0.18em",
+                        color: "rgba(168,85,247,0.75)",
+                        minWidth: "92px",
+                        paddingTop: "2px",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {d.label}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "Showcase Sans mini, sans-serif",
+                        fontSize: "16px",
+                        color: "rgba(255,255,255,0.88)",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      {d.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
 
-            {/* CTA buttons */}
-            <div className="flex flex-wrap gap-4 pt-2">
-              <a
-                href="/Muizzuddin_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hud-btn about-cta"
-              >
-                <Download size={14} strokeWidth={1.8} />
-                <span style={{ fontFamily: "Karasu, sans-serif", fontSize: "12px" }}>DOWNLOAD RESUME</span>
-                <span style={{ fontSize: 12 }}>↗</span>
-              </a>
-              <a
-                href="mailto:muizkamarozaman@gmail.com"
-                className="hud-btn hud-btn-ghost about-cta"
-              >
-                <Mail size={14} strokeWidth={1.8} />
-                <span style={{ fontFamily: "Karasu, sans-serif", fontSize: "12px" }}>GET IN TOUCH</span>
-              </a>
+              <CircleCTA />
             </div>
 
           </div>

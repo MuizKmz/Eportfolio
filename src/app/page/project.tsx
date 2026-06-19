@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
-import { Recycle, GraduationCap, Activity, ChevronRight, ExternalLink } from "lucide-react";
+import { Recycle, GraduationCap, Activity, ChevronRight, ChevronLeft, ExternalLink, Server, Shield, Package, Bot } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -135,6 +135,142 @@ const PROJECTS: Project[] = [
       },
     ],
   },
+  {
+    id: "IOT · 004",
+    codename: "POLESYNC",
+    title: "PoleSyncTech Smart Pole",
+    tagline: "Smart-city multi-sensor IoT platform",
+    description:
+      "A smart-city platform turning street poles into multi-sensor IoT nodes with real-time environmental monitoring (weather, air quality, water, energy), public Wi-Fi management, camera feeds, and three distinct role-based platforms — resident QR web, authority dashboard, and maintenance mobile app.",
+    tags: ["TypeScript", "Node.js", "MQTT", "Socket.IO", "MySQL", "React 19", "React Native", "Expo"],
+    link: "#",
+    Icon: Server,
+    phases: [
+      {
+        num: "01",
+        title: "IoT Data Pipeline",
+        subtitle: "MQTT → Node.js → MySQL → Socket.IO",
+        body: "Built the real-time telemetry backbone: Express 5 MQTT client subscribing to a devices/+/data wildcard topic, processing layer with scheduled offline-device detection, MySQL persistence, and Socket.IO real-time push to both the React web dashboard and React Native mobile app simultaneously.",
+        tech: ["MQTT", "Express 5", "TypeScript", "MySQL", "Socket.IO"],
+      },
+      {
+        num: "02",
+        title: "Multi-Sensor Fusion",
+        subtitle: "Weather · Air Quality · Water · Energy · Wi-Fi",
+        body: "Implemented simultaneous monitoring of six domains per pole: weather (temperature, humidity, wind, precipitation), air quality (PM2.5, PM10, SO2, NO2, O3, CO + AQI), water quality (dissolved oxygen, BOD, COD, pH, WQI), solar/battery energy, public Wi-Fi session metering, and GPS-tagged camera feeds.",
+        tech: ["IoT", "MySQL", "Node.js", "Sensor Fusion"],
+      },
+      {
+        num: "03",
+        title: "Three-Tier UX",
+        subtitle: "QR public · Authority dashboard · Maintenance app",
+        body: "Designed three distinct user experiences: a no-login QR-code web flow for residents (live weather, AQI, Wi-Fi connect), an authenticated React 19 + Vite dashboard for authorities (fleet monitoring, LED control, announcements), and a React Native + Expo mobile app for maintenance crews with push alerts and photo attachments.",
+        tech: ["React 19", "Vite", "Tailwind CSS", "React Native", "Expo", "Laravel"],
+      },
+    ],
+  },
+  {
+    id: "INS · 005",
+    codename: "HAPPISAFE",
+    title: "HappiSafe Insurtech Platform",
+    tagline: "Multi-underwriter insurance & loyalty ecosystem",
+    description:
+      "A Malaysian insurtech platform (HappiSafe Ai Sdn Bhd) built over 6+ months with 400+ backend commits — two live insurer integrations, two payment gateways with RSA card tokenization, a loyalty coin engine, and a production AI chatbot with a two-agent verification pattern.",
+    tags: ["Java", "Spring Boot", "MySQL", "Redis", "Vue 3", "uni-app", "OpenAI GPT-4o-mini"],
+    link: "#",
+    Icon: Shield,
+    phases: [
+      {
+        num: "01",
+        title: "Dual Insurer Integration",
+        subtitle: "Chubb REST/JWT + Pacific SOAP/mTLS",
+        body: "Implemented two live third-party insurer integrations: Chubb (REST, JWT + Azure API Management key) for travel insurance and Pacific/Rexit (SOAP + XML, mutual TLS, e-Cover Motor API v1.7) for motor insurance — each with its own quote → bind → pay → finalize state machine and a strategy-pattern dispatch layer.",
+        tech: ["Java", "Spring Boot", "REST API", "SOAP", "mTLS", "JWT"],
+      },
+      {
+        num: "02",
+        title: "Payment Security Layer",
+        subtitle: "RSA tokenization · Razer Pay · PayDollar",
+        body: "Engineered payment security across two gateways: RSA asymmetric tokenization for card data, hex-hashed cover-note payment references, signature-verified async webhooks, and Redis-backed duplicate-submission locks. Rebuilt the entire Jenkins CI/CD pipeline from scratch after the previous vendor team and nine custom JARs disappeared.",
+        tech: ["Razer Pay", "PayDollar", "RSA", "Redis", "Jenkins", "AWS EC2"],
+      },
+      {
+        num: "03",
+        title: "AI Chatbot — Creamy",
+        subtitle: "Two-agent GPT-4o-mini with RAG knowledge base",
+        body: "Built the production AI chatbot using a primary responder + independent validator two-agent pattern powered by OpenAI GPT-4o-mini, backed by a hybrid knowledge base (database table + live Google Sheet with 5-minute Redis cache), per-session conversation memory, and a prior n8n/LangChain/Gemini prototype as proof-of-concept.",
+        tech: ["OpenAI GPT-4o-mini", "Java", "Redis", "Google Sheets API", "n8n"],
+      },
+    ],
+  },
+  {
+    id: "WMS · 006",
+    codename: "WAREHOUSE",
+    title: "WMS — Warehouse Management",
+    tagline: "EPC/RFID item-level full-stack inventory system",
+    description:
+      "A full-stack warehouse management system built around EPC/RFID item-level tracking across the full lifecycle — PO receiving to shipping and returns — with a NestJS backend, Vue 3 admin portal, and a React Native handheld app with hand-written native Android RFID/barcode modules.",
+    tags: ["NestJS", "Prisma ORM", "MySQL", "Vue 3", "React Native", "Java", "Kotlin", "Docker"],
+    link: "#",
+    Icon: Package,
+    phases: [
+      {
+        num: "01",
+        title: "EPC State Machine",
+        subtitle: "Item-level lifecycle with FIFO allocation",
+        body: "Designed a per-unit EPC lifecycle (GENERATED → INBOUND → ALLOCATED → OUTBOUND → QUARANTINE → RETURNED/DISPOSED) with FIFO allocation prioritising never-returned, good-quality stock, dual return flows (customer and supplier), and quality grading (GOOD/DEFECTIVE/DAMAGED/UNKNOWN) across a 25-model Prisma schema.",
+        tech: ["NestJS", "Prisma ORM", "MySQL", "TypeScript", "JWT", "RBAC"],
+      },
+      {
+        num: "02",
+        title: "Native RFID Bridge",
+        subtitle: "Custom Java/Kotlin Android modules in React Native",
+        body: "Hand-wrote BarcodeModule, RFIDModule, and ScanKeyHelper as native Android modules in Java/Kotlin bridging RFID readers and barcode scanners into React Native via NativeModules/DeviceEventEmitter — supporting bulk UHF RFID tag scanning, barcode trigger scanning, and hardware physical-button events on rugged industrial handhelds.",
+        tech: ["React Native", "Java", "Kotlin", "NativeModules", "UHF RFID"],
+      },
+      {
+        num: "03",
+        title: "Three-Tier Monorepo",
+        subtitle: "Backend · Vue admin portal · Mobile handheld app",
+        body: "Delivered a dockerized monorepo: NestJS/Prisma REST API (JWT auth, 5-tier RBAC, Swagger docs), a Vue 3 + Tailwind admin portal with ApexCharts dashboards and Excel/PDF export, and a React Native handheld app with stock-in, stock-out, returns, cycle-counting, and order-picking — with a structured QA issue tracker covering 10 modules.",
+        tech: ["NestJS", "Vue 3", "Tailwind CSS", "Docker Compose", "jsPDF", "SheetJS"],
+      },
+    ],
+  },
+  {
+    id: "AI · 007",
+    codename: "SMARTBOT",
+    title: "SmartPole AI Chatbot",
+    tagline: "RAG + text-to-SQL agent built on n8n",
+    description:
+      "A production AI chatbot combining Pinecone RAG over an auto-ingested knowledge base with a schema-locked natural-language-to-SQL agent — built entirely in n8n with LangChain nodes, multi-stage LLM pipeline (generation → validation → execution → summarization), and 50-turn conversational memory.",
+    tags: ["n8n", "OpenAI GPT-4.1-mini", "Pinecone", "LangChain", "MySQL", "RAG"],
+    link: "#",
+    Icon: Bot,
+    phases: [
+      {
+        num: "01",
+        title: "Auto-Ingestion Pipeline",
+        subtitle: "Google Drive → chunk → embed → Pinecone",
+        body: "Built an automated RAG ingestion pipeline: Google Drive polling every minute for new files, recursive character text splitting (chunk 500, overlap 20), OpenAI Embeddings generation, and upsert into a Pinecone 'Smart Pole' namespace — the knowledge base stays current without manual re-indexing.",
+        tech: ["n8n", "OpenAI Embeddings", "Pinecone", "LangChain", "Google Drive API"],
+      },
+      {
+        num: "02",
+        title: "Text-to-SQL Agent",
+        subtitle: "Generate → validate → execute → summarize",
+        body: "Designed a four-stage SQL pipeline: GPT-4.1-mini generates SELECT-only queries from natural language against the full sensor schema (12 tables), a second GPT chain corrects/optimises the SQL (JOINs, ORDER BY DESC LIMIT), an IF-node conditionally executes against MySQL, and a final chain summarises raw rows into 2–3 readable sentences.",
+        tech: ["GPT-4.1-mini", "LangChain", "MySQL", "n8n", "Prompt Engineering"],
+      },
+      {
+        num: "03",
+        title: "Defense-in-Depth Design",
+        subtitle: "Read-only · schema-locked · 50-turn memory",
+        body: "Enforced strict security boundaries: SELECT-only SQL with no DML, default LIMIT 10, schema-locked prompt preventing off-schema queries, clarifying questions for ambiguous requests, and a Pinecone RAG retrieval tool as a parallel knowledge path — plus 50-message Simple Memory for conversation continuity.",
+        tech: ["Pinecone", "RAG", "Prompt Engineering", "n8n", "OpenAI"],
+      },
+    ],
+  },
 ];
 
 // ─────────── HUD corner brackets ───────────
@@ -203,7 +339,7 @@ function SidebarItem({
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{
           fontFamily: "Yozakura, sans-serif",
-          fontSize: "15px", letterSpacing: "0.06em",
+          fontSize: "17px", letterSpacing: "0.06em",
           color: active ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.55)",
           lineHeight: 1.1, transition: "color 0.22s",
           whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
@@ -212,9 +348,9 @@ function SidebarItem({
         </div>
         <div style={{
           fontFamily: "Karasu, sans-serif",
-          fontSize: "8.5px", letterSpacing: "0.14em",
-          color: active ? "rgba(168,85,247,0.8)" : "rgba(255,255,255,0.25)",
-          marginTop: 3, transition: "color 0.22s",
+          fontSize: "10.5px", letterSpacing: "0.12em",
+          color: active ? "rgba(168,85,247,0.85)" : "rgba(255,255,255,0.32)",
+          marginTop: 4, transition: "color 0.22s",
           whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
         }}>
           {project.title}
@@ -266,15 +402,15 @@ function ProjectImage({ project }: { project: Project }) {
       {/* HUD labels */}
       <div style={{
         position: "absolute", top: 10, left: 14,
-        fontFamily: "Karasu, sans-serif", fontSize: "8px",
-        letterSpacing: "0.22em", color: "rgba(168,85,247,0.55)",
+        fontFamily: "Karasu, sans-serif", fontSize: "9.5px",
+        letterSpacing: "0.22em", color: "rgba(168,85,247,0.6)",
       }}>
         SYS.PREVIEW
       </div>
       <div style={{
         position: "absolute", top: 10, right: 14,
-        fontFamily: "Karasu, sans-serif", fontSize: "8px",
-        letterSpacing: "0.2em", color: "rgba(168,85,247,0.4)",
+        fontFamily: "Karasu, sans-serif", fontSize: "9.5px",
+        letterSpacing: "0.2em", color: "rgba(168,85,247,0.45)",
       }}>
         {project.id.split(" ")[0]}
       </div>
@@ -390,8 +526,8 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
       {/* Subtitle */}
       <div style={{
         fontFamily: "Karasu, sans-serif",
-        fontSize: "9px", letterSpacing: "0.16em",
-        color: "rgba(168,85,247,0.7)", marginBottom: 12,
+        fontSize: "11px", letterSpacing: "0.14em",
+        color: "rgba(168,85,247,0.8)", marginBottom: 12,
       }}>
         {phase.subtitle}
       </div>
@@ -399,8 +535,8 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
       {/* Body — 3 line clamp */}
       <p style={{
         fontFamily: "Showcase Sans mini, sans-serif",
-        fontSize: "13px", lineHeight: 1.75,
-        color: "rgba(255,255,255,0.55)",
+        fontSize: "14px", lineHeight: 1.8,
+        color: "rgba(255,255,255,0.62)",
         marginBottom: 14,
         display: "-webkit-box",
         WebkitLineClamp: 3,
@@ -414,12 +550,12 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
       <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
         {phase.tech.map(t => (
           <span key={t} style={{
-            fontFamily: "Karasu, sans-serif", fontSize: "8px",
-            letterSpacing: "0.12em",
-            padding: "3px 8px",
+            fontFamily: "Karasu, sans-serif", fontSize: "10px",
+            letterSpacing: "0.1em",
+            padding: "4px 9px",
             background: "rgba(88,28,135,0.35)",
             border: "1px solid rgba(168,85,247,0.28)",
-            color: "rgba(200,130,255,0.85)",
+            color: "rgba(200,130,255,0.9)",
           }}>
             {t}
           </span>
@@ -429,22 +565,60 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
   );
 }
 
+// ─────────── Pagination / filter helpers ───────────
+const ITEMS_PER_PAGE = 4;
+type FilterType = "ALL" | "ACADEMIC" | "PROFESSIONAL";
+
+const ACADEMIC_PREFIXES = ["WMA", "LMS", "SHR"];
+function getCategory(id: string): "ACADEMIC" | "PROFESSIONAL" {
+  return ACADEMIC_PREFIXES.includes(id.split(" ")[0]) ? "ACADEMIC" : "PROFESSIONAL";
+}
+
 // ─────────── Main ───────────
 export default function Project() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef   = useRef<HTMLElement>(null);
+  const headerRef    = useRef<HTMLHeadingElement>(null);
+  const lineRef      = useRef<HTMLDivElement>(null);
+  const sidebarRef   = useRef<HTMLDivElement>(null);
+  const showcaseRef  = useRef<HTMLDivElement>(null);
+  const phaseRef     = useRef<HTMLDivElement>(null);
+
   const [activeIdx, setActiveIdx] = useState(0);
-  const active = PROJECTS[activeIdx];
+  const [page, setPage]     = useState(0);
+  const [filter, setFilter] = useState<FilterType>("ALL");
+
+  const filtered        = filter === "ALL" ? PROJECTS : PROJECTS.filter(p => getCategory(p.id) === filter);
+  const totalPages      = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+  const visibleProjects = filtered.slice(page * ITEMS_PER_PAGE, (page + 1) * ITEMS_PER_PAGE);
+  const active          = PROJECTS[activeIdx];
+
+  const handleFilter = (f: FilterType) => {
+    setFilter(f);
+    setPage(0);
+    const first = f === "ALL" ? PROJECTS[0] : PROJECTS.find(p => getCategory(p.id) === f);
+    setActiveIdx(first ? PROJECTS.indexOf(first) : 0);
+  };
+
+  const goToPage = (newPage: number) => {
+    setPage(newPage);
+    setActiveIdx(PROJECTS.indexOf(filtered[newPage * ITEMS_PER_PAGE]));
+  };
 
   useGSAP(() => {
-    gsap.from(".proj-reveal", {
-      y: 24, opacity: 0, duration: 0.65, stagger: 0.07, ease: "power2.out",
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 72%",
-        toggleActions: "play none none none",
-        once: true,
+        start: "top 70%",
+        toggleActions: "play none none reverse",
       },
     });
+
+    tl.from(".proj-tag",       { y: 20, opacity: 0, duration: 0.5,  stagger: 0.08, ease: "power2.out" })
+      .from(headerRef.current, { y: 55, opacity: 0, duration: 0.85, ease: "power3.out" }, "-=0.35")
+      .from(lineRef.current,   { scaleX: 0, transformOrigin: "left", duration: 0.95, ease: "power2.out" }, "-=0.55")
+      .from(sidebarRef.current,  { x: -44, opacity: 0, duration: 0.85, ease: "power3.out" }, "-=0.55")
+      .from(showcaseRef.current, { x:  34, opacity: 0, duration: 0.85, ease: "power3.out" }, "-=0.78")
+      .from(phaseRef.current,  { y: 30, opacity: 0, duration: 0.7,  ease: "power2.out" }, "-=0.38");
   }, { scope: sectionRef });
 
   return (
@@ -465,15 +639,9 @@ export default function Project() {
       <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-12 py-24">
 
         {/* ── Section header ── */}
-        <motion.div
-          className="proj-reveal flex items-end justify-between mb-3 gap-4 flex-wrap"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="flex items-end justify-between mb-3 gap-4 flex-wrap">
           <div className="flex items-baseline gap-4">
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white"
+            <h2 ref={headerRef} className="text-5xl md:text-7xl lg:text-8xl font-bold text-white"
               style={{
                 fontFamily: "Yozakura, sans-serif",
                 textShadow: "0 0 40px rgba(168,85,247,0.7), 0 4px 10px rgba(0,0,0,0.5)",
@@ -481,41 +649,38 @@ export default function Project() {
               }}>
               PROJECTS
             </h2>
-            <span className="hidden md:inline" style={{
-              fontFamily: "Karasu, sans-serif", fontSize: "10px",
-              letterSpacing: "0.22em", color: "rgba(168,85,247,0.6)", paddingBottom: "8px",
+            <span className="proj-tag hidden md:inline" style={{
+              fontFamily: "Karasu, sans-serif", fontSize: "12px",
+              letterSpacing: "0.22em", color: "rgba(168,85,247,0.7)", paddingBottom: "8px",
             }}>
               _ ARCHIVE.004
             </span>
           </div>
-          <span style={{
-            fontFamily: "Karasu, sans-serif", fontSize: "10px",
-            letterSpacing: "0.2em", color: "rgba(168,85,247,0.32)", paddingBottom: "8px",
+          <span className="proj-tag" style={{
+            fontFamily: "Karasu, sans-serif", fontSize: "12px",
+            letterSpacing: "0.2em", color: "rgba(168,85,247,0.42)", paddingBottom: "8px",
           }}>
             // PROJECT_LOG
           </span>
-        </motion.div>
+        </div>
 
         {/* Divider */}
-        <motion.div className="w-full h-px mb-10"
+        <div ref={lineRef} className="w-full h-px mb-10"
           style={{
             background: "linear-gradient(90deg, rgba(168,85,247,0.85), rgba(99,102,241,0.55), transparent)",
-            transformOrigin: "left",
+            boxShadow: "0 0 10px rgba(168,85,247,0.35)",
           }}
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.0, delay: 0.14 }}
         />
 
         {/* ── Main two-panel ── */}
-        <div className="proj-reveal grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-0"
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-0"
           style={{ border: "1px solid rgba(168,85,247,0.14)" }}>
 
-          {/* Left sidebar — character select list */}
-          <div style={{
+          {/* Left sidebar */}
+          <div ref={sidebarRef} style={{
             borderRight: "1px solid rgba(168,85,247,0.14)",
             borderBottom: "1px solid rgba(168,85,247,0.14)",
+            display: "flex", flexDirection: "column",
           }}
             className="lg:border-b-0"
           >
@@ -528,33 +693,130 @@ export default function Project() {
             }}>
               <div style={{ width: 6, height: 6, background: "rgba(168,85,247,0.8)", transform: "rotate(45deg)" }} />
               <span style={{
-                fontFamily: "Karasu, sans-serif", fontSize: "8.5px",
-                letterSpacing: "0.24em", color: "rgba(168,85,247,0.6)",
+                fontFamily: "Karasu, sans-serif", fontSize: "10.5px",
+                letterSpacing: "0.24em", color: "rgba(168,85,247,0.7)",
               }}>
                 SELECT PROJECT
               </span>
               <span style={{
                 marginLeft: "auto",
-                fontFamily: "Karasu, sans-serif", fontSize: "8px",
-                letterSpacing: "0.1em", color: "rgba(168,85,247,0.3)",
+                fontFamily: "Karasu, sans-serif", fontSize: "10px",
+                letterSpacing: "0.1em", color: "rgba(168,85,247,0.4)",
               }}>
-                {String(PROJECTS.length).padStart(2,"0")} FILES
+                {String(filtered.length).padStart(2, "0")} FILES
               </span>
             </div>
 
-            {PROJECTS.map((p, i) => (
-              <SidebarItem
-                key={p.id}
-                project={p}
-                index={i}
-                active={i === activeIdx}
-                onClick={() => setActiveIdx(i)}
-              />
-            ))}
+            {/* Category filter tabs */}
+            <div style={{ display: "flex", borderBottom: "1px solid rgba(168,85,247,0.12)" }}>
+              {(["ALL", "ACADEMIC", "PROFESSIONAL"] as FilterType[]).map(f => (
+                <button
+                  key={f}
+                  onClick={() => handleFilter(f)}
+                  style={{
+                    flex: 1, padding: "9px 2px",
+                    fontFamily: "Karasu, sans-serif",
+                    fontSize: "9.5px", letterSpacing: "0.08em",
+                    color: filter === f ? "rgba(168,85,247,0.95)" : "rgba(255,255,255,0.28)",
+                    background: filter === f ? "rgba(133,39,227,0.18)" : "transparent",
+                    borderTop: "none", borderLeft: "none", borderRight: "none",
+                    borderBottom: filter === f ? "2px solid rgba(168,85,247,0.8)" : "2px solid transparent",
+                    marginBottom: -1,
+                    cursor: "pointer", transition: "all 0.2s",
+                  }}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
+
+            {/* Paginated project list */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`${filter}-${page}`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22 }}
+              >
+                {visibleProjects.map((p) => {
+                  const globalIdx = PROJECTS.indexOf(p);
+                  return (
+                    <SidebarItem
+                      key={p.id}
+                      project={p}
+                      index={globalIdx}
+                      active={globalIdx === activeIdx}
+                      onClick={() => setActiveIdx(globalIdx)}
+                    />
+                  );
+                })}
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Pagination controls — only shown when there's more than one page */}
+            {totalPages > 1 && (
+              <div style={{
+                marginTop: "auto",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                padding: "10px 16px",
+                borderTop: "1px solid rgba(168,85,247,0.12)",
+                background: "rgba(133,39,227,0.05)",
+              }}>
+                <button
+                  onClick={() => page > 0 && goToPage(page - 1)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 4,
+                    fontFamily: "Karasu, sans-serif", fontSize: "10px",
+                    letterSpacing: "0.14em",
+                    color: page === 0 ? "rgba(168,85,247,0.18)" : "rgba(168,85,247,0.65)",
+                    cursor: page === 0 ? "not-allowed" : "pointer",
+                    background: "transparent", border: "none",
+                    transition: "color 0.2s",
+                  }}
+                >
+                  <ChevronLeft size={11} strokeWidth={1.5} />
+                  PREV
+                </button>
+
+                {/* Page dots */}
+                <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+                  {Array.from({ length: totalPages }, (_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => goToPage(i)}
+                      style={{
+                        width: i === page ? 18 : 6,
+                        height: 4,
+                        background: i === page ? "rgba(168,85,247,0.9)" : "rgba(168,85,247,0.22)",
+                        border: "none", cursor: "pointer",
+                        transition: "all 0.25s", padding: 0,
+                      }}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => page < totalPages - 1 && goToPage(page + 1)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 4,
+                    fontFamily: "Karasu, sans-serif", fontSize: "10px",
+                    letterSpacing: "0.14em",
+                    color: page === totalPages - 1 ? "rgba(168,85,247,0.18)" : "rgba(168,85,247,0.65)",
+                    cursor: page === totalPages - 1 ? "not-allowed" : "pointer",
+                    background: "transparent", border: "none",
+                    transition: "color 0.2s",
+                  }}
+                >
+                  NEXT
+                  <ChevronRight size={11} strokeWidth={1.5} />
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Right showcase */}
-          <div style={{ position: "relative", overflow: "hidden", padding: "28px 28px 24px" }}>
+          <div ref={showcaseRef} style={{ position: "relative", overflow: "hidden", padding: "28px 28px 24px" }}>
 
             {/* Big BG codename */}
             <AnimatePresence mode="wait">
@@ -593,9 +855,9 @@ export default function Project() {
                   {/* Project ID tag */}
                   <span style={{
                     display: "inline-block", marginBottom: 14,
-                    fontFamily: "Karasu, sans-serif", fontSize: "9px",
-                    letterSpacing: "0.24em", color: "rgba(168,85,247,0.9)",
-                    padding: "4px 12px",
+                    fontFamily: "Karasu, sans-serif", fontSize: "11px",
+                    letterSpacing: "0.24em", color: "rgba(168,85,247,0.95)",
+                    padding: "5px 13px",
                     border: "1px solid rgba(168,85,247,0.45)",
                     background: "rgba(133,39,227,0.18)",
                   }}>
@@ -616,8 +878,8 @@ export default function Project() {
 
                   {/* Tagline */}
                   <p style={{
-                    fontFamily: "Karasu, sans-serif", fontSize: "10px",
-                    letterSpacing: "0.2em", color: "rgba(168,85,247,0.75)",
+                    fontFamily: "Karasu, sans-serif", fontSize: "12.5px",
+                    letterSpacing: "0.18em", color: "rgba(168,85,247,0.8)",
                     marginBottom: 16,
                   }}>
                     {active.tagline}
@@ -626,9 +888,9 @@ export default function Project() {
                   {/* Description */}
                   <p style={{
                     fontFamily: "Showcase Sans mini, sans-serif",
-                    fontSize: "14.5px", lineHeight: 1.85,
-                    color: "rgba(255,255,255,0.7)", marginBottom: 20,
-                    maxWidth: 460,
+                    fontSize: "15.5px", lineHeight: 1.9,
+                    color: "rgba(255,255,255,0.78)", marginBottom: 20,
+                    maxWidth: 480,
                   }}>
                     {active.description}
                   </p>
@@ -655,10 +917,10 @@ export default function Project() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hud-btn"
-                    style={{ fontFamily: "Karasu, sans-serif", fontSize: "10px", letterSpacing: "0.22em" }}
+                    style={{ fontFamily: "Karasu, sans-serif", fontSize: "12px", letterSpacing: "0.22em" }}
                   >
-                    <ExternalLink size={13} strokeWidth={1.6} />
-                    VIEW PROJECT
+                    <ExternalLink size={14} strokeWidth={1.6} />
+                    VIEW DETAILS
                   </a>
                 </motion.div>
               </AnimatePresence>
@@ -680,13 +942,13 @@ export default function Project() {
         </div>
 
         {/* ── Phase strip ── */}
-        <div className="proj-reveal mt-8">
+        <div ref={phaseRef} className="mt-8">
           <div style={{
             display: "flex", alignItems: "center", gap: 10, marginBottom: 16,
           }}>
             <span style={{
-              fontFamily: "Karasu, sans-serif", fontSize: "9.5px",
-              letterSpacing: "0.24em", color: "rgba(168,85,247,0.7)", flexShrink: 0,
+              fontFamily: "Karasu, sans-serif", fontSize: "11.5px",
+              letterSpacing: "0.24em", color: "rgba(168,85,247,0.8)", flexShrink: 0,
             }}>
               _ PHASES
             </span>
@@ -695,8 +957,8 @@ export default function Project() {
               background: "linear-gradient(90deg, rgba(168,85,247,0.35), transparent)",
             }} />
             <span style={{
-              fontFamily: "Karasu, sans-serif", fontSize: "9px",
-              letterSpacing: "0.18em", color: "rgba(168,85,247,0.3)",
+              fontFamily: "Karasu, sans-serif", fontSize: "10.5px",
+              letterSpacing: "0.18em", color: "rgba(168,85,247,0.4)",
             }}>
               {active.phases.length} STAGES
             </span>
