@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import SectionReveal from "./SectionReveal";
 
 // ── Palette ───────────────────────────────────────────────
 const P  = "rgba(110,25,210,0.9)";
@@ -262,32 +263,23 @@ function BottomFrame({ label, num, slCode }: { label: string; num: string; slCod
 // ── Main export ───────────────────────────────────────────
 
 interface Props {
-  code:     string;
-  label:    string;
-  num:      string;
-  children: React.ReactNode;
+  code:           string;
+  label:          string;
+  num:            string;
+  children:       React.ReactNode;
+  noBottomFrame?: boolean;
 }
 
-export default function SectionHUDFrame({ label, num, children }: Props) {
+export default function SectionHUDFrame({ label, num, children, noBottomFrame = false }: Props) {
   const slCode    = `SL${num}`;
   const lastDigit = num.slice(-1);
   const newsCode  = `0${lastDigit}42`;
   const endNum    = `00${lastDigit}8`;
 
   return (
-    /*
-     * PAGE_BG is an opaque dark background that covers the fixed hero
-     * behind every section (Education onwards especially).
-     *
-     * TopFrame uses position: sticky so it stays pinned to viewport
-     * top while the user scrolls through this section, then scrolls
-     * away naturally when the next section begins.
-     */
     <div className="relative w-full" style={{ backgroundColor: PAGE_BG }}>
 
       {/* ── STICKY TOP FRAME ─────────────────────────────── */}
-      {/* Sticks to the viewport top while this section is in view.    */}
-      {/* Unsticks and scrolls away when the container ends.           */}
       <div style={{ position: "sticky", top: 0, zIndex: 20, width: "100%" }}>
         <TopFrame
           label={label} num={num}
@@ -295,11 +287,13 @@ export default function SectionHUDFrame({ label, num, children }: Props) {
         />
       </div>
 
-      {/* ── SECTION CONTENT (unchanged) ──────────────────── */}
-      {children}
+      {/* ── SECTION CONTENT ──────────────────────────────── */}
+      <SectionReveal>
+        {children}
+      </SectionReveal>
 
-      {/* ── BOTTOM FRAME (normal flow) ───────────────────── */}
-      <BottomFrame label={label} num={num} slCode={slCode} />
+      {/* ── BOTTOM FRAME (omitted for viewport-locked sections) ── */}
+      {!noBottomFrame && <BottomFrame label={label} num={num} slCode={slCode} />}
 
     </div>
   );

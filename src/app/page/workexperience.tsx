@@ -486,25 +486,29 @@ export default function WorkExperience() {
               </div>
             </div>
 
-            {/* ── Description below ── */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`desc-${current}`}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                style={{ maxWidth: 520, textAlign: "center", padding: "0 8px" }}
-              >
-                <p style={{
-                  fontFamily: "Showcase Sans mini, sans-serif",
-                  fontSize: "16px", lineHeight: 1.9,
-                  color: "rgba(255,255,255,0.72)",
-                }}>
-                  {exp.description}
-                </p>
-              </motion.div>
-            </AnimatePresence>
+            {/* ── Description below — fixed height so card never shifts ── */}
+            <div style={{ width: "100%", maxWidth: 820, height: 120, display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`desc-${current}`}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  className="we-desc-scroll"
+                  style={{ width: "100%", textAlign: "center", padding: "0 8px", overflowY: "auto", maxHeight: 120 }}
+                >
+                  <p style={{
+                    fontFamily: "Karasu, sans-serif",
+                    fontSize: "18px", lineHeight: 1.7,
+                    letterSpacing: "0.06em",
+                    color: "rgba(255,255,255,0.65)",
+                  }}>
+                    {exp.description}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
           </div>
       </div>

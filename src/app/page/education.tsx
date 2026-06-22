@@ -83,7 +83,7 @@ function CGPABar({ cgpa }: { cgpa: number }) {
         <span
           style={{
             fontFamily: "Karasu, sans-serif",
-            fontSize: "11.5px",
+            fontSize: "13px",
             letterSpacing: "0.22em",
             color: "rgba(168,85,247,0.75)",
           }}
@@ -96,7 +96,7 @@ function CGPABar({ cgpa }: { cgpa: number }) {
           transition={{ duration: 0.5, delay: 1.1 }}
           style={{
             fontFamily: "Yozakura, sans-serif",
-            fontSize: "24px",
+            fontSize: "28px",
             color: "rgba(210,150,255,1)",
             textShadow: "0 0 16px rgba(168,85,247,0.75)",
             lineHeight: 1,
@@ -148,10 +148,10 @@ function CGPABar({ cgpa }: { cgpa: number }) {
 
       {/* Scale */}
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
-        <span style={{ fontFamily: "Karasu, sans-serif", fontSize: "9.5px", color: "rgba(168,85,247,0.4)", letterSpacing: "0.1em" }}>
+        <span style={{ fontFamily: "Karasu, sans-serif", fontSize: "11px", color: "rgba(168,85,247,0.4)", letterSpacing: "0.1em" }}>
           0.00
         </span>
-        <span style={{ fontFamily: "Karasu, sans-serif", fontSize: "9.5px", color: "rgba(168,85,247,0.4)", letterSpacing: "0.1em" }}>
+        <span style={{ fontFamily: "Karasu, sans-serif", fontSize: "11px", color: "rgba(168,85,247,0.4)", letterSpacing: "0.1em" }}>
           / 4.00
         </span>
       </div>
@@ -230,7 +230,7 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
         <span
           style={{
             fontFamily: "Karasu, sans-serif",
-            fontSize: "11.5px",
+            fontSize: "13px",
             letterSpacing: "0.18em",
             background: "rgba(133,39,227,0.22)",
             border: "1px solid rgba(168,85,247,0.45)",
@@ -243,7 +243,7 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
         <span
           style={{
             fontFamily: "Karasu, sans-serif",
-            fontSize: "10.5px",
+            fontSize: "12px",
             letterSpacing: "0.16em",
             color: "rgba(168,85,247,0.42)",
           }}
@@ -256,10 +256,10 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
       <h3
         style={{
           fontFamily: "Showcase Sans mini, sans-serif",
-          fontSize: "clamp(18px, 3vw, 26px)",
+          fontSize: "clamp(22px, 3.5vw, 32px)",
           color: "rgba(255,255,255,0.96)",
           lineHeight: 1.2,
-          marginBottom: 8,
+          marginBottom: 10,
         }}
       >
         {item.institution}
@@ -269,9 +269,9 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
       <p
         style={{
           fontFamily: "Showcase Sans mini, sans-serif",
-          fontSize: "15.5px",
+          fontSize: "clamp(16px, 2vw, 20px)",
           color: "rgba(168,85,247,0.85)",
-          marginBottom: 14,
+          marginBottom: 16,
           letterSpacing: "0.01em",
         }}
       >
@@ -283,7 +283,7 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
         style={{
           height: 1,
           background: "linear-gradient(90deg, rgba(168,85,247,0.35), transparent)",
-          marginBottom: 14,
+          marginBottom: 16,
         }}
       />
 
@@ -291,10 +291,10 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
       <p
         style={{
           fontFamily: "Showcase Sans mini, sans-serif",
-          fontSize: "14.5px",
+          fontSize: "clamp(15px, 1.8vw, 18px)",
           color: "rgba(255,255,255,0.6)",
           lineHeight: 1.85,
-          marginBottom: 22,
+          marginBottom: 24,
         }}
       >
         {item.description}
@@ -310,9 +310,9 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
             key={tag}
             style={{
               fontFamily: "Karasu, sans-serif",
-              fontSize: "10.5px",
+              fontSize: "12.5px",
               letterSpacing: "0.1em",
-              padding: "4px 10px",
+              padding: "5px 12px",
               background: "rgba(133,39,227,0.1)",
               border: "1px solid rgba(168,85,247,0.18)",
               color: "rgba(168,85,247,0.72)",

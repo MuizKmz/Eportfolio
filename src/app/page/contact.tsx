@@ -80,10 +80,10 @@ export default function Contact() {
     borderWidth: "1px",
     borderStyle: "solid",
     borderColor: "rgba(168,85,247,0.2)",
-    padding: "13px 16px",
+    padding: "14px 18px",
     color: "rgba(255,255,255,0.88)",
     fontFamily: "Showcase Sans mini, sans-serif",
-    fontSize: "14px",
+    fontSize: "18px",
     outline: "none",
     transition: "border-color 0.2s, box-shadow 0.2s",
     lineHeight: 1.5,
@@ -134,7 +134,7 @@ export default function Contact() {
               GET IN TOUCH
             </h2>
             <span className="hidden md:inline" style={{
-              fontFamily: "Karasu, sans-serif", fontSize: "12px",
+              fontFamily: "Karasu, sans-serif", fontSize: "15px",
               letterSpacing: "0.22em", color: "rgba(168,85,247,0.7)", paddingBottom: "8px",
             }}>
               _ GATE.007
@@ -147,7 +147,7 @@ export default function Contact() {
               boxShadow: "0 0 10px rgba(100,255,160,0.8)",
             }} animate={{ opacity: [1, 0.35, 1] }} transition={{ duration: 1.4, repeat: Infinity }} />
             <span style={{
-              fontFamily: "Karasu, sans-serif", fontSize: "11px",
+              fontFamily: "Karasu, sans-serif", fontSize: "14px",
               letterSpacing: "0.2em", color: "rgba(100,255,160,0.85)",
             }}>
               GATE STATUS: OPEN
@@ -173,9 +173,9 @@ export default function Contact() {
             <div>
               <p style={{
                 fontFamily: "Showcase Sans mini, sans-serif",
-                fontSize: "16px",
+                fontSize: "20px",
                 color: "rgba(255,255,255,0.62)",
-                lineHeight: 1.95,
+                lineHeight: 1.85,
                 letterSpacing: "0.03em",
               }}>
                 Open to new opportunities, collaborations, and projects.
@@ -218,17 +218,17 @@ export default function Contact() {
                     display: "flex", alignItems: "center", justifyContent: "center",
                     background: "rgba(133,39,227,0.06)",
                   }}>
-                    <Icon size={14} strokeWidth={1.5} style={{ color: "rgba(168,85,247,0.9)" }} />
+                    <Icon size={18} strokeWidth={1.5} style={{ color: "rgba(168,85,247,0.9)" }} />
                   </div>
                   <div>
                     <span style={{
                       display: "block", fontFamily: "Karasu, sans-serif",
-                      fontSize: "10px", letterSpacing: "0.24em",
+                      fontSize: "13px", letterSpacing: "0.24em",
                       color: "rgba(168,85,247,0.7)", marginBottom: 4,
                     }}>{label}</span>
                     <span style={{
                       display: "block", fontFamily: "Showcase Sans mini, sans-serif",
-                      fontSize: "13.5px", color: "rgba(255,255,255,0.78)",
+                      fontSize: "17px", color: "rgba(255,255,255,0.78)",
                     }}>{value}</span>
                   </div>
                 </motion.a>
@@ -269,20 +269,21 @@ export default function Contact() {
               {/* Panel header */}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
                 <span style={{
-                  fontFamily: "Karasu, sans-serif", fontSize: "11px",
+                  fontFamily: "Karasu, sans-serif", fontSize: "14px",
                   letterSpacing: "0.24em", color: "rgba(168,85,247,0.8)",
                 }}>
                   ▸ TRANSMISSION DATA
                 </span>
                 <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   <div style={{
-                    width: 5, height: 5, borderRadius: "50%",
+                    width: 7, height: 7, borderRadius: "50%", flexShrink: 0,
                     background: "rgba(100,255,160,1)",
                     boxShadow: "0 0 6px rgba(100,255,160,0.9)",
                     animation: "system-pulse 1.2s ease-in-out infinite",
+                    marginTop: -2,
                   }} />
                   <span style={{
-                    fontFamily: "FF Identification, sans-serif", fontSize: "10px",
+                    fontFamily: "Karasu, sans-serif", fontSize: "13px",
                     letterSpacing: "0.18em", color: "rgba(100,255,160,0.85)",
                   }}>
                     SECURE CHANNEL: ACTIVE
@@ -300,7 +301,7 @@ export default function Contact() {
                     <div>
                       <label style={{
                         display: "block", fontFamily: "Karasu, sans-serif",
-                        fontSize: "10px", letterSpacing: "0.22em",
+                        fontSize: "13px", letterSpacing: "0.22em",
                         color: "rgba(168,85,247,0.7)", marginBottom: 7,
                       }}>
                         HUNTER NAME
@@ -320,7 +321,7 @@ export default function Contact() {
                     <div>
                       <label style={{
                         display: "block", fontFamily: "Karasu, sans-serif",
-                        fontSize: "10px", letterSpacing: "0.22em",
+                        fontSize: "13px", letterSpacing: "0.22em",
                         color: "rgba(168,85,247,0.7)", marginBottom: 7,
                       }}>
                         CONTACT PROTOCOL
@@ -341,7 +342,7 @@ export default function Contact() {
                   <div>
                     <label style={{
                       display: "block", fontFamily: "Karasu, sans-serif",
-                      fontSize: "8px", letterSpacing: "0.24em",
+                      fontSize: "13px", letterSpacing: "0.24em",
                       color: "rgba(168,85,247,0.6)", marginBottom: 6,
                     }}>
                       MESSAGE PAYLOAD
@@ -395,15 +396,15 @@ export default function Contact() {
                       (e.currentTarget as HTMLElement).style.boxShadow = "0 0 20px rgba(168,85,247,0.2)";
                     }}
                   >
-                    {status === "sending" && <Loader size={14} strokeWidth={1.8} style={{ animation: "spin 1s linear infinite", color: "rgba(200,160,255,1)" }} />}
-                    {status === "success" && <CheckCircle size={14} strokeWidth={1.8} style={{ color: "rgba(100,240,150,1)" }} />}
-                    {status === "error"   && <AlertCircle size={14} strokeWidth={1.8} style={{ color: "rgba(255,120,100,1)" }} />}
-                    {(status === "idle" || status === "sending") && status !== "sending" && <Send size={14} strokeWidth={1.8} style={{ color: "rgba(200,160,255,1)" }} />}
+                    {status === "sending" && <Loader size={18} strokeWidth={1.8} style={{ animation: "spin 1s linear infinite", color: "rgba(200,160,255,1)" }} />}
+                    {status === "success" && <CheckCircle size={18} strokeWidth={1.8} style={{ color: "rgba(100,240,150,1)" }} />}
+                    {status === "error"   && <AlertCircle size={18} strokeWidth={1.8} style={{ color: "rgba(255,120,100,1)" }} />}
+                    {(status === "idle" || status === "sending") && status !== "sending" && <Send size={18} strokeWidth={1.8} style={{ color: "rgba(200,160,255,1)" }} />}
 
                     <span style={{
-                      fontFamily: "FF Identification, sans-serif",
-                      fontSize: "12px",
-                      letterSpacing: "0.26em",
+                      fontFamily: "Showcase Sans mini, sans-serif",
+                      fontSize: "18px",
+                      letterSpacing: "0.18em",
                       color: status === "success"
                         ? "rgba(100,240,150,1)"
                         : status === "error"
@@ -426,7 +427,7 @@ export default function Contact() {
                       <motion.p
                         initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                         style={{
-                          fontFamily: "Karasu, sans-serif", fontSize: "9px",
+                          fontFamily: "Karasu, sans-serif", fontSize: "12px",
                           letterSpacing: "0.16em", color: "rgba(255,140,120,0.8)",
                           textAlign: "center",
                         }}

@@ -189,7 +189,7 @@ export default function Home() {
         <Skills />
       </SectionHUDFrame>
 
-      <SectionHUDFrame code="PROJ"  label="PROJECT"        num="004">
+      <SectionHUDFrame code="PROJ"  label="PROJECT"        num="004" noBottomFrame>
         <Project />
       </SectionHUDFrame>
 

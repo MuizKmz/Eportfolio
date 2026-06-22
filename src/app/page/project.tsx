@@ -1,11 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
-import { Recycle, GraduationCap, Activity, ChevronRight, ChevronLeft, ExternalLink, Server, Shield, Package, Bot } from "lucide-react";
+import { Recycle, GraduationCap, Activity, ChevronRight, ChevronLeft, ExternalLink, Server, Shield, Package, Bot, X } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -18,6 +18,17 @@ interface Phase {
   body: string;
   tech: string[];
 }
+// Flexible, project-specific detail content shown in the modal.
+type FeatureItem = string | { label: string; text: string };
+interface FeatureGroup {
+  heading: string;
+  items: FeatureItem[];
+}
+interface DetailSection {
+  title: string;          // e.g. "Project Overview", "Key Features"
+  body?: string;          // paragraph copy
+  groups?: FeatureGroup[]; // grouped bullet lists
+}
 interface Project {
   id: string;
   codename: string;
@@ -29,6 +40,7 @@ interface Project {
   image?: string;
   Icon: LucideIcon;
   phases: Phase[];
+  details: DetailSection[];
 }
 
 // ─────────── Data ───────────
@@ -43,6 +55,39 @@ const PROJECTS: Project[] = [
     tags: ["Flutter", "Dart", "Firebase", "Android Studio"],
     link: "#",
     Icon: Recycle,
+    details: [
+      {
+        title: "Project Overview",
+        body: "Final Year Project and the capstone of my Software Engineering degree at UTM — a cross-platform mobile app that educates and incentivises users to adopt sustainable waste-management habits, turning everyday waste sorting into a gamified, reward-driven routine. Built end-to-end from concept and UX through to a working Flutter + Firebase product.",
+      },
+      {
+        title: "Key Features",
+        groups: [
+          {
+            heading: "Gamified Experience",
+            items: [
+              "Incentive-driven waste sorting that reinforces sustainable behaviour daily",
+              "UX designed in Figma around real behaviour-change principles",
+              "Educational content paired with reward mechanics to drive retention",
+            ],
+          },
+          {
+            heading: "Cross-Platform Architecture",
+            items: [
+              { label: "Flutter + Dart", text: "single codebase delivered across Android and iOS" },
+              { label: "Firebase", text: "real-time data, authentication, and cloud storage" },
+            ],
+          },
+          {
+            heading: "Engineering Workflow",
+            items: [
+              { label: "Jira", text: "agile sprint planning across the full project lifecycle" },
+              { label: "GitHub", text: "feature-branch workflow with clean commit history and code review" },
+            ],
+          },
+        ],
+      },
+    ],
     phases: [
       {
         num: "01",
@@ -77,6 +122,38 @@ const PROJECTS: Project[] = [
     tags: ["GitLab CI/CD", "SonarQube", "Java"],
     link: "#",
     Icon: GraduationCap,
+    details: [
+      {
+        title: "Project Overview",
+        body: "Contributed to UTM's Learning Management System with a focus on code quality, DevOps automation, and team collaboration practices — significantly improving maintainability and deployment velocity across the codebase.",
+      },
+      {
+        title: "Key Features",
+        groups: [
+          {
+            heading: "Code Quality",
+            items: [
+              { label: "SonarQube", text: "continuous static analysis surfacing code smells, complexity hotspots, and security issues" },
+              "Refactored critical paths to improve long-term maintainability",
+            ],
+          },
+          {
+            heading: "CI/CD Automation",
+            items: [
+              { label: "GitLab CI/CD", text: "automated test → build → deploy cycle replacing manual deployments" },
+              { label: "Docker", text: "reproducible runner environments for consistent builds" },
+            ],
+          },
+          {
+            heading: "Team Collaboration",
+            items: [
+              "Branch protection and structured merge-request workflows",
+              "Code review conventions established and enforced across the team",
+            ],
+          },
+        ],
+      },
+    ],
     phases: [
       {
         num: "01",
@@ -111,6 +188,38 @@ const PROJECTS: Project[] = [
     tags: ["HTML/CSS", "JavaScript", "Spring", "Firebase", "Arduino"],
     link: "#",
     Icon: Activity,
+    details: [
+      {
+        title: "Project Overview",
+        body: "A web-based application that analyses real-time patient health data via an Arduino-powered IoT monitoring system. It bridges hardware sensors and a cloud dashboard so caregivers can act on live vitals the moment they change.",
+      },
+      {
+        title: "Key Features",
+        groups: [
+          {
+            heading: "IoT Hardware",
+            items: [
+              { label: "Arduino sensor rig", text: "captures vital signs and streams them over Wi-Fi to the cloud" },
+              "Sensors calibrated for clinical-grade accuracy",
+            ],
+          },
+          {
+            heading: "Backend Data Layer",
+            items: [
+              { label: "Spring Framework", text: "ingests, normalises, and persists incoming sensor telemetry" },
+              { label: "Firebase", text: "real-time database tuned for fast time-series queries" },
+            ],
+          },
+          {
+            heading: "Live Dashboard",
+            items: [
+              "Responsive web dashboard built in HTML/CSS/JavaScript",
+              "Real-time vitals with alert thresholds that notify caregivers instantly",
+            ],
+          },
+        ],
+      },
+    ],
     phases: [
       {
         num: "01",
@@ -145,6 +254,52 @@ const PROJECTS: Project[] = [
     tags: ["TypeScript", "Node.js", "MQTT", "Socket.IO", "MySQL", "React 19", "React Native", "Expo"],
     link: "#",
     Icon: Server,
+    details: [
+      {
+        title: "Project Overview",
+        body: "A smart-city platform that turns ordinary street poles into multi-sensor IoT nodes — delivering real-time environmental monitoring, public Wi-Fi management, and live camera feeds across three distinct role-based platforms: a resident QR web flow, an authority dashboard, and a maintenance mobile app.",
+      },
+      {
+        title: "Real-Time Data Pipeline",
+        groups: [
+          {
+            heading: "MQTT → Node.js → MySQL → Socket.IO",
+            items: [
+              { label: "Express 5 MQTT client", text: "subscribes to a devices/+/data wildcard topic for all poles" },
+              "Processing layer with scheduled offline-device detection",
+              "Socket.IO pushes live updates to the web dashboard and mobile app simultaneously",
+            ],
+          },
+        ],
+      },
+      {
+        title: "Multi-Sensor Monitoring",
+        groups: [
+          {
+            heading: "Six domains monitored per pole",
+            items: [
+              { label: "Weather", text: "temperature, humidity, wind, precipitation" },
+              { label: "Air Quality", text: "PM2.5, PM10, SO2, NO2, O3, CO + computed AQI" },
+              { label: "Water Quality", text: "dissolved oxygen, BOD, COD, pH, WQI" },
+              { label: "Energy & Connectivity", text: "solar/battery metering, public Wi-Fi sessions, GPS-tagged camera feeds" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Three-Tier UX",
+        groups: [
+          {
+            heading: "One platform, three audiences",
+            items: [
+              { label: "Resident", text: "no-login QR-code web flow — live weather, AQI, one-tap Wi-Fi connect" },
+              { label: "Authority", text: "React 19 + Vite dashboard — fleet monitoring, LED control, announcements" },
+              { label: "Maintenance", text: "React Native + Expo app with push alerts and photo attachments" },
+            ],
+          },
+        ],
+      },
+    ],
     phases: [
       {
         num: "01",
@@ -179,6 +334,51 @@ const PROJECTS: Project[] = [
     tags: ["Java", "Spring Boot", "MySQL", "Redis", "Vue 3", "uni-app", "OpenAI GPT-4o-mini"],
     link: "#",
     Icon: Shield,
+    details: [
+      {
+        title: "Project Overview",
+        body: "A Malaysian insurtech platform (HappiSafe Ai Sdn Bhd) built over 6+ months with 400+ backend commits — combining two live insurer integrations, two payment gateways with RSA card tokenization, a loyalty coin engine, and a production AI chatbot built on a two-agent verification pattern.",
+      },
+      {
+        title: "Dual Insurer Integration",
+        groups: [
+          {
+            heading: "Two live third-party insurers",
+            items: [
+              { label: "Chubb", text: "REST, JWT + Azure API Management key — travel insurance" },
+              { label: "Pacific / Rexit", text: "SOAP + XML, mutual TLS, e-Cover Motor API v1.7 — motor insurance" },
+              "Strategy-pattern dispatch with per-insurer quote → bind → pay → finalize state machines",
+            ],
+          },
+        ],
+      },
+      {
+        title: "Payment Security Layer",
+        groups: [
+          {
+            heading: "Two gateways, hardened end-to-end",
+            items: [
+              { label: "RSA tokenization", text: "asymmetric encryption of card data with hex-hashed payment references" },
+              { label: "Razer Pay & PayDollar", text: "signature-verified async webhooks, Redis-backed duplicate-submission locks" },
+              "Rebuilt the entire Jenkins CI/CD pipeline from scratch after the previous vendor team and nine custom JARs disappeared",
+            ],
+          },
+        ],
+      },
+      {
+        title: "AI Chatbot — Creamy",
+        groups: [
+          {
+            heading: "Two-agent GPT-4o-mini with RAG",
+            items: [
+              { label: "Two-agent pattern", text: "primary responder + independent validator on OpenAI GPT-4o-mini" },
+              { label: "Hybrid knowledge base", text: "database table + live Google Sheet with 5-minute Redis cache" },
+              "Per-session conversation memory; prototyped earlier on n8n / LangChain / Gemini",
+            ],
+          },
+        ],
+      },
+    ],
     phases: [
       {
         num: "01",
@@ -213,6 +413,51 @@ const PROJECTS: Project[] = [
     tags: ["NestJS", "Prisma ORM", "MySQL", "Vue 3", "React Native", "Java", "Kotlin", "Docker"],
     link: "#",
     Icon: Package,
+    details: [
+      {
+        title: "Project Overview",
+        body: "A full-stack warehouse management system built around EPC/RFID item-level tracking across the entire lifecycle — from PO receiving through shipping and returns — with a NestJS backend, a Vue 3 admin portal, and a React Native handheld app featuring hand-written native Android RFID/barcode modules.",
+      },
+      {
+        title: "EPC / RFID Lifecycle",
+        groups: [
+          {
+            heading: "Item-level tracking with FIFO allocation",
+            items: [
+              { label: "State machine", text: "GENERATED → INBOUND → ALLOCATED → OUTBOUND → QUARANTINE → RETURNED / DISPOSED" },
+              "FIFO allocation prioritising never-returned, good-quality stock",
+              "Quality grading (GOOD / DEFECTIVE / DAMAGED / UNKNOWN) across a 25-model Prisma schema",
+            ],
+          },
+        ],
+      },
+      {
+        title: "Native RFID Bridge",
+        groups: [
+          {
+            heading: "Custom Java/Kotlin modules in React Native",
+            items: [
+              { label: "BarcodeModule, RFIDModule, ScanKeyHelper", text: "hand-written native Android modules" },
+              "Bulk UHF RFID tag scanning, barcode trigger scanning, and hardware button events",
+              "Bridged into React Native via NativeModules / DeviceEventEmitter on rugged industrial handhelds",
+            ],
+          },
+        ],
+      },
+      {
+        title: "Three-Tier Monorepo",
+        groups: [
+          {
+            heading: "Dockerized, three coordinated apps",
+            items: [
+              { label: "Backend", text: "NestJS / Prisma REST API — JWT auth, 5-tier RBAC, Swagger docs" },
+              { label: "Admin portal", text: "Vue 3 + Tailwind with ApexCharts dashboards and Excel/PDF export" },
+              { label: "Handheld app", text: "React Native — stock-in/out, returns, cycle-counting, order-picking" },
+            ],
+          },
+        ],
+      },
+    ],
     phases: [
       {
         num: "01",
@@ -247,6 +492,51 @@ const PROJECTS: Project[] = [
     tags: ["n8n", "OpenAI GPT-4.1-mini", "Pinecone", "LangChain", "MySQL", "RAG"],
     link: "#",
     Icon: Bot,
+    details: [
+      {
+        title: "Project Overview",
+        body: "A production AI chatbot combining Pinecone RAG over an auto-ingested knowledge base with a schema-locked natural-language-to-SQL agent — built entirely in n8n with LangChain nodes, a multi-stage LLM pipeline, and 50-turn conversational memory.",
+      },
+      {
+        title: "Auto-Ingestion Pipeline",
+        groups: [
+          {
+            heading: "Google Drive → chunk → embed → Pinecone",
+            items: [
+              { label: "Drive polling", text: "checks every minute for new files, no manual re-indexing needed" },
+              { label: "Chunking", text: "recursive character splitting (chunk 500, overlap 20)" },
+              { label: "Embeddings", text: "OpenAI embeddings upserted into a 'Smart Pole' Pinecone namespace" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Text-to-SQL Agent",
+        groups: [
+          {
+            heading: "Generate → validate → execute → summarize",
+            items: [
+              { label: "Generate", text: "GPT-4.1-mini builds SELECT-only queries from natural language over 12 tables" },
+              { label: "Validate", text: "a second GPT chain corrects and optimises the SQL (JOINs, ORDER BY DESC LIMIT)" },
+              { label: "Execute & Summarize", text: "IF-node runs it against MySQL, a final chain returns 2–3 readable sentences" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Defense-in-Depth Design",
+        groups: [
+          {
+            heading: "Read-only, schema-locked, memory-aware",
+            items: [
+              "SELECT-only SQL with no DML and a default LIMIT 10",
+              "Schema-locked prompt preventing off-schema queries, with clarifying questions for ambiguous requests",
+              "Pinecone RAG retrieval as a parallel knowledge path + 50-message conversation memory",
+            ],
+          },
+        ],
+      },
+    ],
     phases: [
       {
         num: "01",
@@ -495,7 +785,7 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
       transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
       style={{
         position: "relative",
-        padding: "20px 20px 18px",
+        padding: "14px 16px 12px",
         background: "rgba(133,39,227,0.06)",
         border: "1px solid rgba(168,85,247,0.15)",
       }}
@@ -504,9 +794,9 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
       {(["tl","tr","bl","br"] as const).map(c => <HUDCorner key={c} pos={c} />)}
 
       {/* Number + divider */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
         <span style={{
-          fontFamily: "Yozakura, sans-serif", fontSize: "13px",
+          fontFamily: "Yozakura, sans-serif", fontSize: "15px",
           color: "rgba(168,85,247,0.9)", letterSpacing: "0.06em", flexShrink: 0,
         }}>
           {phase.num}
@@ -517,7 +807,7 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
       {/* Title */}
       <div style={{
         fontFamily: "Yozakura, sans-serif",
-        fontSize: "17px", color: "rgba(255,255,255,0.95)",
+        fontSize: "20px", color: "rgba(255,255,255,0.95)",
         marginBottom: 4, letterSpacing: "0.03em",
       }}>
         {phase.title}
@@ -526,8 +816,8 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
       {/* Subtitle */}
       <div style={{
         fontFamily: "Karasu, sans-serif",
-        fontSize: "11px", letterSpacing: "0.14em",
-        color: "rgba(168,85,247,0.8)", marginBottom: 12,
+        fontSize: "13px", letterSpacing: "0.14em",
+        color: "rgba(168,85,247,0.8)", marginBottom: 10,
       }}>
         {phase.subtitle}
       </div>
@@ -535,9 +825,9 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
       {/* Body — 3 line clamp */}
       <p style={{
         fontFamily: "Showcase Sans mini, sans-serif",
-        fontSize: "14px", lineHeight: 1.8,
+        fontSize: "14px", lineHeight: 1.75,
         color: "rgba(255,255,255,0.62)",
-        marginBottom: 14,
+        marginBottom: 12,
         display: "-webkit-box",
         WebkitLineClamp: 3,
         WebkitBoxOrient: "vertical",
@@ -550,9 +840,9 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
       <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
         {phase.tech.map(t => (
           <span key={t} style={{
-            fontFamily: "Karasu, sans-serif", fontSize: "10px",
+            fontFamily: "Karasu, sans-serif", fontSize: "12px",
             letterSpacing: "0.1em",
-            padding: "4px 9px",
+            padding: "4px 10px",
             background: "rgba(88,28,135,0.35)",
             border: "1px solid rgba(168,85,247,0.28)",
             color: "rgba(200,130,255,0.9)",
@@ -565,8 +855,330 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
   );
 }
 
+// ─────────── Project detail modal ───────────
+function ProjectDetailModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  const Icon = project.Icon;
+  const category = getCategory(project.id);
+
+  // ESC to close + lock background scroll while open
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  return (
+    <motion.div
+      className="fixed inset-0 flex items-center justify-center p-4 md:p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      onClick={onClose}
+      style={{
+        zIndex: 100,
+        background: "rgba(8,0,18,0.82)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+      }}
+    >
+      <motion.div
+        onClick={(e) => e.stopPropagation()}
+        initial={{ opacity: 0, scale: 0.94, y: 24 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 16 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="relative w-full max-w-3xl"
+        style={{
+          maxHeight: "88vh",
+          background: "linear-gradient(160deg, rgba(22,6,44,0.98) 0%, rgba(12,2,28,0.99) 100%)",
+          border: "1px solid rgba(168,85,247,0.3)",
+          boxShadow: "0 0 60px rgba(133,39,227,0.35), inset 0 0 40px rgba(133,39,227,0.06)",
+          display: "flex", flexDirection: "column", overflow: "hidden",
+        }}
+      >
+        {/* HUD corners */}
+        {(["tl","tr","bl","br"] as const).map(c => <HUDCorner key={c} pos={c} />)}
+
+        {/* Top accent bar */}
+        <div style={{
+          position: "absolute", top: 0, left: 0, right: 0, height: 2,
+          background: "linear-gradient(90deg, transparent, rgba(168,85,247,0.9), transparent)",
+          boxShadow: "0 0 12px rgba(168,85,247,0.7)", zIndex: 2,
+        }} />
+
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="modal-close"
+          style={{
+            position: "absolute", top: 16, right: 16, zIndex: 5,
+            width: 34, height: 34,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            background: "rgba(133,39,227,0.18)",
+            border: "1px solid rgba(168,85,247,0.4)",
+            cursor: "pointer", transition: "all 0.2s",
+          }}
+          aria-label="Close"
+        >
+          <X size={16} strokeWidth={1.8} color="rgba(200,130,255,0.95)" />
+        </button>
+
+        {/* Scrollable content */}
+        <div className="modal-scroll" style={{ overflowY: "auto", padding: "30px 32px 34px" }}>
+
+          {/* ID + category badge */}
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8, marginBottom: 18, paddingRight: 40 }}>
+            <span style={{
+              fontFamily: "Karasu, sans-serif", fontSize: "18px",
+              letterSpacing: "0.24em", color: "rgba(168,85,247,0.95)",
+              padding: "7px 16px",
+              border: "1px solid rgba(168,85,247,0.45)",
+              background: "rgba(133,39,227,0.18)",
+            }}>
+              {project.id}
+            </span>
+            <span style={{
+              fontFamily: "Karasu, sans-serif", fontSize: "17px",
+              letterSpacing: "0.2em", color: "rgba(168,85,247,0.6)",
+              padding: "7px 16px",
+              border: "1px solid rgba(168,85,247,0.22)",
+            }}>
+              {category}
+            </span>
+          </div>
+
+          {/* Icon + title + tagline */}
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 18, marginBottom: 24 }}>
+            <div style={{
+              width: 58, height: 58, flexShrink: 0,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              border: "1px solid rgba(168,85,247,0.45)",
+              background: "rgba(133,39,227,0.15)",
+            }}>
+              <Icon size={30} strokeWidth={1.4} color="rgba(200,130,255,0.95)" />
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <h3 style={{
+                fontFamily: "Yozakura, sans-serif",
+                fontSize: "clamp(32px, 4vw, 44px)",
+                color: "rgba(255,255,255,0.98)",
+                textShadow: "0 0 22px rgba(168,85,247,0.45)",
+                lineHeight: 1.08, letterSpacing: "0.02em", marginBottom: 8,
+              }}>
+                {project.title}
+              </h3>
+              <p style={{
+                fontFamily: "Karasu, sans-serif", fontSize: "20px",
+                letterSpacing: "0.18em", color: "rgba(168,85,247,0.85)",
+              }}>
+                {project.tagline}
+              </p>
+            </div>
+          </div>
+
+          {/* Preview image */}
+          <div style={{ marginBottom: 26 }}>
+            <ProjectImage project={project} />
+          </div>
+
+          {/* Rich detail sections — Project Overview, Key Features, etc. */}
+          {project.details.map((section, i) => (
+            <DetailSectionView key={i} section={section} />
+          ))}
+
+          {/* Phases */}
+          <ModalSectionLabel label="// PHASES" trailing={`${project.phases.length} STAGES`} />
+          <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 30 }}>
+            {project.phases.map((ph) => (
+              <div key={ph.num} style={{
+                position: "relative",
+                padding: "16px 20px",
+                background: "rgba(133,39,227,0.06)",
+                border: "1px solid rgba(168,85,247,0.15)",
+              }}>
+                {(["tl","tr","bl","br"] as const).map(c => <HUDCorner key={c} pos={c} />)}
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                  <span style={{
+                    fontFamily: "Yozakura, sans-serif", fontSize: "20px",
+                    color: "rgba(168,85,247,0.9)", flexShrink: 0,
+                  }}>
+                    {ph.num}
+                  </span>
+                  <div style={{ flex: 1, height: 1, background: "rgba(168,85,247,0.2)" }} />
+                  <span style={{
+                    fontFamily: "Karasu, sans-serif", fontSize: "18px",
+                    letterSpacing: "0.14em", color: "rgba(168,85,247,0.6)",
+                  }}>
+                    {ph.subtitle}
+                  </span>
+                </div>
+                <div style={{
+                  fontFamily: "Yozakura, sans-serif", fontSize: "28px",
+                  color: "rgba(255,255,255,0.95)", marginBottom: 10, letterSpacing: "0.03em",
+                }}>
+                  {ph.title}
+                </div>
+                <p style={{
+                  fontFamily: "Showcase Sans mini, sans-serif",
+                  fontSize: "22px", lineHeight: 1.75,
+                  color: "rgba(255,255,255,0.7)", marginBottom: 12,
+                }}>
+                  {ph.body}
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {ph.tech.map(t => (
+                    <span key={t} style={{
+                      fontFamily: "Karasu, sans-serif", fontSize: "17px",
+                      letterSpacing: "0.1em", padding: "5px 13px",
+                      background: "rgba(88,28,135,0.35)",
+                      border: "1px solid rgba(168,85,247,0.28)",
+                      color: "rgba(200,130,255,0.9)",
+                    }}>
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Tech stack */}
+          <ModalSectionLabel label="// TECH_STACK" />
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 30 }}>
+            {project.tags.map(t => (
+              <span key={t} style={{
+                fontFamily: "Showcase Sans mini, sans-serif",
+                fontSize: "20px", padding: "7px 16px", borderRadius: 999,
+                background: "rgba(88,28,135,0.35)",
+                border: "1px solid rgba(168,85,247,0.28)",
+                color: "rgba(255,255,255,0.85)",
+              }}>
+                {t}
+              </span>
+            ))}
+          </div>
+
+          {/* Footer link */}
+          {project.link && project.link !== "#" && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hud-btn"
+              style={{ fontFamily: "Karasu, sans-serif", fontSize: "12px", letterSpacing: "0.22em" }}
+            >
+              <ExternalLink size={14} strokeWidth={1.6} />
+              VISIT PROJECT
+            </a>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// Rich detail section (Project Overview / Key Features / etc.) inside the modal
+function DetailSectionView({ section }: { section: DetailSection }) {
+  return (
+    <div style={{ marginBottom: 30 }}>
+      {/* Section title */}
+      <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 16 }}>
+        <div style={{ width: 8, height: 8, background: "rgba(168,85,247,0.9)", transform: "rotate(45deg)", flexShrink: 0 }} />
+        <h4 style={{
+          fontFamily: "Yozakura, sans-serif", fontSize: "28px",
+          color: "rgba(255,255,255,0.97)", letterSpacing: "0.04em",
+          textShadow: "0 0 18px rgba(168,85,247,0.35)",
+        }}>
+          {section.title}
+        </h4>
+      </div>
+
+      {/* Body paragraph */}
+      {section.body && (
+        <p style={{
+          fontFamily: "Showcase Sans mini, sans-serif",
+          fontSize: "22px", lineHeight: 1.85,
+          color: "rgba(255,255,255,0.8)",
+        }}>
+          {section.body}
+        </p>
+      )}
+
+      {/* Grouped feature lists */}
+      {section.groups && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 22, marginTop: section.body ? 20 : 4 }}>
+          {section.groups.map((g) => (
+            <div key={g.heading}>
+              <div style={{
+                fontFamily: "Karasu, sans-serif", fontSize: "21px",
+                letterSpacing: "0.06em", color: "rgba(200,130,255,0.95)",
+                marginBottom: 12,
+              }}>
+                {g.heading}
+              </div>
+              <ul style={{ display: "flex", flexDirection: "column", gap: 11, listStyle: "none", padding: 0, margin: 0 }}>
+                {g.items.map((item, i) => (
+                  <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <span style={{
+                      width: 6, height: 6, borderRadius: "50%",
+                      background: "rgba(168,85,247,0.85)",
+                      marginTop: 9, flexShrink: 0,
+                      boxShadow: "0 0 6px rgba(168,85,247,0.7)",
+                    }} />
+                    <span style={{
+                      fontFamily: "Showcase Sans mini, sans-serif",
+                      fontSize: "21px", lineHeight: 1.75,
+                      color: "rgba(255,255,255,0.72)",
+                    }}>
+                      {typeof item === "string" ? item : (
+                        <>
+                          <span style={{ color: "rgba(255,255,255,0.95)", fontWeight: 600 }}>{item.label}:</span>{" "}
+                          {item.text}
+                        </>
+                      )}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Small section label used inside the modal
+function ModalSectionLabel({ label, trailing }: { label: string; trailing?: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+      <span style={{
+        fontFamily: "Karasu, sans-serif", fontSize: "18px",
+        letterSpacing: "0.24em", color: "rgba(168,85,247,0.85)", flexShrink: 0,
+      }}>
+        {label}
+      </span>
+      <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, rgba(168,85,247,0.35), transparent)" }} />
+      {trailing && (
+        <span style={{
+          fontFamily: "Karasu, sans-serif", fontSize: "10px",
+          letterSpacing: "0.18em", color: "rgba(168,85,247,0.4)", flexShrink: 0,
+        }}>
+          {trailing}
+        </span>
+      )}
+    </div>
+  );
+}
+
 // ─────────── Pagination / filter helpers ───────────
-const ITEMS_PER_PAGE = 4;
+const ITEMS_PER_PAGE = 6;
 type FilterType = "ALL" | "ACADEMIC" | "PROFESSIONAL";
 
 const ACADEMIC_PREFIXES = ["WMA", "LMS", "SHR"];
@@ -581,11 +1193,11 @@ export default function Project() {
   const lineRef      = useRef<HTMLDivElement>(null);
   const sidebarRef   = useRef<HTMLDivElement>(null);
   const showcaseRef  = useRef<HTMLDivElement>(null);
-  const phaseRef     = useRef<HTMLDivElement>(null);
 
   const [activeIdx, setActiveIdx] = useState(0);
   const [page, setPage]     = useState(0);
   const [filter, setFilter] = useState<FilterType>("ALL");
+  const [detailOpen, setDetailOpen] = useState(false);
 
   const filtered        = filter === "ALL" ? PROJECTS : PROJECTS.filter(p => getCategory(p.id) === filter);
   const totalPages      = Math.ceil(filtered.length / ITEMS_PER_PAGE);
@@ -617,8 +1229,7 @@ export default function Project() {
       .from(headerRef.current, { y: 55, opacity: 0, duration: 0.85, ease: "power3.out" }, "-=0.35")
       .from(lineRef.current,   { scaleX: 0, transformOrigin: "left", duration: 0.95, ease: "power2.out" }, "-=0.55")
       .from(sidebarRef.current,  { x: -44, opacity: 0, duration: 0.85, ease: "power3.out" }, "-=0.55")
-      .from(showcaseRef.current, { x:  34, opacity: 0, duration: 0.85, ease: "power3.out" }, "-=0.78")
-      .from(phaseRef.current,  { y: 30, opacity: 0, duration: 0.7,  ease: "power2.out" }, "-=0.38");
+      .from(showcaseRef.current, { x:  34, opacity: 0, duration: 0.85, ease: "power3.out" }, "-=0.78");
   }, { scope: sectionRef });
 
   return (
@@ -626,7 +1237,7 @@ export default function Project() {
       id="project"
       ref={sectionRef}
       className="relative w-full overflow-hidden"
-      style={{ background: "rgba(15,0,30,0.98)" }}
+      style={{ background: "rgba(15,0,30,0.98)", height: "calc(100vh - 90px)", display: "flex", flexDirection: "column", scrollMarginTop: "90px" }}
     >
       {/* Dot grid bg */}
       <div className="absolute inset-0 pointer-events-none" style={{
@@ -636,7 +1247,7 @@ export default function Project() {
         WebkitMaskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%)",
       }} />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-12 py-24">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10" style={{ paddingTop: 8, paddingBottom: 12, flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
 
         {/* ── Section header ── */}
         <div className="flex items-end justify-between mb-3 gap-4 flex-wrap">
@@ -645,7 +1256,7 @@ export default function Project() {
               style={{
                 fontFamily: "Yozakura, sans-serif",
                 textShadow: "0 0 40px rgba(168,85,247,0.7), 0 4px 10px rgba(0,0,0,0.5)",
-                letterSpacing: "0.04em", lineHeight: 0.95,
+                letterSpacing: "0.04em", lineHeight: 1.05,
               }}>
               PROJECTS
             </h2>
@@ -665,7 +1276,7 @@ export default function Project() {
         </div>
 
         {/* Divider */}
-        <div ref={lineRef} className="w-full h-px mb-10"
+        <div ref={lineRef} className="w-full h-px mb-4"
           style={{
             background: "linear-gradient(90deg, rgba(168,85,247,0.85), rgba(99,102,241,0.55), transparent)",
             boxShadow: "0 0 10px rgba(168,85,247,0.35)",
@@ -674,13 +1285,14 @@ export default function Project() {
 
         {/* ── Main two-panel ── */}
         <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-0"
-          style={{ border: "1px solid rgba(168,85,247,0.14)" }}>
+          style={{ border: "1px solid rgba(168,85,247,0.14)", flex: 1, minHeight: 0, overflow: "hidden" }}>
 
           {/* Left sidebar */}
           <div ref={sidebarRef} style={{
             borderRight: "1px solid rgba(168,85,247,0.14)",
             borderBottom: "1px solid rgba(168,85,247,0.14)",
             display: "flex", flexDirection: "column",
+            overflowY: "auto",
           }}
             className="lg:border-b-0"
           >
@@ -816,7 +1428,7 @@ export default function Project() {
           </div>
 
           {/* Right showcase */}
-          <div ref={showcaseRef} style={{ position: "relative", overflow: "hidden", padding: "28px 28px 24px" }}>
+          <div ref={showcaseRef} style={{ position: "relative", overflow: "hidden", padding: "28px 32px", display: "flex", alignItems: "center" }}>
 
             {/* Big BG codename */}
             <AnimatePresence mode="wait">
@@ -841,7 +1453,7 @@ export default function Project() {
               </motion.div>
             </AnimatePresence>
 
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1fr_280px] gap-8 items-start">
+            <div className="relative z-10 w-full grid grid-cols-1 md:grid-cols-[1fr_260px] gap-6 items-center">
 
               {/* Left: project info */}
               <AnimatePresence mode="wait">
@@ -854,8 +1466,8 @@ export default function Project() {
                 >
                   {/* Project ID tag */}
                   <span style={{
-                    display: "inline-block", marginBottom: 14,
-                    fontFamily: "Karasu, sans-serif", fontSize: "11px",
+                    display: "inline-block", marginBottom: 12,
+                    fontFamily: "Karasu, sans-serif", fontSize: "13px",
                     letterSpacing: "0.24em", color: "rgba(168,85,247,0.95)",
                     padding: "5px 13px",
                     border: "1px solid rgba(168,85,247,0.45)",
@@ -867,7 +1479,7 @@ export default function Project() {
                   {/* Title */}
                   <h3 style={{
                     fontFamily: "Yozakura, sans-serif",
-                    fontSize: "clamp(26px, 4vw, 38px)",
+                    fontSize: "clamp(30px, 4.5vw, 46px)",
                     color: "rgba(255,255,255,0.98)",
                     textShadow: "0 0 22px rgba(168,85,247,0.45)",
                     lineHeight: 1.05, letterSpacing: "0.02em",
@@ -878,9 +1490,9 @@ export default function Project() {
 
                   {/* Tagline */}
                   <p style={{
-                    fontFamily: "Karasu, sans-serif", fontSize: "12.5px",
+                    fontFamily: "Karasu, sans-serif", fontSize: "15px",
                     letterSpacing: "0.18em", color: "rgba(168,85,247,0.8)",
-                    marginBottom: 16,
+                    marginBottom: 14,
                   }}>
                     {active.tagline}
                   </p>
@@ -888,19 +1500,19 @@ export default function Project() {
                   {/* Description */}
                   <p style={{
                     fontFamily: "Showcase Sans mini, sans-serif",
-                    fontSize: "15.5px", lineHeight: 1.9,
-                    color: "rgba(255,255,255,0.78)", marginBottom: 20,
-                    maxWidth: 480,
+                    fontSize: "22px", lineHeight: 1.75,
+                    color: "rgba(255,255,255,0.78)", marginBottom: 16,
+                    maxWidth: 520,
                   }}>
                     {active.description}
                   </p>
 
                   {/* Tech tags */}
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: 24 }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: 20 }}>
                     {active.tags.map(t => (
                       <span key={t} className="skill-pill" style={{
                         fontFamily: "Showcase Sans mini, sans-serif",
-                        fontSize: "12px", padding: "4px 11px",
+                        fontSize: "18px", padding: "6px 16px",
                         borderRadius: 999,
                         background: "rgba(88,28,135,0.35)",
                         border: "1px solid rgba(168,85,247,0.28)",
@@ -912,16 +1524,14 @@ export default function Project() {
                   </div>
 
                   {/* CTA */}
-                  <a
-                    href={active.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={() => setDetailOpen(true)}
                     className="hud-btn"
-                    style={{ fontFamily: "Karasu, sans-serif", fontSize: "12px", letterSpacing: "0.22em" }}
+                    style={{ fontFamily: "Karasu, sans-serif", fontSize: "13px", letterSpacing: "0.22em", cursor: "pointer" }}
                   >
                     <ExternalLink size={14} strokeWidth={1.6} />
                     VIEW DETAILS
-                  </a>
+                  </button>
                 </motion.div>
               </AnimatePresence>
 
@@ -938,45 +1548,18 @@ export default function Project() {
                 </motion.div>
               </AnimatePresence>
             </div>
-          </div>
-        </div>
 
-        {/* ── Phase strip ── */}
-        <div ref={phaseRef} className="mt-8">
-          <div style={{
-            display: "flex", alignItems: "center", gap: 10, marginBottom: 16,
-          }}>
-            <span style={{
-              fontFamily: "Karasu, sans-serif", fontSize: "11.5px",
-              letterSpacing: "0.24em", color: "rgba(168,85,247,0.8)", flexShrink: 0,
-            }}>
-              _ PHASES
-            </span>
-            <div style={{
-              flex: 1, height: 1,
-              background: "linear-gradient(90deg, rgba(168,85,247,0.35), transparent)",
-            }} />
-            <span style={{
-              fontFamily: "Karasu, sans-serif", fontSize: "10.5px",
-              letterSpacing: "0.18em", color: "rgba(168,85,247,0.4)",
-            }}>
-              {active.phases.length} STAGES
-            </span>
           </div>
-
-          <AnimatePresence mode="wait">
-            <div
-              key={`phases-${activeIdx}`}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-4"
-            >
-              {active.phases.map((ph, i) => (
-                <PhaseCard key={ph.num} phase={ph} index={i} />
-              ))}
-            </div>
-          </AnimatePresence>
         </div>
 
       </div>
+
+      {/* Project detail modal */}
+      <AnimatePresence>
+        {detailOpen && (
+          <ProjectDetailModal project={active} onClose={() => setDetailOpen(false)} />
+        )}
+      </AnimatePresence>
 
       {/* Sidebar hover style */}
       <style>{`
@@ -984,6 +1567,18 @@ export default function Project() {
           background: rgba(133,39,227,0.1) !important;
           border-left-color: rgba(168,85,247,0.5) !important;
         }
+        .modal-close:hover {
+          background: rgba(168,85,247,0.35) !important;
+          border-color: rgba(168,85,247,0.8) !important;
+        }
+        .modal-scroll::-webkit-scrollbar { width: 8px; }
+        .modal-scroll::-webkit-scrollbar-track { background: rgba(133,39,227,0.05); }
+        .modal-scroll::-webkit-scrollbar-thumb {
+          background: rgba(168,85,247,0.35);
+          border-radius: 4px;
+        }
+        .modal-scroll::-webkit-scrollbar-thumb:hover { background: rgba(168,85,247,0.55); }
+        .modal-scroll { scrollbar-width: thin; scrollbar-color: rgba(168,85,247,0.35) rgba(133,39,227,0.05); }
       `}</style>
     </section>
   );
