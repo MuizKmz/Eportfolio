@@ -87,7 +87,9 @@ export default function SystemNotification() {
         pointerEvents: "none",
         transition: "opacity 0.4s ease, transform 0.4s ease",
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateX(0)" : "translateX(32px)",
+        // Slide vertically (not right) so a near-edge fixed toast can never
+        // poke past the viewport and create horizontal page overflow.
+        transform: visible ? "translateY(0)" : "translateY(12px)",
       }}
     >
       <div

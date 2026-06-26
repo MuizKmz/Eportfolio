@@ -309,7 +309,7 @@ export default function SideNavBar({ delay = 5.5, className = "" }: Props) {
 
     {/* Drawer overlay */}
     <div
-      className="lg:hidden fixed inset-0 z-[55]"
+      className="lg:hidden fixed inset-0 z-[55] overflow-hidden"
       style={{ pointerEvents: menuOpen ? "auto" : "none" }}
       aria-hidden={!menuOpen}
     >
