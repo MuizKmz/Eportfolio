@@ -202,40 +202,46 @@ export default function Home() {
         </div>
       </motion.main>
 
-      {/* ── Sections ── */}
-      <div style={{ marginTop: "100vh" }}>
+      {/* ── Sections ──
+           Wrapped in overflow-x:clip to contain any in-section element that
+           would otherwise overflow horizontally — that overflow let the page
+           drag sideways on mobile and revealed the fixed hero on the right.
+           `clip` on the X axis only (Y stays visible) does NOT create a scroll
+           container, so vertical scrolling and the sticky HUD headers both keep
+           working — unlike overflow:hidden, which would break the sticky bars. */}
+      <div style={{ marginTop: "100vh", overflowX: "clip" }}>
         <SectionHUDFrame code="ABOUT" label="ABOUT ME" num="001">
           <AboutMe />
         </SectionHUDFrame>
+
+        <SectionHUDFrame code="EDU"   label="EDUCATION"      num="002">
+          <Education />
+        </SectionHUDFrame>
+
+        <SectionHUDFrame code="SKILL" label="SKILLS"         num="003">
+          <Skills />
+        </SectionHUDFrame>
+
+        <SectionHUDFrame code="PROJ"  label="PROJECT"        num="004" noBottomFrame>
+          <Project />
+        </SectionHUDFrame>
+
+        <SectionHUDFrame code="WORK"  label="WORK EXP"       num="005">
+          <WorkExperience />
+        </SectionHUDFrame>
+
+        {/* Temporarily hidden — Achievements section
+        <SectionHUDFrame code="ACH"   label="ACHIEVEMENTS"   num="006">
+          <Achievements />
+        </SectionHUDFrame>
+        */}
+
+        <SectionHUDFrame code="GATE"  label="CONTACT"        num="007">
+          <Contact />
+        </SectionHUDFrame>
+
+        <Footer />
       </div>
-
-      <SectionHUDFrame code="EDU"   label="EDUCATION"      num="002">
-        <Education />
-      </SectionHUDFrame>
-
-      <SectionHUDFrame code="SKILL" label="SKILLS"         num="003">
-        <Skills />
-      </SectionHUDFrame>
-
-      <SectionHUDFrame code="PROJ"  label="PROJECT"        num="004" noBottomFrame>
-        <Project />
-      </SectionHUDFrame>
-
-      <SectionHUDFrame code="WORK"  label="WORK EXP"       num="005">
-        <WorkExperience />
-      </SectionHUDFrame>
-
-      {/* Temporarily hidden — Achievements section
-      <SectionHUDFrame code="ACH"   label="ACHIEVEMENTS"   num="006">
-        <Achievements />
-      </SectionHUDFrame>
-      */}
-
-      <SectionHUDFrame code="GATE"  label="CONTACT"        num="007">
-        <Contact />
-      </SectionHUDFrame>
-
-      <Footer />
     </>
   );
 }
