@@ -62,15 +62,6 @@ export default function Home() {
         }}
         transition={{ duration: 2 }}
         className="fixed inset-0 overflow-hidden text-white flex items-center justify-start z-0"
-        style={{
-          // Promote the fixed hero to its own compositor layer so mobile
-          // browsers don't repaint (flicker) it every time the address bar
-          // hides/shows during scroll.
-          transform: "translateZ(0)",
-          backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden",
-          willChange: "transform",
-        }}
       >
         {/* Background motion layer */}
         <motion.div

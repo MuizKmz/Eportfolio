@@ -16,18 +16,11 @@ html::-webkit-scrollbar {
 body {
   max-width: 100%;
   overflow-x: hidden;
-}
-
-/* Lock horizontal scroll at the root too — `clip` (not `hidden`) stops the
-   left/right slide on mobile WITHOUT creating a scroll container, so it can't
-   break the sticky HUD headers. overscroll-behavior kills the rubber-band
-   bounce that briefly reveals the fixed hero "off" during momentum scroll. */
-html {
-  overflow-x: clip;
-  overscroll-behavior: none;
-}
-body {
-  overscroll-behavior: none;
+  /* Kills the mobile rubber-band bounce that briefly reveals the fixed hero.
+     Safe: does NOT change the scroll container, so vertical scroll + the
+     sticky HUD headers keep working. (No overflow on <html> — that breaks
+     mobile scrolling.) */
+  overscroll-behavior-y: none;
 }
 
 /* Offset smooth-scroll anchoring so section tops aren't hidden
