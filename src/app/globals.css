@@ -28,6 +28,12 @@ body {
 @media (max-width: 1023px) {
   html {
     scroll-padding-top: 56px;
+    /* Mobile-only horizontal lock. body's overflow-x:hidden can't contain a
+       FIXED element that pokes past the viewport, so clip at the scroll root
+       too. `hidden` (not `clip`) forces overflow-y to `auto`, so vertical
+       scroll keeps working; html is already the scroll root, so the sticky
+       HUD headers are unaffected. */
+    overflow-x: hidden;
   }
 }
 
