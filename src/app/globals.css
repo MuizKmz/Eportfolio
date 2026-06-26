@@ -18,6 +18,18 @@ body {
   overflow-x: hidden;
 }
 
+/* Lock horizontal scroll at the root too — `clip` (not `hidden`) stops the
+   left/right slide on mobile WITHOUT creating a scroll container, so it can't
+   break the sticky HUD headers. overscroll-behavior kills the rubber-band
+   bounce that briefly reveals the fixed hero "off" during momentum scroll. */
+html {
+  overflow-x: clip;
+  overscroll-behavior: none;
+}
+body {
+  overscroll-behavior: none;
+}
+
 /* Offset smooth-scroll anchoring so section tops aren't hidden
    behind the fixed mobile nav bar (only relevant < lg). */
 @media (max-width: 1023px) {
