@@ -16,53 +16,54 @@ interface Experience {
   role: string;
   description: string;
   type: string;
+  image: string;
+  tags: string[];
 }
 
 const experiences: Experience[] = [
   {
     id: "EXP · 001",
+    dateRange: "May 2023 – May 2024",
+    company: "PAYT — Recycling App",
+    role: "Mobile App Developer",
+    type: "Final Year Project",
+    image: "/images/utm.png",
+    tags: ["Flutter", "Dart", "Firebase", "MVC"],
+    description:
+      "Built PAYT (Pay-As-You-Throw), a mobile app that makes recycling rewarding — users earn cash for returning recyclables across 10+ material types, driving real waste reduction. Crafted with Flutter, Dart & Firebase on a clean MVC architecture for a maintainable codebase.",
+  },
+  {
+    id: "EXP · 002",
     dateRange: "Sep 2023 – Feb 2024",
     company: "Pejabat Daerah dan Tanah Tampin",
     role: "Programmer & Assistant Technician",
     type: "Internship",
+    image: "/images/Pdt.png",
+    tags: ["PHP", "JavaScript", "MySQL", "Networking"],
     description:
-      "Led development of a comprehensive Lucky Draw System (PHP, HTML, JavaScript). Set up PCs in the company's Active Directory domain. Participated in the Tech Master series to stay current with emerging technologies.",
-  },
-  {
-    id: "EXP · 002",
-    dateRange: "Dec 2022 – Feb 2023",
-    company: "Smart Healthcare Project",
-    role: "Full-Stack Developer",
-    type: "Academic Project",
-    description:
-      "Built a web application to analyse real-time patient health data using an IoT-based Arduino monitoring system. Implemented with HTML/CSS, JavaScript, Spring Framework, and Firebase.",
+      "Led the end-to-end build and deployment of a lucky-draw system that fairly drew 40 winners from 50,000 taxpayers via a randomized selection algorithm (PHP, JavaScript, MySQL). Also configured and networked PCs across 4 departments — hands-on systems experience in Tampin, Negeri Sembilan.",
   },
   {
     id: "EXP · 003",
-    dateRange: "May 2023 – May 2024",
-    company: "UTM Final Year Project",
-    role: "Mobile App Developer",
-    type: "Capstone Project",
+    dateRange: "Dec 2024 – Oct 2025",
+    company: "Evolve Technology Sdn Bhd",
+    role: "Junior Software Engineer",
+    type: "Professional",
+    image: "/images/evolve.png",
+    tags: ["WMS", "IoT", "Backend", "Full-Stack"],
     description:
-      "Designed and built a Flutter mobile app promoting sustainable waste management practices. Managed project lifecycle with Jira and GitHub; implemented Enterprise Architecture testing in Android Studio.",
+      "Started my professional journey at Evolve Technology, working across enterprise and IoT systems. Contributed to a Warehouse Management System (WMS) and IoT platforms — touching real-time hardware integration, backend services, and full-stack web & mobile development.",
   },
   {
     id: "EXP · 004",
-    dateRange: "2024 – Present",
-    company: "IoT & Enterprise Platform Development",
-    role: "Software Engineer",
+    dateRange: "Nov 2025 – Present",
+    company: "Evolve Technology · CLB Group",
+    role: "Software Engineer II",
     type: "Professional",
+    image: "/images/clb.png",
+    tags: ["AWS", "CI/CD", "AI Agents", "RAG"],
     description:
-      "Delivered production-grade systems: PoleSyncTech Smart Pole IoT (MQTT · Socket.IO · MySQL · React · React Native), iottix RFID retail demo (Spring Boot · MongoDB · WebSocket/TCP hardware protocol), WMS (NestJS · Prisma · Vue 3 · React Native with native Android RFID modules), and MES manufacturing system design.",
-  },
-  {
-    id: "EXP · 005",
-    dateRange: "2024 – 2025",
-    company: "HappiSafe Ai Sdn Bhd",
-    role: "Full-Stack Developer",
-    type: "Professional",
-    description:
-      "Built a Malaysian insurtech platform over 6+ months (400+ backend commits): two live insurer integrations (Chubb REST/JWT · Pacific SOAP/mTLS), Razer Pay & PayDollar gateways with RSA card tokenization, AI chatbot 'Creamy' (GPT-4o-mini, two-agent verification pattern), Redis session management, and CI/CD pipeline rebuilt from scratch after vendor dissolution.",
+      "Stepped into broader full-stack and cloud engineering — shipping production systems on AWS with CI/CD pipelines, building AI agents and RAG (retrieval-augmented generation) features, and collaborating with cross-functional teams to deliver end-to-end solutions.",
   },
 ];
 
@@ -78,12 +79,12 @@ function HUDFrame({ topLeft, topRight }: { topLeft: string; topRight: string }) 
     <>
       <div className="absolute top-2 left-2 flex items-center gap-1.5 pointer-events-none" style={{ zIndex: 2 }}>
         <div style={{ width: sz, height: sz, borderTop: `1px solid ${c}`, borderLeft: `1px solid ${c}`, flexShrink: 0 }} />
-        <span style={{ fontSize: 9.5, letterSpacing: "0.18em", color: c, fontFamily: "Karasu, sans-serif", whiteSpace: "nowrap" }}>
+        <span style={{ fontSize: 11.5, letterSpacing: "0.2em", color: c, fontFamily: "Karasu, sans-serif", whiteSpace: "nowrap" }}>
           {topLeft}
         </span>
       </div>
       <div className="absolute top-2 right-2 flex items-center gap-1.5 pointer-events-none" style={{ zIndex: 2 }}>
-        <span style={{ fontSize: 9.5, letterSpacing: "0.18em", color: "rgba(168,85,247,0.5)", fontFamily: "Karasu, sans-serif", whiteSpace: "nowrap" }}>
+        <span style={{ fontSize: 11.5, letterSpacing: "0.2em", color: "rgba(168,85,247,0.7)", fontFamily: "Karasu, sans-serif", whiteSpace: "nowrap" }}>
           {topRight}
         </span>
         <div style={{ width: sz, height: sz, borderTop: `1px solid ${c}`, borderRight: `1px solid ${c}`, flexShrink: 0 }} />
@@ -308,16 +309,15 @@ export default function WorkExperience() {
         <div className="we-reveal flex flex-col items-center gap-5">
 
             {/* Carousel cards */}
-            <div className="relative w-full flex items-center justify-center" style={{ height: 360 }}>
+            <div className="relative w-full flex items-center justify-center h-[400px] sm:h-[360px]">
               {experiences.map((e, i) => {
                 const pos = getPos(i);
                 const isCenter = pos === "center";
                 return (
                   <div
                     key={i}
-                    className="absolute"
+                    className="absolute top-0 bottom-0 w-[86%] left-[7%] sm:w-[68%] sm:left-[16%]"
                     style={{
-                      top: 0, bottom: 0, width: "68%", left: "16%",
                       transition: "transform 0.42s cubic-bezier(0.22,1,0.36,1), opacity 0.42s ease",
                       transform: transforms[pos],
                       opacity: opacities[pos],
@@ -343,49 +343,60 @@ export default function WorkExperience() {
                         }} />
                       )}
 
-                      <div className="relative z-0 w-full h-full flex flex-col items-center justify-center gap-2 px-10"
+                      <div className="relative z-0 w-full h-full flex flex-col items-center justify-center gap-2 px-5 sm:px-10"
                         style={{ background: "linear-gradient(135deg, rgba(88,28,135,0.1) 0%, transparent 60%)" }}>
 
                         {isCenter ? (
                           <>
-                            {/* Portrait image */}
+                            {/* Logo chip — box follows the logo's natural shape */}
                             <div style={{
                               position: "relative",
-                              width: 100, height: 100, marginBottom: 8, flexShrink: 0,
+                              marginBottom: 12, flexShrink: 0,
+                              display: "inline-flex",
                             }}>
-                              {/* HUD corner accents */}
-                              {(["tl","tr","bl","br"] as const).map(c => {
-                                const isT = c[0]==="t", isL = c[1]==="l";
-                                return (
-                                  <div key={c} style={{
-                                    position: "absolute",
-                                    [isT?"top":"bottom"]: -3, [isL?"left":"right"]: -3,
-                                    width: 10, height: 10,
-                                    borderTop:    isT  ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
-                                    borderBottom: !isT ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
-                                    borderLeft:   isL  ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
-                                    borderRight:  !isL ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
-                                    zIndex: 2, pointerEvents: "none",
-                                  }} />
-                                );
-                              })}
-                              {/* Glow behind image */}
+                              {/* Glow behind */}
                               <div style={{
-                                position: "absolute", inset: -6, borderRadius: "50%",
-                                background: "radial-gradient(circle, rgba(133,39,227,0.35) 0%, transparent 70%)",
+                                position: "absolute", inset: -8, borderRadius: 12,
+                                background: "radial-gradient(ellipse at center, rgba(133,39,227,0.4) 0%, transparent 70%)",
                                 pointerEvents: "none",
                               }} />
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
-                                src="/images/beru.png"
-                                alt="portrait"
-                                style={{
-                                  width: "100%", height: "100%",
-                                  objectFit: "cover",
-                                  display: "block",
-                                  filter: "drop-shadow(0 0 8px rgba(168,85,247,0.6))",
-                                }}
-                              />
+
+                              {/* Padded chip — sizes to the image, no fill */}
+                              <div style={{
+                                position: "relative",
+                                background: "transparent",
+                                borderRadius: 6,
+                                padding: 12,
+                                display: "flex", alignItems: "center", justifyContent: "center",
+                              }}>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                  src={e.image}
+                                  alt={`${e.company} logo`}
+                                  style={{
+                                    height: 64, width: "auto", maxWidth: 230,
+                                    objectFit: "contain", display: "block",
+                                    filter: "drop-shadow(0 0 8px rgba(168,85,247,0.5))",
+                                  }}
+                                />
+
+                                {/* HUD corner accents — sit just outside the chip */}
+                                {(["tl","tr","bl","br"] as const).map(c => {
+                                  const isT = c[0]==="t", isL = c[1]==="l";
+                                  return (
+                                    <div key={c} style={{
+                                      position: "absolute",
+                                      [isT?"top":"bottom"]: -4, [isL?"left":"right"]: -4,
+                                      width: 11, height: 11,
+                                      borderTop:    isT  ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
+                                      borderBottom: !isT ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
+                                      borderLeft:   isL  ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
+                                      borderRight:  !isL ? "1.5px solid rgba(168,85,247,0.9)" : undefined,
+                                      zIndex: 2, pointerEvents: "none",
+                                    }} />
+                                  );
+                                })}
+                              </div>
                             </div>
 
                             <p className="text-center" style={{
@@ -413,6 +424,27 @@ export default function WorkExperience() {
                             }}>
                               {e.dateRange}
                             </p>
+
+                            {/* Tech-stack tags */}
+                            <div style={{
+                              display: "flex", flexWrap: "wrap", justifyContent: "center",
+                              gap: 7, marginTop: 14, maxWidth: 360,
+                            }}>
+                              {e.tags.map(tag => (
+                                <span key={tag} style={{
+                                  fontFamily: "Karasu, sans-serif", fontSize: "10px",
+                                  letterSpacing: "0.12em",
+                                  color: "rgba(216,180,254,0.95)",
+                                  padding: "4px 11px",
+                                  borderRadius: 999,
+                                  border: "1px solid rgba(168,85,247,0.35)",
+                                  background: "rgba(133,39,227,0.12)",
+                                  whiteSpace: "nowrap",
+                                }}>
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
                           </>
                         ) : (
                           <p className="text-center" style={{

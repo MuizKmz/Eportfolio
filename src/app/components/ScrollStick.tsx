@@ -44,7 +44,7 @@ export default function ScrollStick({ delay = 0.8, className = "" }: Props) {
   return (
     <div
       ref={containerRef}
-      className={`fixed right-6 top-1/2 -translate-y-1/2 z-30 select-none flex flex-col items-center ${className}`}
+      className={`fixed right-6 top-1/2 -translate-y-1/2 z-30 select-none flex-col items-center ${className}`}
     >
       {/* Top cap */}
       <div style={{ width: "8px", height: "1px", background: "rgba(255,255,255,0.35)", marginBottom: "6px" }} />

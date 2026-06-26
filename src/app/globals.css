@@ -8,6 +8,24 @@ html::-webkit-scrollbar {
   display: none;
 }
 
+/* ── Global responsive guards ──────────────────────────────
+   Prevent any decorative/fixed-width element from creating a
+   horizontal scrollbar on small screens. Scoped to <body> only
+   (not <html>) so it can't disable position: sticky on the HUD
+   section headers. */
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Offset smooth-scroll anchoring so section tops aren't hidden
+   behind the fixed mobile nav bar (only relevant < lg). */
+@media (max-width: 1023px) {
+  html {
+    scroll-padding-top: 56px;
+  }
+}
+
 /* GitHub activity calendar — scale SVG to fill container width */
 .react-activity-calendar svg {
   width: 100% !important;
@@ -169,6 +187,93 @@ img {
 .nav-glitch:hover .glitch-c {
   opacity: 1;
   animation: glitch-clip-cyan 0.35s steps(1) infinite 0.12s;
+}
+
+/* ── Portrait hover glitch (about-me ID card) ──────────── */
+/* Glitch swap layers sit on top of the base portrait, hidden until hover */
+.portrait-glitch .pg-glitch {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* On hover: base portrait dims to a faint ghost behind the glitch */
+.portrait-glitch:hover .pg-base {
+  opacity: 0.2;
+  transition: opacity 0.15s ease;
+}
+
+.portrait-glitch:hover .pg-glitch {
+  opacity: 1;
+}
+
+/* RGB-split ghosts — magenta + cyan offset copies */
+.portrait-glitch .pg-r {
+  mix-blend-mode: screen;
+  filter: hue-rotate(-35deg) saturate(1.5) brightness(1.1);
+}
+
+.portrait-glitch .pg-c {
+  mix-blend-mode: screen;
+  filter: hue-rotate(150deg) saturate(1.5) brightness(1.1);
+}
+
+/* Organic glitch: faint constant RGB fringe, with sudden tears every ~2.6s */
+.portrait-glitch:hover .pg-r {
+  opacity: 0.8;
+  animation: pg-tear-red 2.6s steps(1) infinite;
+}
+
+.portrait-glitch:hover .pg-c {
+  opacity: 0.8;
+  animation: pg-tear-cyan 2.6s steps(1) infinite;
+}
+
+/* Main glitch image gets a subtle CRT flicker so it never sits perfectly still */
+.portrait-glitch:hover .pg-glitch:not(.pg-r):not(.pg-c) {
+  animation: pg-flicker 2.6s steps(1) infinite;
+}
+
+/* Magenta channel: calm at -2px baseline, snaps into hard tears */
+@keyframes pg-tear-red {
+  0%, 100% { clip-path: inset(0 0 0 0);     transform: translate(-2px, 0); }
+  7%       { clip-path: inset(12% 0 58% 0); transform: translate(-9px, 0) skew(-2deg); }
+  11%      { clip-path: inset(0 0 0 0);     transform: translate(-2px, 0); }
+  40%      { clip-path: inset(0 0 0 0);     transform: translate(-2px, 0); }
+  44%      { clip-path: inset(50% 0 14% 0); transform: translate(-8px, 0) skew(1deg); }
+  48%      { clip-path: inset(0 0 0 0);     transform: translate(-2px, 0); }
+  73%      { clip-path: inset(0 0 0 0);     transform: translate(-2px, 0); }
+  77%      { clip-path: inset(33% 0 41% 0); transform: translate(-11px, 0); }
+  81%      { clip-path: inset(0 0 0 0);     transform: translate(-2px, 0); }
+}
+
+/* Cyan channel: mirrored direction, tears offset in time from the magenta */
+@keyframes pg-tear-cyan {
+  0%, 100% { clip-path: inset(0 0 0 0);     transform: translate(2px, 0); }
+  9%       { clip-path: inset(60% 0 10% 0); transform: translate(9px, 0) skew(2deg); }
+  13%      { clip-path: inset(0 0 0 0);     transform: translate(2px, 0); }
+  42%      { clip-path: inset(0 0 0 0);     transform: translate(2px, 0); }
+  46%      { clip-path: inset(16% 0 52% 0); transform: translate(8px, 0) skew(-1deg); }
+  50%      { clip-path: inset(0 0 0 0);     transform: translate(2px, 0); }
+  75%      { clip-path: inset(0 0 0 0);     transform: translate(2px, 0); }
+  79%      { clip-path: inset(44% 0 30% 0); transform: translate(11px, 0); }
+  83%      { clip-path: inset(0 0 0 0);     transform: translate(2px, 0); }
+}
+
+/* Tiny brightness/position blips synced to the tear bursts */
+@keyframes pg-flicker {
+  0%, 100% { filter: brightness(1);    transform: translate(0, 0); }
+  7%       { filter: brightness(1.25); transform: translate(0, -1px); }
+  11%      { filter: brightness(1);    transform: translate(0, 0); }
+  44%      { filter: brightness(0.85); transform: translate(1px, 0); }
+  48%      { filter: brightness(1);    transform: translate(0, 0); }
+  77%      { filter: brightness(1.2);  transform: translate(-1px, 1px); }
+  81%      { filter: brightness(1);    transform: translate(0, 0); }
 }
 
 /* ── Interactive card hover effects ────────────────────── */

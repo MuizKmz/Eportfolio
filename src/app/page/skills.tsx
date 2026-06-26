@@ -588,8 +588,8 @@ function GithubPanel() {
 
         {/* Year selector */}
         <div style={{
-          display: "flex", flexDirection: "row", gap: 6,
-          marginBottom: 16, position: "relative", zIndex: 1,
+          display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 6,
+          marginBottom: 16, position: "relative", zIndex: 1, paddingRight: 96,
         }}>
           {YEARS.map(y => (
             <button

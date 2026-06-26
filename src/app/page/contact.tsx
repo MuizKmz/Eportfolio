@@ -296,7 +296,7 @@ export default function Contact() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
                   {/* Name + Email row */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {/* Name */}
                     <div>
                       <label style={{

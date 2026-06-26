@@ -11,11 +11,12 @@ import Education from "./page/education";
 import Skills from "./page/skills";
 import Project from "./page/project";
 import WorkExperience from "./page/workexperience";
-import Achievements from "./page/achievements";
+// import Achievements from "./page/achievements"; // temporarily hidden
 import Contact from "./page/contact";
 import SectionHUDFrame from "./components/SectionHUDFrame";
 import Footer from "./components/Footer";
 import SystemNotification from "./components/SystemNotification";
+import HeroEmbers from "./components/HeroEmbers";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -57,7 +58,7 @@ export default function Home() {
         initial={{ backgroundColor: "#000000" }}
         animate={{
           backgroundImage:
-            "linear-gradient(160deg, rgba(233,242,245,1) 0%, rgba(159,120,191,1) 53%, rgba(133,39,227,1) 100%)",
+            "linear-gradient(155deg, rgba(40,15,70,1) 0%, rgba(20,7,40,1) 50%, rgba(7,2,18,1) 100%)",
         }}
         transition={{ duration: 2 }}
         className="fixed inset-0 overflow-hidden text-white flex items-center justify-start z-0"
@@ -71,23 +72,50 @@ export default function Home() {
           transition={{ delay: 2, duration: 1.5 }}
         />
 
+        {/* ── Pulsing glow behind the character — z-[4] ── */}
+        <motion.div
+          className="absolute inset-0 z-[4] pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 48% 62% at 24% 50%, rgba(230,45,55,0.34) 0%, rgba(150,30,210,0.16) 44%, transparent 72%)",
+          }}
+          animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.06, 1] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+
         {/* ── Hero character image — z-10 ── */}
-        <div ref={heroImageWrapRef} className="absolute left-20 top-0 z-10">
+        <div ref={heroImageWrapRef} className="absolute inset-0 z-10">
           <motion.img
-            src="/images/image1.1.png"
+            src="/images/landing6.png"
             alt="Muhammad Muizzuddin Kamarozaman"
-            className="h-[200vh] max-h-[800px] w-auto object-contain"
-            style={{ transform: "scale(2)", transformOrigin: "top left" }}
-            initial={{ opacity: 0, x: -50, scale: 2 }}
-            animate={{ opacity: 1, x: 0, scale: 2 }}
+            className="w-full h-full object-cover"
+            style={{ objectPosition: "left top" }}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1, duration: 1 }}
           />
         </div>
 
+        {/* ── Floating red embers — z-[15] (over the art, under the text) ── */}
+        <div className="absolute inset-0 z-[15]">
+          <HeroEmbers />
+        </div>
+
+        {/* ── Vignette + right-side text backdrop — z-[16] ── */}
+        <div
+          className="absolute inset-0 z-[16] pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 85% 80% at 38% 50%, transparent 42%, rgba(8,2,22,0.55) 100%), radial-gradient(ellipse 40% 55% at 82% 28%, rgba(8,2,22,0.45) 0%, transparent 70%)",
+          }}
+        />
+
         {/* ── Hero text — z-20 ── */}
         <div
           ref={heroContentRef}
-          className="absolute top-10 right-10 flex flex-col items-end z-20"
+          className="absolute z-20 flex flex-col px-6 left-0 right-0 bottom-24 items-center text-center
+                     sm:left-auto sm:right-10 sm:top-16 sm:bottom-auto sm:px-0 sm:items-end sm:text-right
+                     lg:top-10"
         >
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -95,7 +123,7 @@ export default function Home() {
             transition={{ delay: 3, duration: 1 }}
           >
             <h1
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-none text-right"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-none text-center sm:text-right"
               style={{
                 fontFamily: "Yozakura, sans-serif",
                 textShadow:
@@ -111,13 +139,13 @@ export default function Home() {
               </span>
             </h1>
             <p
-              className="mt-10 text-purple-200 text-lg md:text-xl tracking-[0.10em] font-light text-shadow-glow"
-              style={{ fontFamily: "Showcase Sans mini, sans-serif", fontSize: "35px" }}
+              className="mt-5 sm:mt-10 text-purple-200 tracking-[0.10em] font-light text-shadow-glow"
+              style={{ fontFamily: "Showcase Sans mini, sans-serif", fontSize: "clamp(15px, 3.8vw, 35px)" }}
             >
               • FULL-STACK DEVELOPER • PROJECT DESIGN • DEV OPS •
               <span
-                className="block text-center text-purple-200 text-lg md:text-xl tracking-[0.10em] font-light text-shadow-soft"
-                style={{ fontFamily: "Showcase Sans mini, sans-serif", fontSize: "35px" }}
+                className="block text-center text-purple-200 tracking-[0.10em] font-light text-shadow-soft"
+                style={{ fontFamily: "Showcase Sans mini, sans-serif", fontSize: "clamp(15px, 3.8vw, 35px)" }}
               >
                 • VIBE CODER •
               </span>
@@ -125,10 +153,10 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* ── Gradient bar — z-20 ── */}
-        <div ref={heroBarRef} className="absolute top-[250px] right-10 z-20">
+        {/* ── Gradient bar — z-20 (desktop-positioned, hidden on phones) ── */}
+        <div ref={heroBarRef} className="hidden sm:block absolute top-[250px] right-10 z-20">
           <motion.div
-            className="w-[780px] h-1 bg-purple-900/30 rounded-full overflow-hidden shadow-lg"
+            className="w-[780px] max-w-[calc(100vw-5rem)] h-1 bg-purple-900/30 rounded-full overflow-hidden shadow-lg"
             initial={{ width: 0, opacity: 0 }}
             animate={{
               width: "780px",
@@ -197,9 +225,11 @@ export default function Home() {
         <WorkExperience />
       </SectionHUDFrame>
 
+      {/* Temporarily hidden — Achievements section
       <SectionHUDFrame code="ACH"   label="ACHIEVEMENTS"   num="006">
         <Achievements />
       </SectionHUDFrame>
+      */}
 
       <SectionHUDFrame code="GATE"  label="CONTACT"        num="007">
         <Contact />

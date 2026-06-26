@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Instagram, Twitter, Linkedin, Github } from "lucide-react";
+import { Instagram, Twitter, Linkedin, Github, Menu, X } from "lucide-react";
 
 gsap.registerPlugin(useGSAP);
 
@@ -19,7 +19,7 @@ const SECTIONS = [
   { id: "skills",          label: "SKILLS" },
   { id: "project",         label: "PROJECT" },
   { id: "work-experience", label: "WORK EXPERIENCE" },
-  { id: "achievements",    label: "ACHIEVEMENTS" },
+  // { id: "achievements",    label: "ACHIEVEMENTS" }, // temporarily hidden
   { id: "contact",         label: "CONTACT" },
 ];
 
@@ -45,6 +45,7 @@ function GlitchText({ children, style }: { children: string; style?: React.CSSPr
 export default function SideNavBar({ delay = 5.5, className = "" }: Props) {
   const [tickerPaused, setTickerPaused]   = useState(false);
   const [activeSection, setActiveSection] = useState("HOME");
+  const [menuOpen, setMenuOpen]           = useState(false);
   const containerRef   = useRef<HTMLDivElement>(null);
   const currentTextRef = useRef<HTMLSpanElement>(null);
 
@@ -97,10 +98,24 @@ export default function SideNavBar({ delay = 5.5, className = "" }: Props) {
     };
   }, []);
 
+  // ── Mobile drawer: lock background scroll + close on ESC ──
+  useEffect(() => {
+    if (!menuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
+
   // No single glitch effect needed - using permanent CSS glitch instead
 
   // ── Smooth scroll to section on nav item click ──
   const scrollTo = (label: string) => {
+    setMenuOpen(false);
     const section = SECTIONS.find((s) => s.label === label);
     if (!section) return;
     const el = document.getElementById(section.id);
@@ -108,9 +123,11 @@ export default function SideNavBar({ delay = 5.5, className = "" }: Props) {
   };
 
   return (
+    <>
+    {/* ══════════ DESKTOP SIDEBAR (lg and up) ══════════ */}
     <div
       ref={containerRef}
-      className={`fixed left-10 top-5 bottom-5 z-30 select-none ${className}`}
+      className={`hidden lg:block fixed left-10 top-5 bottom-5 z-30 select-none ${className}`}
       style={{ width: "320px" }}
     >
       {/* Vertical line */}
@@ -269,5 +286,172 @@ export default function SideNavBar({ delay = 5.5, className = "" }: Props) {
         </div>
       </div>
     </div>
+
+    {/* ══════════ MOBILE NAV (below lg) ══════════ */}
+
+    {/* Floating menu button — small footprint so it never hides the HUD frames */}
+    <button
+      onClick={() => setMenuOpen(true)}
+      aria-label="Open navigation menu"
+      aria-expanded={menuOpen}
+      className="lg:hidden fixed top-3 right-3 z-50 flex items-center justify-center"
+      style={{
+        width: 46, height: 46,
+        background: "linear-gradient(135deg, rgba(20,6,42,0.92) 0%, rgba(6,2,18,0.92) 100%)",
+        border: "1px solid rgba(168,85,247,0.45)",
+        boxShadow: "0 0 14px rgba(168,85,247,0.25)",
+        backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+        color: "rgba(216,180,254,0.95)", cursor: "pointer",
+      }}
+    >
+      <Menu size={24} strokeWidth={1.6} />
+    </button>
+
+    {/* Drawer overlay */}
+    <div
+      className="lg:hidden fixed inset-0 z-[55]"
+      style={{ pointerEvents: menuOpen ? "auto" : "none" }}
+      aria-hidden={!menuOpen}
+    >
+      {/* Backdrop */}
+      <div
+        onClick={() => setMenuOpen(false)}
+        style={{
+          position: "absolute", inset: 0,
+          background: "rgba(4,1,14,0.7)",
+          backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)",
+          opacity: menuOpen ? 1 : 0,
+          transition: "opacity 0.35s ease",
+        }}
+      />
+
+      {/* Sliding panel */}
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+        className="absolute top-0 right-0 bottom-0 flex flex-col"
+        style={{
+          width: "min(82vw, 340px)",
+          background: "linear-gradient(160deg, rgba(20,6,42,0.99) 0%, rgba(6,2,18,0.99) 100%)",
+          borderLeft: "1px solid rgba(168,85,247,0.3)",
+          boxShadow: "-20px 0 60px rgba(0,0,0,0.55)",
+          transform: menuOpen ? "translateX(0)" : "translateX(100%)",
+          transition: "transform 0.4s cubic-bezier(0.22,1,0.36,1)",
+          padding: "18px 24px 28px",
+          overflowY: "auto",
+        }}
+      >
+        {/* Panel header + close */}
+        <div className="flex items-center justify-between mb-5">
+          <span style={{
+            fontFamily: "FF Identification, sans-serif", fontSize: "16px",
+            letterSpacing: "0.22em", color: "rgba(168,85,247,0.55)",
+          }}>
+            NAVIGATION
+          </span>
+          <button
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close navigation menu"
+            className="flex items-center justify-center"
+            style={{ width: 44, height: 44, marginRight: -10, color: "rgba(216,180,254,0.95)", background: "transparent", border: "none", cursor: "pointer" }}
+          >
+            <X size={24} strokeWidth={1.6} />
+          </button>
+        </div>
+
+        {/* CURRENT — live section name */}
+        <div className="mb-5">
+          <span
+            className="nav-glitch-always relative inline-block"
+            style={{
+              fontFamily: "Showcase Sans mini, sans-serif",
+              fontSize: "34px", fontWeight: 500, letterSpacing: "0.03em",
+              color: "rgba(255,255,255,0.92)", whiteSpace: "nowrap",
+            }}
+          >
+            {activeSection}
+            <span className="glitch-r absolute inset-0 pointer-events-none">{activeSection}</span>
+            <span className="glitch-c absolute inset-0 pointer-events-none">{activeSection}</span>
+          </span>
+        </div>
+
+        {/* TOPIC 1 */}
+        <div className="flex items-center gap-3 mb-2">
+          <span style={{
+            fontFamily: "FF Identification, sans-serif", fontSize: "16px",
+            color: "rgba(255,255,255,0.4)", letterSpacing: "0.22em", whiteSpace: "nowrap",
+          }}>
+            TOPIC 1
+          </span>
+          <div className="h-px bg-white/20 flex-1" />
+        </div>
+
+        {/* Nav items */}
+        <ul className="flex flex-col">
+          {SECTIONS.map(({ label }) => (
+            <li key={label}>
+              <button
+                onClick={() => scrollTo(label)}
+                className="nav-glitch w-full text-left"
+                style={{
+                  padding: "11px 0",
+                  background: "transparent", border: "none", cursor: "pointer",
+                  position: "relative", display: "inline-block",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "Showcase Sans mini, sans-serif",
+                    fontSize: "26px", fontWeight: 500, letterSpacing: "0.03em",
+                    color: activeSection === label ? "#a855f7" : "rgba(255,255,255,0.82)",
+                    textShadow: activeSection === label
+                      ? "0 0 20px rgba(168,85,247,0.6)"
+                      : "0 1px 4px rgba(0,0,0,0.25)",
+                    whiteSpace: "nowrap",
+                    transition: "color 0.3s ease, text-shadow 0.3s ease",
+                  }}
+                >
+                  {label}
+                </span>
+                <span className="glitch-r absolute inset-0 pointer-events-none" style={{ paddingTop: "11px", fontFamily: "Showcase Sans mini, sans-serif", fontSize: "26px", whiteSpace: "nowrap" }}>{label}</span>
+                <span className="glitch-c absolute inset-0 pointer-events-none" style={{ paddingTop: "11px", fontFamily: "Showcase Sans mini, sans-serif", fontSize: "26px", whiteSpace: "nowrap" }}>{label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex-1 min-h-[20px]" />
+
+        {/* SOCIAL */}
+        <div className="flex items-center gap-3 mb-3 mt-6">
+          <span style={{
+            fontFamily: "FF Identification, sans-serif", fontSize: "16px",
+            color: "rgba(255,255,255,0.4)", letterSpacing: "0.22em",
+          }}>
+            SOCIAL
+          </span>
+          <div className="h-px bg-white/20 flex-1" />
+        </div>
+
+        {/* Social icons row */}
+        <div className="flex items-center gap-5">
+          {SOCIALS.map(({ Icon, href }, i) => (
+            <a
+              key={i}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-icon text-white/60 flex items-center justify-center"
+              style={{ width: 44, height: 44 }}
+              aria-label="Social link"
+            >
+              <Icon size={26} strokeWidth={1.5} />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+    </>
   );
 }

@@ -36,7 +36,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased`}
       >
         {children}
-        <ScrollStick delay={5.5} />
+        <ScrollStick delay={5.5} className="hidden lg:flex" />
         <SideNavBar delay={5.5}/>
       </body>
     </html>

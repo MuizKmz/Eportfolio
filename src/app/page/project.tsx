@@ -1,11 +1,12 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
-import { Recycle, GraduationCap, Activity, ChevronRight, ChevronLeft, ExternalLink, Server, Shield, Package, Bot, X } from "lucide-react";
+import { Recycle, Snowflake, Activity, ChevronRight, ChevronLeft, ExternalLink, Server, Shield, Package, Bot, X } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -38,6 +39,8 @@ interface Project {
   tags: string[];
   link: string;
   image?: string;
+  video?: string;
+  screenshots?: string[];
   Icon: LucideIcon;
   phases: Phase[];
   details: DetailSection[];
@@ -49,11 +52,21 @@ const PROJECTS: Project[] = [
     id: "WMA · 001",
     codename: "WASTE",
     title: "Waste Management App",
-    tagline: "Eco-Hunter Mobile Application",
+    tagline: "PAYT - Mobile Application",
     description:
-      "Final Year Project — a mobile application that educates and incentivises users to adopt sustainable waste management practices. Built end-to-end as the capstone of my Software Engineering degree at UTM.",
+      "Final Year Project — (Pay as You Throw) a mobile application that educates and incentivises users to adopt sustainable waste management practices. Built end-to-end as the capstone of my Software Engineering degree at UTM.",
     tags: ["Flutter", "Dart", "Firebase", "Android Studio"],
     link: "#",
+    video: "/images/payt/video/payt.mp4",
+    screenshots: [
+      "/images/payt/image/6192760392187056835%20(1).jpg",
+      "/images/payt/image/6192760392187056836%20(1).jpg",
+      "/images/payt/image/6192760392187056837%20(1).jpg",
+      "/images/payt/image/6192760392187056838%20(1).jpg",
+      "/images/payt/image/6192760392187056839%20(1).jpg",
+      "/images/payt/image/6192760392187056840%20(2).jpg",
+      "/images/payt/image/6192760392187056841%20(2).jpg",
+    ],
     Icon: Recycle,
     details: [
       {
@@ -113,42 +126,69 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "LMS · 002",
-    codename: "STUDPRO",
-    title: "STUDPRO LMS",
-    tagline: "Learning Management System for UTM",
+    id: "SCM · 002",
+    codename: "FROSTEDGE",
+    title: "SmartArctic Smart Freezer",
+    tagline: "IoT smart freezer platform",
     description:
-      "Contributed to UTM's Learning Management System — focusing on code quality, DevOps automation, and team collaboration practices. Significantly improved maintainability and deployment velocity.",
-    tags: ["GitLab CI/CD", "SonarQube", "Java"],
+      "An IoT cold-chain monitoring platform (branded SmartArctic / Frost Edge, built for Evolve) for tracking refrigerated and freezer assets remotely — temperature, power consumption, GPS location, and alerting — with a built-in technician and maintenance workflow. Architected as a multi-tenant B2B monitoring product around a clean 8-table relational schema.",
+    tags: ["MySQL", "Database Design", "System Architecture", "IoT", "Figma"],
     link: "#",
-    Icon: GraduationCap,
+    video: "/images/smartfreezer/video/smartfreezer.mp4",
+    screenshots: [
+      "/images/smartfreezer/image/s1.png",
+      "/images/smartfreezer/image/s2.png",
+      "/images/smartfreezer/image/s3.png",
+      "/images/smartfreezer/image/s4.png",
+      "/images/smartfreezer/image/s5.png",
+    ],
+    Icon: Snowflake,
     details: [
       {
         title: "Project Overview",
-        body: "Contributed to UTM's Learning Management System with a focus on code quality, DevOps automation, and team collaboration practices — significantly improving maintainability and deployment velocity across the codebase.",
+        body: "SmartArctic (also referenced as Frost Edge) is an IoT cold-chain monitoring platform designed for clients managing distributed cold-storage equipment — tracking temperature, power consumption, and GPS location with real-time alerting and a technician/maintenance workflow built in. Delivered as system and database design: a confirmed 8-table relational schema and a full UI branding/icon set, positioned as the architecture for a multi-tenant B2B monitoring product.",
       },
       {
-        title: "Key Features",
+        title: "Database Design",
         groups: [
           {
-            heading: "Code Quality",
+            heading: "8-table multi-tenant cold-chain schema",
             items: [
-              { label: "SonarQube", text: "continuous static analysis surfacing code smells, complexity hotspots, and security issues" },
-              "Refactored critical paths to improve long-term maintainability",
+              { label: "users / user_logs", text: "platform accounts plus an audit trail of every user action" },
+              { label: "clients / assets", text: "businesses that own the monitored freezer units, each linked to their assets" },
+              { label: "asset_logs", text: "time-series telemetry per asset — temperature, power, and location" },
+              { label: "alerts", text: "generated events such as temperature excursions and power loss, tied to assets" },
+              { label: "technician / maintenance_logs", text: "field-technician records and per-asset service history" },
             ],
           },
+        ],
+      },
+      {
+        title: "Feature Set",
+        groups: [
           {
-            heading: "CI/CD Automation",
+            heading: "Monitoring & operations",
             items: [
-              { label: "GitLab CI/CD", text: "automated test → build → deploy cycle replacing manual deployments" },
-              { label: "Docker", text: "reproducible runner environments for consistent builds" },
+              "Multi-client asset registry — each client manages multiple cold-storage units",
+              "Real-time temperature and power/electricity telemetry per asset",
+              "GPS location tracking for mobile and distributed cold-chain equipment",
+              { label: "ChatAlert", text: "chat-style alert UI triggered by threshold breaches" },
+              "Full detection-to-resolution loop: alert → technician dispatch → maintenance log",
             ],
           },
+        ],
+      },
+      {
+        title: "AIoT Roadmap",
+        groups: [
           {
-            heading: "Team Collaboration",
+            heading: "Planned enhancements (shared AIoT family with PoleSyncTech)",
             items: [
-              "Branch protection and structured merge-request workflows",
-              "Code review conventions established and enforced across the team",
+              "Anomaly-detection ML over temperature/power telemetry",
+              "AI-based health scoring for monitored assets",
+              "Automated PDF report generation via n8n workflow automation",
+              "Weight-sensor integration for stock-level inference",
+              "Camera-based spoilage detection",
             ],
           },
         ],
@@ -157,95 +197,29 @@ const PROJECTS: Project[] = [
     phases: [
       {
         num: "01",
-        title: "The Cleanup",
-        subtitle: "SonarQube-driven refactor",
-        body: "Ran continuous static analysis through SonarQube to surface code smells, complexity hotspots, and security issues. Refactored critical paths to improve maintainability.",
-        tech: ["SonarQube", "Java"],
+        title: "The Schema",
+        subtitle: "Normalized cold-chain data model",
+        body: "Designed a clean, normalized 8-table relational schema separating asset ownership, raw telemetry, alerting, and maintenance into distinct tables with clear relational links — a pattern that scales cleanly as clients and assets grow.",
+        tech: ["MySQL", "Database Design", "ER Modeling"],
       },
       {
         num: "02",
-        title: "The Pipeline",
-        subtitle: "GitLab CI/CD automation",
-        body: "Designed and implemented GitLab CI/CD pipelines automating the entire test → build → deploy cycle. Replaced manual deployments with reproducible runners.",
-        tech: ["GitLab CI/CD", "Docker"],
+        title: "The Workflow",
+        subtitle: "Detection → dispatch → resolution",
+        body: "Modeled the full operational loop beyond monitoring: a raw sensor reading in asset_logs triggers an alert, which links through to a technician record and a maintenance_log entry — closing the loop from detection to resolution, with user_logs auditing every action.",
+        tech: ["System Architecture", "Workflow Design", "Audit Logging"],
       },
       {
         num: "03",
-        title: "The Process",
-        subtitle: "Version control + collaboration",
-        body: "Managed collaborative development via GitLab — established branch protection, merge request workflows, and code review conventions across the team.",
-        tech: ["GitLab", "Code Review"],
+        title: "The Roadmap",
+        subtitle: "Forward-looking AIoT strategy",
+        body: "Positioned within a documented two-product AIoT family alongside PoleSyncTech, with a planned enhancement track: anomaly-detection ML, AI health scoring, camera-based spoilage detection, and automated n8n-driven reporting.",
+        tech: ["Machine Learning", "n8n", "AIoT"],
       },
     ],
   },
   {
-    id: "SHR · 003",
-    codename: "HEALTH",
-    title: "Smart Healthcare Remote",
-    tagline: "IoT-driven patient monitoring",
-    description:
-      "Web-based application that analyses real-time patient health data via an Arduino-powered IoT monitoring system. Bridges hardware sensors and a cloud dashboard so caregivers can act on live vitals.",
-    tags: ["HTML/CSS", "JavaScript", "Spring", "Firebase", "Arduino"],
-    link: "#",
-    Icon: Activity,
-    details: [
-      {
-        title: "Project Overview",
-        body: "A web-based application that analyses real-time patient health data via an Arduino-powered IoT monitoring system. It bridges hardware sensors and a cloud dashboard so caregivers can act on live vitals the moment they change.",
-      },
-      {
-        title: "Key Features",
-        groups: [
-          {
-            heading: "IoT Hardware",
-            items: [
-              { label: "Arduino sensor rig", text: "captures vital signs and streams them over Wi-Fi to the cloud" },
-              "Sensors calibrated for clinical-grade accuracy",
-            ],
-          },
-          {
-            heading: "Backend Data Layer",
-            items: [
-              { label: "Spring Framework", text: "ingests, normalises, and persists incoming sensor telemetry" },
-              { label: "Firebase", text: "real-time database tuned for fast time-series queries" },
-            ],
-          },
-          {
-            heading: "Live Dashboard",
-            items: [
-              "Responsive web dashboard built in HTML/CSS/JavaScript",
-              "Real-time vitals with alert thresholds that notify caregivers instantly",
-            ],
-          },
-        ],
-      },
-    ],
-    phases: [
-      {
-        num: "01",
-        title: "The Hardware",
-        subtitle: "Arduino sensor pipeline",
-        body: "Assembled an IoT-based remote patient monitoring rig using Arduino — capturing vital signs and streaming them over Wi-Fi to the cloud. Calibrated sensors for accuracy.",
-        tech: ["Arduino", "IoT", "C++"],
-      },
-      {
-        num: "02",
-        title: "The Backend",
-        subtitle: "Spring + Firebase data layer",
-        body: "Implemented a Spring Framework backend that ingests sensor telemetry, normalises it, and persists into a Firebase real-time database for fast time-series queries.",
-        tech: ["Spring Framework", "Firebase", "Java"],
-      },
-      {
-        num: "03",
-        title: "The Dashboard",
-        subtitle: "Live web visualisation",
-        body: "Built a responsive web dashboard in HTML/CSS/JavaScript that surfaces real-time patient vitals with alert thresholds so caregivers are notified instantly.",
-        tech: ["HTML/CSS", "JavaScript", "Firebase"],
-      },
-    ],
-  },
-  {
-    id: "IOT · 004",
+    id: "IOT · 003",
     codename: "POLESYNC",
     title: "PoleSyncTech Smart Pole",
     tagline: "Smart-city multi-sensor IoT platform",
@@ -253,6 +227,15 @@ const PROJECTS: Project[] = [
       "A smart-city platform turning street poles into multi-sensor IoT nodes with real-time environmental monitoring (weather, air quality, water, energy), public Wi-Fi management, camera feeds, and three distinct role-based platforms — resident QR web, authority dashboard, and maintenance mobile app.",
     tags: ["TypeScript", "Node.js", "MQTT", "Socket.IO", "MySQL", "React 19", "React Native", "Expo"],
     link: "#",
+    video: "/images/smartpole/video/smartpole.mp4",
+    screenshots: [
+      "/images/smartpole/Image/Screenshot%202026-06-26%20112933.png",
+      "/images/smartpole/Image/Screenshot%202026-06-26%20113021.png",
+      "/images/smartpole/Image/Screenshot%202026-06-26%20113112.png",
+      "/images/smartpole/Image/Screenshot%202026-06-26%20113158.png",
+      "/images/smartpole/Image/Screenshot%202026-06-26%20113256.png",
+      "/images/smartpole/Image/Screenshot%202026-06-26%20113330.png",
+    ],
     Icon: Server,
     details: [
       {
@@ -325,7 +308,7 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "INS · 005",
+    id: "INS · 004",
     codename: "HAPPISAFE",
     title: "HappiSafe Insurtech Platform",
     tagline: "Multi-underwriter insurance & loyalty ecosystem",
@@ -333,6 +316,16 @@ const PROJECTS: Project[] = [
       "A Malaysian insurtech platform (HappiSafe Ai Sdn Bhd) built over 6+ months with 400+ backend commits — two live insurer integrations, two payment gateways with RSA card tokenization, a loyalty coin engine, and a production AI chatbot with a two-agent verification pattern.",
     tags: ["Java", "Spring Boot", "MySQL", "Redis", "Vue 3", "uni-app", "OpenAI GPT-4o-mini"],
     link: "#",
+    video: "/images/happi/video/happi.mp4",
+    screenshots: [
+      "/images/happi/image/h1.png",
+      "/images/happi/image/h2.png",
+      "/images/happi/image/h3.png",
+      "/images/happi/image/h4.jpeg",
+      "/images/happi/image/h5.jpeg",
+      "/images/happi/image/h6.jpeg",
+      "/images/happi/image/h7.png",
+    ],
     Icon: Shield,
     details: [
       {
@@ -404,7 +397,7 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "WMS · 006",
+    id: "WMS · 005",
     codename: "WAREHOUSE",
     title: "WMS — Warehouse Management",
     tagline: "EPC/RFID item-level full-stack inventory system",
@@ -412,6 +405,15 @@ const PROJECTS: Project[] = [
       "A full-stack warehouse management system built around EPC/RFID item-level tracking across the full lifecycle — PO receiving to shipping and returns — with a NestJS backend, Vue 3 admin portal, and a React Native handheld app with hand-written native Android RFID/barcode modules.",
     tags: ["NestJS", "Prisma ORM", "MySQL", "Vue 3", "React Native", "Java", "Kotlin", "Docker"],
     link: "#",
+    video: "/images/wms/video/wms.mp4",
+    screenshots: [
+      "/images/wms/image/w1.png",
+      "/images/wms/image/w2.png",
+      "/images/wms/image/w3.png",
+      "/images/wms/image/w4.jpg",
+      "/images/wms/image/w5.jpg",
+      "/images/wms/image/w6.jpg",
+    ],
     Icon: Package,
     details: [
       {
@@ -483,7 +485,7 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "AI · 007",
+    id: "AI · 006",
     codename: "SMARTBOT",
     title: "SmartPole AI Chatbot",
     tagline: "RAG + text-to-SQL agent built on n8n",
@@ -558,6 +560,72 @@ const PROJECTS: Project[] = [
         subtitle: "Read-only · schema-locked · 50-turn memory",
         body: "Enforced strict security boundaries: SELECT-only SQL with no DML, default LIMIT 10, schema-locked prompt preventing off-schema queries, clarifying questions for ambiguous requests, and a Pinecone RAG retrieval tool as a parallel knowledge path — plus 50-message Simple Memory for conversation continuity.",
         tech: ["Pinecone", "RAG", "Prompt Engineering", "n8n", "OpenAI"],
+      },
+    ],
+  },
+  {
+    id: "SHR · 007",
+    codename: "HEALTH",
+    title: "Smart Healthcare Remote",
+    tagline: "IoT-driven patient monitoring",
+    description:
+      "Web-based application that analyses real-time patient health data via an Arduino-powered IoT monitoring system. Bridges hardware sensors and a cloud dashboard so caregivers can act on live vitals.",
+    tags: ["HTML/CSS", "JavaScript", "Spring", "Firebase", "Arduino"],
+    link: "#",
+    Icon: Activity,
+    details: [
+      {
+        title: "Project Overview",
+        body: "A web-based application that analyses real-time patient health data via an Arduino-powered IoT monitoring system. It bridges hardware sensors and a cloud dashboard so caregivers can act on live vitals the moment they change.",
+      },
+      {
+        title: "Key Features",
+        groups: [
+          {
+            heading: "IoT Hardware",
+            items: [
+              { label: "Arduino sensor rig", text: "captures vital signs and streams them over Wi-Fi to the cloud" },
+              "Sensors calibrated for clinical-grade accuracy",
+            ],
+          },
+          {
+            heading: "Backend Data Layer",
+            items: [
+              { label: "Spring Framework", text: "ingests, normalises, and persists incoming sensor telemetry" },
+              { label: "Firebase", text: "real-time database tuned for fast time-series queries" },
+            ],
+          },
+          {
+            heading: "Live Dashboard",
+            items: [
+              "Responsive web dashboard built in HTML/CSS/JavaScript",
+              "Real-time vitals with alert thresholds that notify caregivers instantly",
+            ],
+          },
+        ],
+      },
+    ],
+    phases: [
+      {
+        num: "01",
+        title: "The Hardware",
+        subtitle: "Arduino sensor pipeline",
+        body: "Assembled an IoT-based remote patient monitoring rig using Arduino — capturing vital signs and streaming them over Wi-Fi to the cloud. Calibrated sensors for accuracy.",
+        tech: ["Arduino", "IoT", "C++"],
+      },
+      {
+        num: "02",
+        title: "The Backend",
+        subtitle: "Spring + Firebase data layer",
+        body: "Implemented a Spring Framework backend that ingests sensor telemetry, normalises it, and persists into a Firebase real-time database for fast time-series queries.",
+        tech: ["Spring Framework", "Firebase", "Java"],
+      },
+      {
+        num: "03",
+        title: "The Dashboard",
+        subtitle: "Live web visualisation",
+        body: "Built a responsive web dashboard in HTML/CSS/JavaScript that surfaces real-time patient vitals with alert thresholds so caregivers are notified instantly.",
+        tech: ["HTML/CSS", "JavaScript", "Firebase"],
       },
     ],
   },
@@ -667,12 +735,12 @@ function SidebarItem({
 }
 
 // ─────────── Project image frame ───────────
-function ProjectImage({ project }: { project: Project }) {
+function ProjectImage({ project, fillHeight = false }: { project: Project; fillHeight?: boolean }) {
   const Icon = project.Icon;
   return (
     <div style={{
       position: "relative",
-      aspectRatio: "16 / 10",
+      ...(fillHeight ? { height: "100%", width: "100%" } : { aspectRatio: "16 / 10" }),
       background: project.image
         ? "transparent"
         : "linear-gradient(135deg, rgba(60,15,120,0.9) 0%, rgba(20,5,50,0.95) 100%)",
@@ -705,7 +773,16 @@ function ProjectImage({ project }: { project: Project }) {
         {project.id.split(" ")[0]}
       </div>
 
-      {project.image ? (
+      {project.video ? (
+        <video
+          src={project.video}
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+      ) : project.image ? (
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
           src={project.image}
@@ -768,7 +845,7 @@ function ProjectImage({ project }: { project: Project }) {
           letterSpacing: "0.22em", color: "rgba(168,85,247,0.35)",
           padding: "0 10px", flexShrink: 0,
         }}>
-          {project.image ? "PREVIEW" : "AWAITING.ASSET"}
+          {project.video ? "LIVE.DEMO" : project.image ? "PREVIEW" : "AWAITING.ASSET"}
         </span>
         <div style={{ height: 1, flex: 1, background: "rgba(168,85,247,0.25)" }} />
       </div>
@@ -855,6 +932,86 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
   );
 }
 
+// ─────────── Screenshots gallery ───────────
+function ScreenshotsGallery({ screenshots }: { screenshots: string[] }) {
+  return (
+    <div style={{ marginBottom: 30 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+        <span style={{
+          fontFamily: "Karasu, sans-serif", fontSize: "18px",
+          letterSpacing: "0.24em", color: "rgba(168,85,247,0.85)", flexShrink: 0,
+        }}>
+          // SCREENSHOTS
+        </span>
+        <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, rgba(168,85,247,0.35), transparent)" }} />
+        <span style={{
+          fontFamily: "Karasu, sans-serif", fontSize: "10px",
+          letterSpacing: "0.18em", color: "rgba(168,85,247,0.4)", flexShrink: 0,
+        }}>
+          {String(screenshots.length).padStart(2, "0")} FRAMES
+        </span>
+      </div>
+
+      <div
+        style={{
+          display: "flex", gap: 12, overflowX: "auto",
+          paddingBottom: 10,
+          scrollbarWidth: "thin",
+          scrollbarColor: "rgba(168,85,247,0.35) rgba(133,39,227,0.05)",
+        }}
+        className="screenshots-scroll"
+      >
+        {screenshots.map((src, i) => (
+          <div
+            key={i}
+            style={{
+              position: "relative", flexShrink: 0,
+              height: 320, width: "auto",
+              border: "1px solid rgba(168,85,247,0.3)",
+              background: "rgba(12,2,28,0.9)",
+              overflow: "hidden",
+            }}
+          >
+            {(["tl","tr","bl","br"] as const).map(c => <HUDCorner key={c} pos={c} />)}
+
+            {/* Top scan bar */}
+            <div style={{
+              position: "absolute", top: 0, left: 0, right: 0, height: 1,
+              background: "linear-gradient(90deg, transparent, rgba(168,85,247,0.6), transparent)",
+              zIndex: 2,
+            }} />
+
+            {/* Frame index */}
+            <div style={{
+              position: "absolute", top: 8, left: 10, zIndex: 3,
+              fontFamily: "Karasu, sans-serif", fontSize: "8px",
+              letterSpacing: "0.22em", color: "rgba(168,85,247,0.5)",
+            }}>
+              {String(i + 1).padStart(2, "0")}
+            </div>
+
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt={`Screenshot ${i + 1}`}
+              style={{
+                height: "100%", width: "auto", display: "block",
+                objectFit: "contain",
+              }}
+            />
+
+            {/* Scan line overlay */}
+            <div style={{
+              position: "absolute", inset: 0, pointerEvents: "none",
+              backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px)",
+            }} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─────────── Project detail modal ───────────
 function ProjectDetailModal({ project, onClose }: { project: Project; onClose: () => void }) {
   const Icon = project.Icon;
@@ -872,7 +1029,11 @@ function ProjectDetailModal({ project, onClose }: { project: Project; onClose: (
     };
   }, [onClose]);
 
-  return (
+  // Render through a portal to document.body so the section's clip-path
+  // (from SectionReveal) can't clip this fixed overlay.
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <motion.div
       className="fixed inset-0 flex items-center justify-center p-4 md:p-8"
       initial={{ opacity: 0 }}
@@ -982,10 +1143,15 @@ function ProjectDetailModal({ project, onClose }: { project: Project; onClose: (
             </div>
           </div>
 
-          {/* Preview image */}
-          <div style={{ marginBottom: 26 }}>
+          {/* Preview image / video */}
+          <div style={{ marginBottom: project.screenshots?.length ? 20 : 26 }}>
             <ProjectImage project={project} />
           </div>
+
+          {/* Screenshots gallery */}
+          {project.screenshots && project.screenshots.length > 0 && (
+            <ScreenshotsGallery screenshots={project.screenshots} />
+          )}
 
           {/* Rich detail sections — Project Overview, Key Features, etc. */}
           {project.details.map((section, i) => (
@@ -1079,7 +1245,8 @@ function ProjectDetailModal({ project, onClose }: { project: Project; onClose: (
           )}
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }
 
@@ -1181,7 +1348,7 @@ function ModalSectionLabel({ label, trailing }: { label: string; trailing?: stri
 const ITEMS_PER_PAGE = 6;
 type FilterType = "ALL" | "ACADEMIC" | "PROFESSIONAL";
 
-const ACADEMIC_PREFIXES = ["WMA", "LMS", "SHR"];
+const ACADEMIC_PREFIXES = ["WMA", "SHR"];
 function getCategory(id: string): "ACADEMIC" | "PROFESSIONAL" {
   return ACADEMIC_PREFIXES.includes(id.split(" ")[0]) ? "ACADEMIC" : "PROFESSIONAL";
 }
@@ -1236,8 +1403,8 @@ export default function Project() {
     <section
       id="project"
       ref={sectionRef}
-      className="relative w-full overflow-hidden"
-      style={{ background: "rgba(15,0,30,0.98)", height: "calc(100vh - 90px)", display: "flex", flexDirection: "column", scrollMarginTop: "90px" }}
+      className="relative w-full overflow-hidden min-h-screen lg:flex lg:flex-col lg:h-[calc(100vh-90px)]"
+      style={{ background: "rgba(15,0,30,0.98)", scrollMarginTop: "90px" }}
     >
       {/* Dot grid bg */}
       <div className="absolute inset-0 pointer-events-none" style={{
@@ -1247,7 +1414,7 @@ export default function Project() {
         WebkitMaskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%)",
       }} />
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10" style={{ paddingTop: 8, paddingBottom: 12, flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 lg:flex lg:flex-col lg:flex-1 lg:min-h-0" style={{ paddingTop: 8, paddingBottom: 12 }}>
 
         {/* ── Section header ── */}
         <div className="flex items-end justify-between mb-3 gap-4 flex-wrap">
@@ -1284,8 +1451,8 @@ export default function Project() {
         />
 
         {/* ── Main two-panel ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-0"
-          style={{ border: "1px solid rgba(168,85,247,0.14)", flex: 1, minHeight: 0, overflow: "hidden" }}>
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-0 lg:flex-1 lg:min-h-0 lg:overflow-hidden"
+          style={{ border: "1px solid rgba(168,85,247,0.14)" }}>
 
           {/* Left sidebar */}
           <div ref={sidebarRef} style={{
@@ -1428,7 +1595,11 @@ export default function Project() {
           </div>
 
           {/* Right showcase */}
-          <div ref={showcaseRef} style={{ position: "relative", overflow: "hidden", padding: "28px 32px", display: "flex", alignItems: "center" }}>
+          <div ref={showcaseRef} style={{
+            position: "relative", overflow: "hidden",
+            padding: "18px 32px",
+            display: "flex", flexDirection: "column", gap: 12,
+          }}>
 
             {/* Big BG codename */}
             <AnimatePresence mode="wait">
@@ -1453,77 +1624,100 @@ export default function Project() {
               </motion.div>
             </AnimatePresence>
 
-            <div className="relative z-10 w-full grid grid-cols-1 md:grid-cols-[1fr_260px] gap-6 items-center">
+            {/* 1 — Title block */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`head-${activeIdx}`}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="relative z-10"
+                style={{ flexShrink: 0 }}
+              >
+                {/* Project ID tag */}
+                <span style={{
+                  display: "inline-block", marginBottom: 8,
+                  fontFamily: "Karasu, sans-serif", fontSize: "13px",
+                  letterSpacing: "0.24em", color: "rgba(168,85,247,0.95)",
+                  padding: "5px 13px",
+                  border: "1px solid rgba(168,85,247,0.45)",
+                  background: "rgba(133,39,227,0.18)",
+                }}>
+                  {active.id}
+                </span>
 
-              {/* Left: project info */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`info-${activeIdx}`}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                >
-                  {/* Project ID tag */}
-                  <span style={{
-                    display: "inline-block", marginBottom: 12,
-                    fontFamily: "Karasu, sans-serif", fontSize: "13px",
-                    letterSpacing: "0.24em", color: "rgba(168,85,247,0.95)",
-                    padding: "5px 13px",
-                    border: "1px solid rgba(168,85,247,0.45)",
-                    background: "rgba(133,39,227,0.18)",
-                  }}>
-                    {active.id}
-                  </span>
+                <h3 style={{
+                  fontFamily: "Yozakura, sans-serif",
+                  fontSize: "clamp(26px, 3.4vw, 38px)",
+                  color: "rgba(255,255,255,0.98)",
+                  textShadow: "0 0 22px rgba(168,85,247,0.45)",
+                  lineHeight: 1.05, letterSpacing: "0.02em",
+                  marginBottom: 4,
+                }}>
+                  {active.title}
+                </h3>
+                <p style={{
+                  fontFamily: "Karasu, sans-serif", fontSize: "13px",
+                  letterSpacing: "0.18em", color: "rgba(168,85,247,0.8)",
+                }}>
+                  {active.tagline}
+                </p>
+              </motion.div>
+            </AnimatePresence>
 
-                  {/* Title */}
-                  <h3 style={{
-                    fontFamily: "Yozakura, sans-serif",
-                    fontSize: "clamp(30px, 4.5vw, 46px)",
-                    color: "rgba(255,255,255,0.98)",
-                    textShadow: "0 0 22px rgba(168,85,247,0.45)",
-                    lineHeight: 1.05, letterSpacing: "0.02em",
-                    marginBottom: 8,
-                  }}>
-                    {active.title}
-                  </h3>
+            {/* 2 — Video / image preview (large) */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`img-${activeIdx}`}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="relative z-10 proj-preview"
+              >
+                <ProjectImage project={active} fillHeight />
+              </motion.div>
+            </AnimatePresence>
 
-                  {/* Tagline */}
-                  <p style={{
-                    fontFamily: "Karasu, sans-serif", fontSize: "15px",
-                    letterSpacing: "0.18em", color: "rgba(168,85,247,0.8)",
-                    marginBottom: 14,
-                  }}>
-                    {active.tagline}
-                  </p>
+            {/* 3 — Description + tools + CTA */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`info-${activeIdx}`}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="relative z-10"
+                style={{ flexShrink: 0 }}
+              >
+                {/* Description */}
+                <p style={{
+                  fontFamily: "Showcase Sans mini, sans-serif",
+                  fontSize: "21px", lineHeight: 1.7,
+                  color: "rgba(255,255,255,0.78)", marginBottom: 14,
+                }}>
+                  {active.description}
+                </p>
 
-                  {/* Description */}
-                  <p style={{
-                    fontFamily: "Showcase Sans mini, sans-serif",
-                    fontSize: "22px", lineHeight: 1.75,
-                    color: "rgba(255,255,255,0.78)", marginBottom: 16,
-                    maxWidth: 520,
-                  }}>
-                    {active.description}
-                  </p>
+                {/* Tech tags */}
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px", marginBottom: 16 }}>
+                  {active.tags.map(t => (
+                    <span key={t} className="skill-pill" style={{
+                      fontFamily: "Showcase Sans mini, sans-serif",
+                      fontSize: "16px", padding: "5px 16px",
+                      borderRadius: 999,
+                      background: "rgba(88,28,135,0.35)",
+                      border: "1px solid rgba(168,85,247,0.28)",
+                      color: "rgba(255,255,255,0.85)",
+                    }}>
+                      {t}
+                    </span>
+                  ))}
+                </div>
 
-                  {/* Tech tags */}
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: 20 }}>
-                    {active.tags.map(t => (
-                      <span key={t} className="skill-pill" style={{
-                        fontFamily: "Showcase Sans mini, sans-serif",
-                        fontSize: "18px", padding: "6px 16px",
-                        borderRadius: 999,
-                        background: "rgba(88,28,135,0.35)",
-                        border: "1px solid rgba(168,85,247,0.28)",
-                        color: "rgba(255,255,255,0.85)",
-                      }}>
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* CTA */}
+                {/* CTA — centered on its own line */}
+                <div style={{ display: "flex", justifyContent: "center" }}>
                   <button
                     onClick={() => setDetailOpen(true)}
                     className="hud-btn"
@@ -1532,22 +1726,9 @@ export default function Project() {
                     <ExternalLink size={14} strokeWidth={1.6} />
                     VIEW DETAILS
                   </button>
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Right: image frame */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`img-${activeIdx}`}
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                >
-                  <ProjectImage project={active} />
-                </motion.div>
-              </AnimatePresence>
-            </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
 
           </div>
         </div>
@@ -1563,6 +1744,12 @@ export default function Project() {
 
       {/* Sidebar hover style */}
       <style>{`
+        /* Preview pane: fixed height on mobile (so fillHeight image resolves),
+           flexes to fill the locked viewport layout on desktop. */
+        .proj-preview { height: 230px; }
+        @media (min-width: 1024px) {
+          .proj-preview { flex: 1; min-height: 0; max-height: 300px; height: auto; }
+        }
         .sidebar-item:hover {
           background: rgba(133,39,227,0.1) !important;
           border-left-color: rgba(168,85,247,0.5) !important;
@@ -1579,6 +1766,10 @@ export default function Project() {
         }
         .modal-scroll::-webkit-scrollbar-thumb:hover { background: rgba(168,85,247,0.55); }
         .modal-scroll { scrollbar-width: thin; scrollbar-color: rgba(168,85,247,0.35) rgba(133,39,227,0.05); }
+        .screenshots-scroll::-webkit-scrollbar { height: 5px; }
+        .screenshots-scroll::-webkit-scrollbar-track { background: rgba(133,39,227,0.05); }
+        .screenshots-scroll::-webkit-scrollbar-thumb { background: rgba(168,85,247,0.35); border-radius: 4px; }
+        .screenshots-scroll::-webkit-scrollbar-thumb:hover { background: rgba(168,85,247,0.55); }
       `}</style>
     </section>
   );

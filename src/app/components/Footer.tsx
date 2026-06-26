@@ -5,7 +5,7 @@ import { ChevronUp } from "lucide-react";
 
 const bounce = {
   y: [0, -6, 0],
-  transition: { duration: 1.4, repeat: Infinity, ease: "easeInOut" },
+  transition: { duration: 1.4, repeat: Infinity, ease: "easeInOut" as const },
 };
 
 export default function Footer() {

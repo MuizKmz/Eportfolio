@@ -174,7 +174,7 @@ function EduCard({ item, index }: { item: (typeof timelineData)[number]; index: 
         position: "relative",
         background: "linear-gradient(135deg, rgba(35,8,70,0.78) 0%, rgba(8,2,22,0.96) 100%)",
         border: "1px solid rgba(168,85,247,0.2)",
-        padding: "28px 32px",
+        padding: "clamp(18px, 5vw, 28px) clamp(18px, 5vw, 32px)",
         overflow: "hidden",
       }}
     >

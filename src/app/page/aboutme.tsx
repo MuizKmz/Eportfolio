@@ -276,7 +276,7 @@ export default function AboutMe() {
           <div className="flex items-baseline gap-4">
             <h2
               ref={headerRef}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold text-white"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white"
               style={{
                 fontFamily: "Yozakura, sans-serif",
                 textShadow: "0 0 40px rgba(168,85,247,0.5), 0 4px 10px rgba(0,0,0,0.5)",
@@ -381,7 +381,7 @@ export default function AboutMe() {
 
             {/* Portrait frame */}
             <div
-              className="relative overflow-hidden mb-5"
+              className="portrait-glitch relative overflow-hidden mb-5"
               style={{
                 aspectRatio: "3 / 4",
                 background:
@@ -389,9 +389,11 @@ export default function AboutMe() {
                 border: "1px solid rgba(168,85,247,0.2)",
               }}
             >
+              {/* Base portrait */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/profile.png"
+                className="pg-base"
+                src="/images/muiz.png"
                 alt="Muhammad Muizzuddin"
                 style={{
                   width: "100%",
@@ -402,6 +404,14 @@ export default function AboutMe() {
                 }}
                 draggable={false}
               />
+
+              {/* Glitch swap layers — revealed + animated on hover */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="pg-glitch" src="/images/profile.png" alt="" draggable={false} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="pg-glitch pg-r" src="/images/Glitch 1.png" alt="" draggable={false} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="pg-glitch pg-c" src="/images/profile.png" alt="" draggable={false} />
 
               {/* Scan lines over portrait */}
               <div
@@ -565,7 +575,7 @@ export default function AboutMe() {
             </p>
 
             {/* Stats row */}
-            <div className="flex gap-10 pt-1">
+            <div className="flex flex-wrap gap-6 sm:gap-10 pt-1">
               {stats.map((s) => (
                 <div key={s.label} className="about-stat flex flex-col gap-1">
                   <span
@@ -605,8 +615,8 @@ export default function AboutMe() {
             />
 
             {/* Detail rows + circular CTA badge */}
-            <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-              <div className="flex flex-col" style={{ flex: 1 }}>
+            <div className="flex flex-col sm:flex-row items-center gap-8 sm:gap-6">
+              <div className="flex flex-col w-full sm:w-auto" style={{ flex: 1 }}>
                 {details.map((d) => (
                   <div
                     key={d.label}
