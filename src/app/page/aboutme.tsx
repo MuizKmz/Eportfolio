@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -92,8 +92,24 @@ function CircleCTA() {
   const [hovered, setHovered]       = useState(false);
   const [hoveredTop, setHoveredTop] = useState(false);
   const [hoveredBot, setHoveredBot] = useState(false);
+  const [showResume, setShowResume] = useState(false);
+
+  // Close the resume preview with the Escape key + lock body scroll while open
+  useEffect(() => {
+    if (!showResume) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setShowResume(false); };
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [showResume]);
 
   return (
+    <>
+      <ResumeModal open={showResume} onClose={() => setShowResume(false)} />
     <div
       className="about-cta"
       style={{ flexShrink: 0, animation: "about-float 3s ease-in-out infinite" }}
@@ -175,8 +191,9 @@ function CircleCTA() {
           fill={hovered ? "rgba(210,150,255,1)" : "rgba(168,85,247,0.55)"}
           style={{ transition: "fill 0.3s" }} />
 
-        {/* Top arc — DOWNLOAD RESUME */}
-        <a href="/Muizzuddin_Resume.pdf" target="_blank" rel="noopener noreferrer"
+        {/* Top arc — PREVIEW RESUME (opens in-page modal) */}
+        <a href="/Muizzuddin_Resume.pdf"
+          onClick={(e) => { e.preventDefault(); setShowResume(true); }}
           onMouseEnter={() => setHoveredTop(true)}
           onMouseLeave={() => setHoveredTop(false)}>
           <text fontFamily="Karasu, sans-serif" letterSpacing="3"
@@ -187,7 +204,7 @@ function CircleCTA() {
               transition: "font-size 0.25s, fill 0.25s",
             }}>
             <textPath href="#about-top" startOffset="50%" textAnchor="middle">
-              DOWNLOAD  RESUME  ↗
+              PREVIEW  RESUME  ↗
             </textPath>
           </text>
         </a>
@@ -209,6 +226,114 @@ function CircleCTA() {
           </text>
         </a>
       </svg>
+    </div>
+    </>
+  );
+}
+
+// ── Resume preview modal — shows the PDF inline instead of forcing a download ──
+function ResumeModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  if (!open) return null;
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+        background: "rgba(5,1,15,0.82)",
+        backdropFilter: "blur(6px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "clamp(12px, 4vw, 48px)",
+        animation: "resume-fade 0.25s ease",
+      }}
+    >
+      <style>{`
+        @keyframes resume-fade { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes resume-rise { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: translateY(0) } }
+      `}</style>
+
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          position: "relative",
+          width: "min(900px, 100%)",
+          height: "min(90vh, 100%)",
+          display: "flex",
+          flexDirection: "column",
+          background: "#120623",
+          border: "1px solid rgba(168,85,247,0.4)",
+          borderRadius: 14,
+          boxShadow: "0 0 60px rgba(168,85,247,0.25)",
+          overflow: "hidden",
+          animation: "resume-rise 0.3s ease",
+        }}
+      >
+        {/* Header bar */}
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "14px 18px",
+          borderBottom: "1px solid rgba(168,85,247,0.25)",
+          background: "linear-gradient(135deg,#1a0b2e,#2d1147)",
+        }}>
+          <span style={{
+            fontFamily: "Karasu, sans-serif",
+            letterSpacing: 2,
+            fontSize: 14,
+            color: "#d8b4fe",
+            textTransform: "uppercase",
+          }}>
+            ▍Resume — Muizzuddin
+          </span>
+          <div style={{ display: "flex", gap: 10 }}>
+            <a
+              href="/Muizzuddin_Resume.pdf"
+              download
+              style={{
+                fontFamily: "Karasu, sans-serif",
+                fontSize: 12,
+                letterSpacing: 1,
+                color: "#fff",
+                textDecoration: "none",
+                background: "linear-gradient(135deg,#9333ea,#c026d3)",
+                padding: "8px 16px",
+                borderRadius: 7,
+              }}
+            >
+              ↓ DOWNLOAD
+            </a>
+            <button
+              onClick={onClose}
+              aria-label="Close resume preview"
+              style={{
+                fontFamily: "Karasu, sans-serif",
+                fontSize: 14,
+                color: "#d8b4fe",
+                background: "rgba(168,85,247,0.12)",
+                border: "1px solid rgba(168,85,247,0.4)",
+                borderRadius: 7,
+                width: 34,
+                height: 34,
+                cursor: "pointer",
+                lineHeight: 1,
+              }}
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+
+        {/* PDF preview */}
+        <iframe
+          src="/Muizzuddin_Resume.pdf#toolbar=0&navpanes=0&view=FitH"
+          title="Resume preview"
+          style={{ flex: 1, width: "100%", border: "none", background: "#1a1a1a" }}
+        />
+      </div>
     </div>
   );
 }
