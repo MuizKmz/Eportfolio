@@ -35,6 +35,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased`}
       >
+        {/* Runs during HTML parse, before first paint, so the browser never
+            restores the old scroll position on refresh — page always starts
+            at the top with no jump/flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{history.scrollRestoration='manual';window.scrollTo(0,0);}catch(e){}`,
+          }}
+        />
         {children}
         <ScrollStick delay={5.5} className="hidden lg:flex" />
         <SideNavBar delay={5.5}/>
