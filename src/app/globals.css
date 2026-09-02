@@ -507,3 +507,59 @@ img {
 
 .scroll-stick { opacity: 0; }
 .scroll-stick.sl-ready { opacity: 1; }
+
+/* ── Custom cursor ─────────────────────────────────────────────────────
+   One flame arrow everywhere. Real CSS cursor, so the OS composites it and
+   there is zero pointer lag (a JS-tracked element is always a frame behind).
+
+   The trailing keyword after url() is REQUIRED — a `cursor` value with no
+   keyword fallback is invalid and the whole declaration is dropped. The two
+   numbers are the hotspot: the pixel that actually points, measured from the
+   image's top-left. The arrow tip sits at 3,1.
+
+   Guarded by (pointer: fine) so touch and stylus users keep their native
+   cursor — a custom cursor on a touchscreen is invisible and pointless. */
+@media (pointer: fine) {
+  html,
+  body,
+  a,
+  button,
+  [role="button"],
+  summary,
+  label[for],
+  select,
+  .cursor-target,
+  [data-cursor="target"],
+  a *,
+  button * {
+    cursor: url("/cursors/normal.png") 3 1, auto;
+  }
+
+  /* Text entry keeps a real caret — an arrow over a text field hides where
+     the insertion point is. */
+  input,
+  textarea,
+  [contenteditable="true"] {
+    cursor: text;
+  }
+
+  /* Disabled controls should not imply they are clickable. */
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  /* Many components set an inline `cursor: pointer`, and inline styles beat
+     stylesheet rules — without this those elements would fall back to the
+     system hand. `!important` is the only way a stylesheet can win against
+     an inline style, so it is warranted here rather than editing ~18 call
+     sites (and every future one). */
+  [style*="cursor: pointer"],
+  [style*="cursor:pointer"],
+  [style*="cursor: default"],
+  [style*="cursor:default"],
+  .cursor-pointer,
+  .skill-pill:hover {
+    cursor: url("/cursors/normal.png") 3 1, auto !important;
+  }
+}
