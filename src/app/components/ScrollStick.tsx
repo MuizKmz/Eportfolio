@@ -30,9 +30,12 @@ export default function ScrollStick({ delay = 0.8, className = "" }: Props) {
 
   useGSAP(
     () => {
-      gsap.from(containerRef.current, {
-        opacity: 0,
-        x: 20,
+      // Start state is also in globals.css (.scroll-stick) so this does not
+      // paint at full opacity before hydration; `sl-ready` hands control to GSAP.
+      gsap.set(containerRef.current, { opacity: 0 });
+      containerRef.current?.classList.add("sl-ready");
+      gsap.to(containerRef.current, {
+        opacity: 1,
         duration: 1.0,
         delay,
         ease: "power3.out",
@@ -44,7 +47,7 @@ export default function ScrollStick({ delay = 0.8, className = "" }: Props) {
   return (
     <div
       ref={containerRef}
-      className={`fixed right-6 top-1/2 -translate-y-1/2 z-30 select-none flex-col items-center ${className}`}
+      className={`scroll-stick fixed right-6 top-1/2 -translate-y-1/2 z-30 select-none flex-col items-center ${className}`}
     >
       {/* Top cap */}
       <div style={{ width: "8px", height: "1px", background: "rgba(255,255,255,0.35)", marginBottom: "6px" }} />

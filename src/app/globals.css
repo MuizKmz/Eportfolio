@@ -481,3 +481,29 @@ img {
   50%       { opacity: 1;   transform: scale(1.04); }
 }
 
+
+/* ── Pre-hydration state for the desktop side nav / scroll stick ──
+   These are animated in by GSAP after a 5.5s delay. Without an initial
+   hidden state here, the server-rendered markup paints at full opacity
+   immediately, so on a cold refresh the nav appears alone over a blank
+   hero — then snaps back to invisible once GSAP hydrates and applies its
+   starting values. Declaring the start state in CSS closes that window.
+   `.sl-ready` is set by the component once GSAP owns the elements. */
+.sl-stick   { transform: scaleY(0); transform-origin: top; }
+.sl-bracket { transform: scaleX(0); transform-origin: left; }
+.sl-dot     { opacity: 0; transform: scale(0); }
+.sl-section,
+.sl-current,
+.sl-item    { opacity: 0; }
+
+/* Once GSAP has taken over, its inline styles win; clearing these avoids
+   the CSS rules fighting the tween on any later re-render. */
+.sl-ready .sl-stick,
+.sl-ready .sl-bracket,
+.sl-ready .sl-dot,
+.sl-ready .sl-section,
+.sl-ready .sl-current,
+.sl-ready .sl-item { transform: none; opacity: 1; }
+
+.scroll-stick { opacity: 0; }
+.scroll-stick.sl-ready { opacity: 1; }

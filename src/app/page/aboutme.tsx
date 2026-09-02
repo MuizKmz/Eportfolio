@@ -485,9 +485,9 @@ export default function AboutMe() {
               <span
                 style={{
                   fontFamily: "Karasu, sans-serif",
-                  fontSize: "11px",
-                  letterSpacing: "0.2em",
-                  color: "rgba(168,85,247,0.85)",
+                  fontSize: "12px",
+                  letterSpacing: "0.16em",
+                  color: "rgba(168,85,247,0.9)",
                 }}
               >
                 ID · 001
@@ -495,9 +495,9 @@ export default function AboutMe() {
               <span
                 style={{
                   fontFamily: "Karasu, sans-serif",
-                  fontSize: "11px",
-                  letterSpacing: "0.2em",
-                  color: "rgba(168,85,247,0.55)",
+                  fontSize: "12px",
+                  letterSpacing: "0.16em",
+                  color: "rgba(168,85,247,0.75)",
                 }}
               >
                 HUNTER
@@ -594,9 +594,9 @@ export default function AboutMe() {
               <p
                 style={{
                   fontFamily: "Showcase Sans mini, sans-serif",
-                  fontSize: "13px",
+                  fontSize: "14px",
                   letterSpacing: "0.08em",
-                  color: "rgba(255,255,255,0.7)",
+                  color: "rgba(255,255,255,0.8)",
                 }}
               >
                 SOFTWARE ENGINEER
@@ -605,13 +605,13 @@ export default function AboutMe() {
                 className="flex items-center gap-2"
                 style={{
                   fontFamily: "Karasu, sans-serif",
-                  fontSize: "11px",
-                  letterSpacing: "0.2em",
-                  color: "rgba(168,85,247,0.85)",
+                  fontSize: "13px",
+                  letterSpacing: "0.14em",
+                  color: "rgba(168,85,247,0.95)",
                 }}
               >
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(168,85,247,1)", boxShadow: "0 0 8px rgba(168,85,247,0.8)" }} />
-                RANK · S-CLASS
+                RANK · :C
               </p>
             </div>
 
@@ -623,9 +623,9 @@ export default function AboutMe() {
             }}>
               <span style={{
                 fontFamily: "Karasu, sans-serif",
-                fontSize: "9px",
-                letterSpacing: "0.26em",
-                color: "rgba(168,85,247,0.5)",
+                fontSize: "12px",
+                letterSpacing: "0.18em",
+                color: "rgba(168,85,247,0.75)",
                 display: "block",
                 marginBottom: 8,
               }}>
@@ -641,8 +641,8 @@ export default function AboutMe() {
                       <span style={{ width: 5, height: 5, borderRadius: "50%", background: dot, boxShadow: `0 0 6px ${dot}`, flexShrink: 0 }} />
                       <span style={{
                         fontFamily: "Showcase Sans mini, sans-serif",
-                        fontSize: "13px",
-                        color: "rgba(255,255,255,0.82)",
+                        fontSize: "14px",
+                        color: "rgba(255,255,255,0.88)",
                         letterSpacing: "0.03em",
                       }}>
                         {lang}
@@ -650,10 +650,10 @@ export default function AboutMe() {
                     </div>
                     <span style={{
                       fontFamily: "Karasu, sans-serif",
-                      fontSize: "9px",
-                      letterSpacing: "0.18em",
+                      fontSize: "12px",
+                      letterSpacing: "0.12em",
                       color: dot,
-                      opacity: 0.75,
+                      opacity: 0.95,
                     }}>
                       {level}
                     </span>
@@ -717,9 +717,9 @@ export default function AboutMe() {
                   <span
                     style={{
                       fontFamily: "Karasu, sans-serif",
-                      fontSize: "11px",
-                      letterSpacing: "0.18em",
-                      color: "rgba(255,255,255,0.45)",
+                      fontSize: "13px",
+                      letterSpacing: "0.14em",
+                      color: "rgba(255,255,255,0.7)",
                     }}
                   >
                     {s.label}
@@ -751,10 +751,10 @@ export default function AboutMe() {
                     <span
                       style={{
                         fontFamily: "Karasu, sans-serif",
-                        fontSize: "11px",
-                        letterSpacing: "0.18em",
-                        color: "rgba(168,85,247,0.75)",
-                        minWidth: "92px",
+                        fontSize: "13px",
+                        letterSpacing: "0.14em",
+                        color: "rgba(168,85,247,0.9)",
+                        minWidth: "104px",
                         paddingTop: "2px",
                         flexShrink: 0,
                       }}
@@ -764,8 +764,8 @@ export default function AboutMe() {
                     <span
                       style={{
                         fontFamily: "Showcase Sans mini, sans-serif",
-                        fontSize: "16px",
-                        color: "rgba(255,255,255,0.88)",
+                        fontSize: "17px",
+                        color: "rgba(255,255,255,0.92)",
                         lineHeight: 1.5,
                       }}
                     >

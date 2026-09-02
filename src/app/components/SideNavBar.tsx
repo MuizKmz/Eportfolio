@@ -52,14 +52,25 @@ export default function SideNavBar({ delay = 5.5, className = "" }: Props) {
   // ── Entrance animation ──────────────────────────────────
   useGSAP(
     () => {
+      // The start state also lives in globals.css so the server-rendered nav
+      // is not visible before hydration. Set it here too, then flip
+      // `sl-ready` on so GSAP's inline styles are the single source of truth.
+      gsap.set(".sl-stick",   { scaleY: 0, transformOrigin: "top" });
+      gsap.set(".sl-bracket", { scaleX: 0, transformOrigin: "left" });
+      gsap.set(".sl-dot",     { opacity: 0, scale: 0 });
+      gsap.set(".sl-section", { opacity: 0, x: -12 });
+      gsap.set(".sl-current", { opacity: 0, x: -20 });
+      gsap.set(".sl-item",    { opacity: 0, x: -20 });
+      containerRef.current?.classList.add("sl-ready");
+
       const tl = gsap.timeline({ delay });
       tl
-        .from(".sl-stick",   { scaleY: 0, transformOrigin: "top", duration: 1.8, ease: "power2.inOut" })
-        .from(".sl-bracket", { scaleX: 0, transformOrigin: "left", duration: 0.5, stagger: 0.07, ease: "power2.out" }, "-=1.6")
-        .from(".sl-dot",     { opacity: 0, scale: 0, duration: 0.22, stagger: 0.06, ease: "back.out(2)" }, "-=1.3")
-        .from(".sl-section", { opacity: 0, x: -12, duration: 0.4, stagger: 0.15, ease: "power2.out" }, "-=0.9")
-        .from(".sl-current", { opacity: 0, x: -20, duration: 0.6, ease: "power3.out" }, "-=0.8")
-        .from(".sl-item",    { opacity: 0, x: -20, duration: 0.28, stagger: 0.05, ease: "power2.out" }, "-=0.5");
+        .to(".sl-stick",   { scaleY: 1, duration: 1.8, ease: "power2.inOut" })
+        .to(".sl-bracket", { scaleX: 1, duration: 0.5, stagger: 0.07, ease: "power2.out" }, "-=1.6")
+        .to(".sl-dot",     { opacity: 1, scale: 1, duration: 0.22, stagger: 0.06, ease: "back.out(2)" }, "-=1.3")
+        .to(".sl-section", { opacity: 1, x: 0, duration: 0.4, stagger: 0.15, ease: "power2.out" }, "-=0.9")
+        .to(".sl-current", { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, "-=0.8")
+        .to(".sl-item",    { opacity: 1, x: 0, duration: 0.28, stagger: 0.05, ease: "power2.out" }, "-=0.5");
     },
     { scope: containerRef }
   );
@@ -221,7 +232,7 @@ export default function SideNavBar({ delay = 5.5, className = "" }: Props) {
         <div className="flex-1" />
 
         {/* TOPIC 2 label */}
-        <div className="sl-section flex items-center gap-3 mb-3">
+        {/* <div className="sl-section flex items-center gap-3 mb-3">
           <span style={{
             fontFamily: "FF Identification, sans-serif", fontSize: "24px",
             color: "rgba(255,255,255,0.4)", letterSpacing: "0.22em", whiteSpace: "nowrap",
@@ -229,7 +240,7 @@ export default function SideNavBar({ delay = 5.5, className = "" }: Props) {
             TOPIC 2
           </span>
           <div className="h-px bg-white/20" style={{ width: "70px" }} />
-        </div>
+        </div> */}
 
         {/* SOCIAL label */}
         <div className="sl-section flex items-center gap-3 mb-2">
