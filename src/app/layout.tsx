@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import ScrollStick from "./components/ScrollStick";
 import SideNavBar from "./components/SideNavBar";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
         {children}
         <ScrollStick delay={5.5} className="hidden lg:flex" />
         <SideNavBar delay={5.5}/>
+        <Analytics />
       </body>
     </html>
   );
