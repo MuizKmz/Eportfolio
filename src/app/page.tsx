@@ -147,7 +147,7 @@ export default function Home() {
                 className="block text-center text-purple-200 tracking-[0.10em] font-light text-shadow-soft"
                 style={{ fontFamily: "Showcase Sans mini, sans-serif", fontSize: "clamp(15px, 3.8vw, 35px)" }}
               >
-                • VIBE CODER •
+                {/* • VIBE CODER • */}
               </span>
             </p>
           </motion.div>
