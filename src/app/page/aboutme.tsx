@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -192,7 +193,7 @@ function CircleCTA() {
           style={{ transition: "fill 0.3s" }} />
 
         {/* Top arc — PREVIEW RESUME (opens in-page modal) */}
-        <a href="/Muizzuddin_Resume.pdf"
+        <a href="/Muizzuddin_Resume_26.pdf"
           onClick={(e) => { e.preventDefault(); setShowResume(true); }}
           onMouseEnter={() => setHoveredTop(true)}
           onMouseLeave={() => setHoveredTop(false)}>
@@ -232,17 +233,61 @@ function CircleCTA() {
 }
 
 // ── Resume preview modal — shows the PDF inline instead of forcing a download ──
+// Rendered through a portal on <body>: the CTA sits inside transformed /
+// animated ancestors, which trap `position: fixed` and stop the browser's PDF
+// viewer from painting (the white-screen bug).
+const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "]);
+
 function ResumeModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  if (!open) return null;
-  return (
+  const [mounted, setMounted] = useState(false);
+  const [hint, setHint]       = useState(0);   // bumps on every scroll attempt → re-triggers animations
+  const [hintOn, setHintOn]   = useState(false);
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastHint  = useRef(0);
+
+  useEffect(() => setMounted(true), []);
+
+  // Scrolling the page is locked while the preview is open — when the visitor
+  // tries anyway, flash a SYSTEM warning, shake the panel and pulse the ✕.
+  useEffect(() => {
+    if (!open) return;
+    const warn = () => {
+      const now = Date.now();
+      if (now - lastHint.current < 700) return;   // one warning per gesture, not per wheel tick
+      lastHint.current = now;
+      setHint((n) => n + 1);
+      setHintOn(true);
+      if (hideTimer.current) clearTimeout(hideTimer.current);
+      hideTimer.current = setTimeout(() => setHintOn(false), 2200);
+      navigator.vibrate?.(60);
+    };
+    const onWheel = (e: WheelEvent) => { e.preventDefault(); warn(); };
+    const onTouch = (e: TouchEvent) => { e.preventDefault(); warn(); };
+    const onKey   = (e: KeyboardEvent) => {
+      if (SCROLL_KEYS.has(e.key) && !(e.target instanceof HTMLButtonElement)) { e.preventDefault(); warn(); }
+    };
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchmove", onTouch, { passive: false });
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchmove", onTouch);
+      window.removeEventListener("keydown", onKey);
+      if (hideTimer.current) clearTimeout(hideTimer.current);
+      setHint(0);
+      setHintOn(false);
+    };
+  }, [open]);
+
+  if (!open || !mounted) return null;
+  return createPortal(
     <div
       onClick={onClose}
       style={{
         position: "fixed",
         inset: 0,
-        zIndex: 9999,
+        zIndex: 10000,
         background: "rgba(5,1,15,0.82)",
-        backdropFilter: "blur(6px)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -253,7 +298,84 @@ function ResumeModal({ open, onClose }: { open: boolean; onClose: () => void }) 
       <style>{`
         @keyframes resume-fade { from { opacity: 0 } to { opacity: 1 } }
         @keyframes resume-rise { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: translateY(0) } }
+        @keyframes resume-shake-0 {
+          0%,100% { transform: translateX(0) }
+          15% { transform: translateX(-9px) } 30% { transform: translateX(8px) }
+          45% { transform: translateX(-6px) } 60% { transform: translateX(5px) }
+          75% { transform: translateX(-3px) } 90% { transform: translateX(2px) }
+        }
+        @keyframes resume-shake-1 {
+          0%,100% { transform: translateX(0) }
+          15% { transform: translateX(-9px) } 30% { transform: translateX(8px) }
+          45% { transform: translateX(-6px) } 60% { transform: translateX(5px) }
+          75% { transform: translateX(-3px) } 90% { transform: translateX(2px) }
+        }
+        @keyframes resume-x-pulse {
+          0%,100% { box-shadow: 0 0 0 0 rgba(168,85,247,0) }
+          50%     { box-shadow: 0 0 0 5px rgba(168,85,247,0.35), 0 0 18px rgba(168,85,247,0.9) }
+        }
+        @keyframes resume-warn-in {
+          from { opacity: 0; transform: translate(-50%, -10px) }
+          to   { opacity: 1; transform: translate(-50%, 0) }
+        }
+        @keyframes resume-scan { from { top: 0 } to { top: 100% } }
       `}</style>
+
+      {/* SYSTEM warning — shown when the visitor tries to scroll behind the modal */}
+      {hintOn && (
+        <div
+          key={hint}
+          role="alert"
+          style={{
+            position: "fixed",
+            top: "clamp(12px, 3vh, 28px)",
+            left: "50%",
+            zIndex: 10001,
+            width: "min(440px, calc(100vw - 32px))",
+            pointerEvents: "none",
+            background: "rgba(6,2,18,0.96)",
+            border: "1px solid rgba(168,85,247,0.6)",
+            boxShadow: "0 0 22px rgba(168,85,247,0.35), inset 0 0 12px rgba(100,80,255,0.05)",
+            padding: "14px 20px",
+            overflow: "hidden",
+            animation: "resume-warn-in 0.25s ease forwards",
+          }}
+        >
+          <div style={{
+            position: "absolute", top: 0, left: 0, right: 0, height: 1,
+            background: "linear-gradient(90deg, transparent, rgba(168,85,247,0.95) 40%, rgba(168,85,247,0.95) 60%, transparent)",
+          }} />
+          <div style={{
+            position: "absolute", left: 0, right: 0, height: 2,
+            background: "linear-gradient(90deg, transparent, rgba(168,85,247,0.35) 40%, rgba(168,85,247,0.35) 60%, transparent)",
+            animation: "resume-scan 1.1s linear forwards",
+          }} />
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+            <div style={{
+              width: 8, height: 8, borderRadius: "50%",
+              background: "rgba(248,113,113,1)", boxShadow: "0 0 8px rgba(248,113,113,0.9)",
+            }} />
+            <span style={{
+              fontFamily: "Showcase Sans mini, sans-serif", fontSize: 12, letterSpacing: "0.2em",
+              color: "rgba(168,85,247,1)", textShadow: "0 0 10px rgba(168,85,247,0.7)",
+            }}>
+              SYSTEM · WARNING
+            </span>
+            <span style={{
+              fontFamily: "Showcase Sans mini, sans-serif", fontSize: 11, letterSpacing: "0.12em",
+              color: "rgba(168,85,247,0.45)", marginLeft: "auto",
+            }}>
+              SL-SYS
+            </span>
+          </div>
+          <p style={{
+            margin: 0, fontFamily: "Showcase Sans mini, sans-serif", fontSize: 15, letterSpacing: "0.06em",
+            color: "rgba(160,220,255,0.95)", textShadow: "0 0 12px rgba(100,200,255,0.5)", lineHeight: 1.55,
+          }}>
+            CLOSE THE RESUME [ ✕ ] TO CONTINUE
+          </p>
+        </div>
+      )}
 
       <div
         onClick={(e) => e.stopPropagation()}
@@ -264,11 +386,14 @@ function ResumeModal({ open, onClose }: { open: boolean; onClose: () => void }) 
           display: "flex",
           flexDirection: "column",
           background: "#120623",
-          border: "1px solid rgba(168,85,247,0.4)",
+          border: `1px solid ${hintOn ? "rgba(168,85,247,0.85)" : "rgba(168,85,247,0.4)"}`,
           borderRadius: 14,
-          boxShadow: "0 0 60px rgba(168,85,247,0.25)",
+          boxShadow: hintOn ? "0 0 80px rgba(168,85,247,0.45)" : "0 0 60px rgba(168,85,247,0.25)",
           overflow: "hidden",
-          animation: "resume-rise 0.3s ease",
+          transition: "border-color 0.3s, box-shadow 0.3s",
+          // Alternate two identical keyframes so each warning restarts the shake
+          // without remounting the panel (which would reload the PDF).
+          animation: hint ? `resume-shake-${hint % 2} 0.45s ease` : "resume-rise 0.3s ease",
         }}
       >
         {/* Header bar */}
@@ -291,7 +416,7 @@ function ResumeModal({ open, onClose }: { open: boolean; onClose: () => void }) 
           </span>
           <div style={{ display: "flex", gap: 10 }}>
             <a
-              href="/Muizzuddin_Resume.pdf"
+              href="/Muizzuddin_Resume_26.pdf"
               download
               style={{
                 fontFamily: "Karasu, sans-serif",
@@ -312,14 +437,16 @@ function ResumeModal({ open, onClose }: { open: boolean; onClose: () => void }) 
               style={{
                 fontFamily: "Karasu, sans-serif",
                 fontSize: 14,
-                color: "#d8b4fe",
-                background: "rgba(168,85,247,0.12)",
-                border: "1px solid rgba(168,85,247,0.4)",
+                color: hintOn ? "#fff" : "#d8b4fe",
+                background: hintOn ? "rgba(168,85,247,0.45)" : "rgba(168,85,247,0.12)",
+                border: `1px solid ${hintOn ? "rgba(216,180,254,0.95)" : "rgba(168,85,247,0.4)"}`,
                 borderRadius: 7,
                 width: 34,
                 height: 34,
                 cursor: "pointer",
                 lineHeight: 1,
+                transition: "background 0.3s, color 0.3s, border-color 0.3s",
+                animation: hintOn ? "resume-x-pulse 0.8s ease-in-out infinite" : "none",
               }}
             >
               ✕
@@ -329,12 +456,13 @@ function ResumeModal({ open, onClose }: { open: boolean; onClose: () => void }) 
 
         {/* PDF preview */}
         <iframe
-          src="/Muizzuddin_Resume.pdf#toolbar=0&navpanes=0&view=FitH"
+          src="/Muizzuddin_Resume_26.pdf#toolbar=0&navpanes=0&view=FitH"
           title="Resume preview"
           style={{ flex: 1, width: "100%", border: "none", background: "#1a1a1a" }}
         />
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

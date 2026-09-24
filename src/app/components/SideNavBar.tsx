@@ -27,7 +27,7 @@ const SECTIONS = [
 const SOCIALS = [
   { Icon: Instagram, href: "https://www.instagram.com/muizkmz/" },
   { Icon: Twitter,   href: "https://x.com/muizzuddin" },
-  { Icon: Linkedin,  href: "https://linkedin.com/in/muizzuddin-kamarozamaan" },
+  { Icon: Linkedin,  href: "https://www.linkedin.com/in/muhammad-muizzuddin-62559a262" },
   { Icon: Github,    href: "https://github.com/muizkamarozaman" },
 ];
 
