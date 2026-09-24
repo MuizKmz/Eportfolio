@@ -6,7 +6,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "framer-motion";
-import { Recycle, Snowflake, Activity, ChevronRight, ChevronLeft, ExternalLink, Server, Shield, Package, Bot, X } from "lucide-react";
+import { Recycle, Snowflake, Activity, ChevronRight, ChevronLeft, ExternalLink, Server, Shield, Package, Bot, BrainCircuit, Factory, X } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -126,7 +126,165 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "SCM · 002",
+    id: "EAIP · 002",
+    codename: "NEXUS",
+    title: "EAIP — Enterprise AI Integration Platform",
+    tagline: "Multi-tenant RAG + agent platform for enterprise systems",
+    description:
+      "A multi-tenant RAG and agent platform where enterprise systems connect through SQL, REST and knowledge connectors — tenant isolation via Postgres row-level security, Keycloak OIDC sign-in, and a LangGraph agent running under per-call authorization with hard step, time and cost limits and human approval on every write.",
+    tags: ["FastAPI", "LangGraph", "pgvector", "PostgreSQL", "Next.js", "Keycloak", "MCP"],
+    link: "#",
+    Icon: BrainCircuit,
+    details: [
+      {
+        title: "Project Overview",
+        body: "A production multi-tenant RAG and agent platform where enterprise systems connect through SQL, REST and knowledge connectors. Tenants are isolated at the database level with Postgres row-level security, Keycloak handles OIDC sign-in, and a LangGraph agent runs under per-call authorization with hard step, time and cost limits — every write it proposes needs human approval.",
+      },
+      {
+        title: "Multi-Tenant Foundation",
+        groups: [
+          {
+            heading: "Isolation enforced by the database, not the app",
+            items: [
+              { label: "Row-level security", text: "Postgres RLS isolates every tenant's data at the database layer" },
+              { label: "Identity", text: "Keycloak OIDC sign-in across the Next.js console and API" },
+              { label: "Connectors", text: "SQL, REST and knowledge connectors plug enterprise systems in" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Governed Agent Runtime",
+        groups: [
+          {
+            heading: "LangGraph agent with hard guardrails",
+            items: [
+              { label: "Per-call authorization", text: "every tool call is checked against the caller's permissions" },
+              { label: "Budgets", text: "hard step, time and cost limits on each agent run" },
+              { label: "Human-in-the-loop", text: "every write the agent proposes waits for human approval" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Measured & Tested",
+        groups: [
+          {
+            heading: "Quality backed by numbers",
+            items: [
+              { label: "97%", text: "tool-selection accuracy" },
+              { label: "0.91 Recall@1", text: "on pgvector retrieval" },
+              { label: "Red-team in CI", text: "37-attack suite with zero escalations" },
+              "~36k lines of code covered by 537 tests",
+            ],
+          },
+        ],
+      },
+    ],
+    phases: [
+      {
+        num: "01",
+        title: "Tenant Isolation",
+        subtitle: "Postgres RLS · Keycloak OIDC · connectors",
+        body: "Built the multi-tenant core: tenants isolated at the database level with Postgres row-level security, Keycloak OIDC sign-in, and SQL, REST and knowledge connectors that let enterprise systems plug into the platform.",
+        tech: ["PostgreSQL", "Keycloak", "FastAPI", "Next.js"],
+      },
+      {
+        num: "02",
+        title: "Governed Agent",
+        subtitle: "LangGraph under per-call authorization",
+        body: "Designed a LangGraph agent that runs under per-call authorization with hard step, time and cost limits. Every write it proposes is routed for human approval before anything touches a connected system.",
+        tech: ["LangGraph", "MCP", "FastAPI", "pgvector"],
+      },
+      {
+        num: "03",
+        title: "Evaluation & Red-Team",
+        subtitle: "97% tool selection · 0.91 Recall@1 · 37 attacks",
+        body: "Measured the platform end to end: 97% tool-selection accuracy, 0.91 Recall@1 retrieval, and a 37-attack red-team suite running in CI with zero escalations — across ~36k lines of code and 537 tests.",
+        tech: ["pgvector", "CI", "Red-Teaming", "Evaluation"],
+      },
+    ],
+  },
+  {
+    id: "IIOT · 003",
+    codename: "FORGELINK",
+    title: "Industrial IoT Monitoring Platform",
+    tagline: "Real-time machine telemetry, alerts and OEE",
+    description:
+      "An end-to-end platform that ingests machine telemetry over MQTT, checks alert rules and computes OEE in real time, and streams live updates to a React Native app and a React admin console — with a deny-by-default API and alerts delivered by push, email and Telegram.",
+    tags: ["TypeScript", "Node.js", "React Native (Expo)", "React", "MySQL", "MQTT", "Socket.IO"],
+    link: "#",
+    Icon: Factory,
+    details: [
+      {
+        title: "Project Overview",
+        body: "An end-to-end industrial IoT platform that ingests machine telemetry over MQTT, checks alert rules and computes OEE in real time, and streams live updates to a React Native app and a React admin console. The API denies access by default, and a CI test fails the build if any route is left unauthenticated.",
+      },
+      {
+        title: "Real-Time Pipeline",
+        groups: [
+          {
+            heading: "MQTT → rules & OEE → Socket.IO",
+            items: [
+              { label: "Ingestion", text: "machine telemetry streamed in over MQTT" },
+              { label: "Processing", text: "alert rules evaluated and OEE computed in real time" },
+              { label: "Fan-out", text: "Socket.IO pushes live updates to mobile and web clients" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Secure by Default",
+        groups: [
+          {
+            heading: "No route ships unauthenticated",
+            items: [
+              { label: "Deny-by-default API", text: "every route requires auth unless explicitly opened" },
+              { label: "CI gate", text: "a GitHub Actions test fails the build if any route is left unauthenticated" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Multi-Channel Alerts",
+        groups: [
+          {
+            heading: "Operators notified wherever they are",
+            items: [
+              "Push notifications to the React Native (Expo) app",
+              "Email and Telegram alerts for off-app delivery",
+              "~64k lines of TypeScript across 3 packages",
+            ],
+          },
+        ],
+      },
+    ],
+    phases: [
+      {
+        num: "01",
+        title: "Telemetry Ingestion",
+        subtitle: "MQTT → Node.js → MySQL",
+        body: "Built the ingestion layer that takes machine telemetry over MQTT, evaluates alert rules and computes OEE in real time, persisting results to MySQL.",
+        tech: ["MQTT", "Node.js", "TypeScript", "MySQL"],
+      },
+      {
+        num: "02",
+        title: "Live Clients",
+        subtitle: "Socket.IO fan-out to mobile + admin",
+        body: "Streamed live updates through a real-time Socket.IO fan-out to a React Native (Expo) operator app and a React admin console, with alerts delivered by push, email and Telegram.",
+        tech: ["Socket.IO", "React Native (Expo)", "React", "Telegram"],
+      },
+      {
+        num: "03",
+        title: "Security Gate",
+        subtitle: "Deny-by-default API + CI enforcement",
+        body: "Made the API deny access by default and added a GitHub Actions CI test that fails the build if any route is left unauthenticated — keeping ~64k lines of code across 3 packages secure as it grows.",
+        tech: ["GitHub Actions", "TypeScript", "Node.js", "CI"],
+      },
+    ],
+  },
+  {
+    id: "SCM · 004",
     codename: "FROSTEDGE",
     title: "SmartArctic Smart Freezer",
     tagline: "IoT smart freezer platform",
@@ -219,7 +377,7 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "IOT · 003",
+    id: "IOT · 005",
     codename: "POLESYNC",
     title: "PoleSyncTech Smart Pole",
     tagline: "Smart-city multi-sensor IoT platform",
@@ -308,7 +466,7 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "INS · 004",
+    id: "INS · 006",
     codename: "HAPPISAFE",
     title: "HappiSafe Insurtech Platform",
     tagline: "Multi-underwriter insurance & loyalty ecosystem",
@@ -397,7 +555,7 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "WMS · 005",
+    id: "WMS · 007",
     codename: "WAREHOUSE",
     title: "WMS — Warehouse Management",
     tagline: "EPC/RFID item-level full-stack inventory system",
@@ -485,7 +643,7 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "AI · 006",
+    id: "AI · 008",
     codename: "SMARTBOT",
     title: "SmartPole AI Chatbot",
     tagline: "RAG + text-to-SQL agent built on n8n",
@@ -564,7 +722,7 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "SHR · 007",
+    id: "SHR · 009",
     codename: "HEALTH",
     title: "Smart Healthcare Remote",
     tagline: "IoT-driven patient monitoring",
