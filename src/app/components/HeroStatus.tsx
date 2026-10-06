@@ -7,7 +7,6 @@ import { motion, animate } from "framer-motion";
 // then, the bar = progress toward the next year. Real numbers, not decoration.
 const CAREER_START = new Date(2023, 4, 1); // May 2023
 const ROLES  = ["FULL-STACK DEVELOPER", "PROJECT DESIGN", "DEV OPS"];
-const STATUS = "OPEN TO OPPORTUNITIES";
 const DELAY  = 3.6;
 
 function careerStats(now: Date) {
@@ -20,7 +19,7 @@ function careerStats(now: Date) {
 
 const label: React.CSSProperties = {
   fontFamily: "Showcase Sans mini, sans-serif",
-  letterSpacing: "0.22em",
+  letterSpacing: "0.12em",
   textTransform: "uppercase",
 };
 
@@ -140,24 +139,13 @@ export default function HeroStatus() {
         ))}
       </div>
 
-      {/* ── Bottom row: roles · status ── */}
-      <div className="mt-4 flex flex-col items-center sm:items-stretch gap-3">
-        <div className="flex flex-wrap justify-center sm:justify-start gap-x-5 gap-y-1.5">
-          {ROLES.map((r) => (
-            <span key={r} style={{ ...label, fontSize: "clamp(14px, 1.35vw, 20px)", color: "rgba(233,213,255,0.95)", textShadow: "0 0 14px rgba(168,85,247,0.35)" }}>
-              <span style={{ color: "rgba(168,85,247,0.9)", marginRight: 8, fontSize: "0.7em", verticalAlign: "middle" }}>◆</span>
-              {r}
-            </span>
-          ))}
-        </div>
-        <span className="flex items-center gap-2 whitespace-nowrap sm:self-end" style={{ ...label, fontSize: "clamp(14px, 1.2vw, 18px)", color: "rgba(187,247,208,0.95)" }}>
-          <span className="relative flex w-2 h-2">
-            <span className="absolute inset-0 rounded-full bg-emerald-400 opacity-60 animate-ping" style={{ animationDuration: "2.4s" }} />
-            <span className="relative w-2 h-2 rounded-full bg-emerald-400" style={{ boxShadow: "0 0 8px rgba(52,211,153,0.8)" }} />
-          </span>
-          {STATUS}
-        </span>
-      </div>
+      {/* ── Roles — original hero tagline style ── */}
+      <p
+        className="mt-5 sm:mt-7 text-purple-200 tracking-[0.10em] font-light text-shadow-glow text-center sm:text-right"
+        style={{ fontFamily: "Showcase Sans mini, sans-serif", fontSize: "clamp(15px, 3.8vw, 35px)" }}
+      >
+        • {ROLES.join(" • ")} •
+      </p>
     </motion.div>
   );
 }
