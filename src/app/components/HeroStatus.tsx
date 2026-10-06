@@ -6,7 +6,7 @@ import { motion, animate } from "framer-motion";
 // Career start — first role (see workexperience.tsx). Level = full years since
 // then, the bar = progress toward the next year. Real numbers, not decoration.
 const CAREER_START = new Date(2023, 4, 1); // May 2023
-const ROLES  = ["FULL-STACK DEVELOPER", "PROJECT DESIGN", "DEV OPS"];
+const ROLES  = ["FULL-STACK", "AI AGENTS & RAG", "REAL-TIME IOT", "DEVOPS"];
 const DELAY  = 3.6;
 
 function careerStats(now: Date) {
@@ -142,7 +142,7 @@ export default function HeroStatus() {
       {/* ── Roles — original hero tagline style ── */}
       <p
         className="mt-5 sm:mt-7 text-purple-200 tracking-[0.10em] font-light text-shadow-glow text-center sm:text-right"
-        style={{ fontFamily: "Showcase Sans mini, sans-serif", fontSize: "clamp(15px, 3.8vw, 35px)" }}
+        style={{ fontFamily: "Showcase Sans mini, sans-serif", fontSize: "clamp(14px, 3.6vw, 31px)" }}
       >
         • {ROLES.join(" • ")} •
       </p>
