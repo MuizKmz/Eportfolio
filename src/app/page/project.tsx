@@ -126,8 +126,176 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "EAIP · 002",
-    codename: "NEXUS",
+    id: "INS · 002",
+    codename: "HAPPISAFE",
+    title: "HappiSafe Insurtech Platform",
+    tagline: "Multi-underwriter insurance & loyalty ecosystem",
+    description:
+      "A Malaysian insurtech platform (HappiSafe Ai Sdn Bhd) built over 6+ months with 400+ backend commits — two live insurer integrations, two payment gateways with RSA card tokenization, a loyalty coin engine, and a production AI chatbot with a two-agent verification pattern.",
+    tags: ["Java", "Spring Boot", "MySQL", "Redis", "Vue 3", "uni-app", "OpenAI GPT-4o-mini"],
+    link: "#",
+    video: "/images/happi/video/happi.mp4",
+    screenshots: [
+      "/images/happi/image/h1.png",
+      "/images/happi/image/h2.png",
+      "/images/happi/image/h3.png",
+      "/images/happi/image/h4.jpeg",
+      "/images/happi/image/h5.jpeg",
+      "/images/happi/image/h6.jpeg",
+      "/images/happi/image/h7.png",
+    ],
+    Icon: Shield,
+    details: [
+      {
+        title: "Project Overview",
+        body: "A Malaysian insurtech platform (HappiSafe Ai Sdn Bhd) built over 6+ months with 400+ backend commits — combining two live insurer integrations, two payment gateways with RSA card tokenization, a loyalty coin engine, and a production AI chatbot built on a two-agent verification pattern.",
+      },
+      {
+        title: "Dual Insurer Integration",
+        groups: [
+          {
+            heading: "Two live third-party insurers",
+            items: [
+              { label: "Chubb", text: "REST, JWT + Azure API Management key — travel insurance" },
+              { label: "Pacific / Rexit", text: "SOAP + XML, mutual TLS, e-Cover Motor API v1.7 — motor insurance" },
+              "Strategy-pattern dispatch with per-insurer quote → bind → pay → finalize state machines",
+            ],
+          },
+        ],
+      },
+      {
+        title: "Payment Security Layer",
+        groups: [
+          {
+            heading: "Two gateways, hardened end-to-end",
+            items: [
+              { label: "RSA tokenization", text: "asymmetric encryption of card data with hex-hashed payment references" },
+              { label: "Razer Pay & PayDollar", text: "signature-verified async webhooks, Redis-backed duplicate-submission locks" },
+              "Rebuilt the entire Jenkins CI/CD pipeline from scratch after the previous vendor team and nine custom JARs disappeared",
+            ],
+          },
+        ],
+      },
+      {
+        title: "AI Chatbot — Creamy",
+        groups: [
+          {
+            heading: "Two-agent GPT-4o-mini with RAG",
+            items: [
+              { label: "Two-agent pattern", text: "primary responder + independent validator on OpenAI GPT-4o-mini" },
+              { label: "Hybrid knowledge base", text: "database table + live Google Sheet with 5-minute Redis cache" },
+              "Per-session conversation memory; prototyped earlier on n8n / LangChain / Gemini",
+            ],
+          },
+        ],
+      },
+    ],
+    phases: [
+      {
+        num: "01",
+        title: "Dual Insurer Integration",
+        subtitle: "Chubb REST/JWT + Pacific SOAP/mTLS",
+        body: "Implemented two live third-party insurer integrations: Chubb (REST, JWT + Azure API Management key) for travel insurance and Pacific/Rexit (SOAP + XML, mutual TLS, e-Cover Motor API v1.7) for motor insurance — each with its own quote → bind → pay → finalize state machine and a strategy-pattern dispatch layer.",
+        tech: ["Java", "Spring Boot", "REST API", "SOAP", "mTLS", "JWT"],
+      },
+      {
+        num: "02",
+        title: "Payment Security Layer",
+        subtitle: "RSA tokenization · Razer Pay · PayDollar",
+        body: "Engineered payment security across two gateways: RSA asymmetric tokenization for card data, hex-hashed cover-note payment references, signature-verified async webhooks, and Redis-backed duplicate-submission locks. Rebuilt the entire Jenkins CI/CD pipeline from scratch after the previous vendor team and nine custom JARs disappeared.",
+        tech: ["Razer Pay", "PayDollar", "RSA", "Redis", "Jenkins", "AWS EC2"],
+      },
+      {
+        num: "03",
+        title: "AI Chatbot — Creamy",
+        subtitle: "Two-agent GPT-4o-mini with RAG knowledge base",
+        body: "Built the production AI chatbot using a primary responder + independent validator two-agent pattern powered by OpenAI GPT-4o-mini, backed by a hybrid knowledge base (database table + live Google Sheet with 5-minute Redis cache), per-session conversation memory, and a prior n8n/LangChain/Gemini prototype as proof-of-concept.",
+        tech: ["OpenAI GPT-4o-mini", "Java", "Redis", "Google Sheets API", "n8n"],
+      },
+    ],
+  },
+  {
+    id: "IIOT · 003",
+    codename: "IOTPLATFORM",
+    title: "Industrial IoT Monitoring Platform",
+    tagline: "Real-time machine telemetry, alerts and OEE",
+    description:
+      "An end-to-end platform that ingests machine telemetry over MQTT, checks alert rules and computes OEE in real time, and streams live updates to a React Native app and a React admin console — with a deny-by-default API and alerts delivered by push, email and Telegram.",
+    tags: ["TypeScript", "Node.js", "React Native (Expo)", "React", "MySQL", "MQTT", "Socket.IO"],
+    link: "#",
+    video: "/images/iotplatform/video/Iot.mp4",
+    Icon: Factory,
+    details: [
+      {
+        title: "Project Overview",
+        body: "An end-to-end industrial IoT platform that ingests machine telemetry over MQTT, checks alert rules and computes OEE in real time, and streams live updates to a React Native app and a React admin console. The API denies access by default, and a CI test fails the build if any route is left unauthenticated.",
+      },
+      {
+        title: "Real-Time Pipeline",
+        groups: [
+          {
+            heading: "MQTT → rules & OEE → Socket.IO",
+            items: [
+              { label: "Ingestion", text: "machine telemetry streamed in over MQTT" },
+              { label: "Processing", text: "alert rules evaluated and OEE computed in real time" },
+              { label: "Fan-out", text: "Socket.IO pushes live updates to mobile and web clients" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Secure by Default",
+        groups: [
+          {
+            heading: "No route ships unauthenticated",
+            items: [
+              { label: "Deny-by-default API", text: "every route requires auth unless explicitly opened" },
+              { label: "CI gate", text: "a GitHub Actions test fails the build if any route is left unauthenticated" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Multi-Channel Alerts",
+        groups: [
+          {
+            heading: "Operators notified wherever they are",
+            items: [
+              "Push notifications to the React Native (Expo) app",
+              "Email and Telegram alerts for off-app delivery",
+              "~64k lines of TypeScript across 3 packages",
+            ],
+          },
+        ],
+      },
+    ],
+    phases: [
+      {
+        num: "01",
+        title: "Telemetry Ingestion",
+        subtitle: "MQTT → Node.js → MySQL",
+        body: "Built the ingestion layer that takes machine telemetry over MQTT, evaluates alert rules and computes OEE in real time, persisting results to MySQL.",
+        tech: ["MQTT", "Node.js", "TypeScript", "MySQL"],
+      },
+      {
+        num: "02",
+        title: "Live Clients",
+        subtitle: "Socket.IO fan-out to mobile + admin",
+        body: "Streamed live updates through a real-time Socket.IO fan-out to a React Native (Expo) operator app and a React admin console, with alerts delivered by push, email and Telegram.",
+        tech: ["Socket.IO", "React Native (Expo)", "React", "Telegram"],
+      },
+      {
+        num: "03",
+        title: "Security Gate",
+        subtitle: "Deny-by-default API + CI enforcement",
+        body: "Made the API deny access by default and added a GitHub Actions CI test that fails the build if any route is left unauthenticated — keeping ~64k lines of code across 3 packages secure as it grows.",
+        tech: ["GitHub Actions", "TypeScript", "Node.js", "CI"],
+      },
+    ],
+  },
+  {
+    id: "EAIP · 004",
+    codename: "AIPLATFORM",
     title: "EAIP — Enterprise AI Integration Platform",
     tagline: "Multi-tenant RAG + agent platform for enterprise systems",
     description:
@@ -206,85 +374,7 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "IIOT · 003",
-    codename: "FORGELINK",
-    title: "Industrial IoT Monitoring Platform",
-    tagline: "Real-time machine telemetry, alerts and OEE",
-    description:
-      "An end-to-end platform that ingests machine telemetry over MQTT, checks alert rules and computes OEE in real time, and streams live updates to a React Native app and a React admin console — with a deny-by-default API and alerts delivered by push, email and Telegram.",
-    tags: ["TypeScript", "Node.js", "React Native (Expo)", "React", "MySQL", "MQTT", "Socket.IO"],
-    link: "#",
-    Icon: Factory,
-    details: [
-      {
-        title: "Project Overview",
-        body: "An end-to-end industrial IoT platform that ingests machine telemetry over MQTT, checks alert rules and computes OEE in real time, and streams live updates to a React Native app and a React admin console. The API denies access by default, and a CI test fails the build if any route is left unauthenticated.",
-      },
-      {
-        title: "Real-Time Pipeline",
-        groups: [
-          {
-            heading: "MQTT → rules & OEE → Socket.IO",
-            items: [
-              { label: "Ingestion", text: "machine telemetry streamed in over MQTT" },
-              { label: "Processing", text: "alert rules evaluated and OEE computed in real time" },
-              { label: "Fan-out", text: "Socket.IO pushes live updates to mobile and web clients" },
-            ],
-          },
-        ],
-      },
-      {
-        title: "Secure by Default",
-        groups: [
-          {
-            heading: "No route ships unauthenticated",
-            items: [
-              { label: "Deny-by-default API", text: "every route requires auth unless explicitly opened" },
-              { label: "CI gate", text: "a GitHub Actions test fails the build if any route is left unauthenticated" },
-            ],
-          },
-        ],
-      },
-      {
-        title: "Multi-Channel Alerts",
-        groups: [
-          {
-            heading: "Operators notified wherever they are",
-            items: [
-              "Push notifications to the React Native (Expo) app",
-              "Email and Telegram alerts for off-app delivery",
-              "~64k lines of TypeScript across 3 packages",
-            ],
-          },
-        ],
-      },
-    ],
-    phases: [
-      {
-        num: "01",
-        title: "Telemetry Ingestion",
-        subtitle: "MQTT → Node.js → MySQL",
-        body: "Built the ingestion layer that takes machine telemetry over MQTT, evaluates alert rules and computes OEE in real time, persisting results to MySQL.",
-        tech: ["MQTT", "Node.js", "TypeScript", "MySQL"],
-      },
-      {
-        num: "02",
-        title: "Live Clients",
-        subtitle: "Socket.IO fan-out to mobile + admin",
-        body: "Streamed live updates through a real-time Socket.IO fan-out to a React Native (Expo) operator app and a React admin console, with alerts delivered by push, email and Telegram.",
-        tech: ["Socket.IO", "React Native (Expo)", "React", "Telegram"],
-      },
-      {
-        num: "03",
-        title: "Security Gate",
-        subtitle: "Deny-by-default API + CI enforcement",
-        body: "Made the API deny access by default and added a GitHub Actions CI test that fails the build if any route is left unauthenticated — keeping ~64k lines of code across 3 packages secure as it grows.",
-        tech: ["GitHub Actions", "TypeScript", "Node.js", "CI"],
-      },
-    ],
-  },
-  {
-    id: "SCM · 004",
+    id: "SCM · 005",
     codename: "FROSTEDGE",
     title: "SmartArctic Smart Freezer",
     tagline: "IoT smart freezer platform",
@@ -377,7 +467,7 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "IOT · 005",
+    id: "IOT · 006",
     codename: "POLESYNC",
     title: "PoleSyncTech Smart Pole",
     tagline: "Smart-city multi-sensor IoT platform",
@@ -462,95 +552,6 @@ const PROJECTS: Project[] = [
         subtitle: "QR public · Authority dashboard · Maintenance app",
         body: "Designed three distinct user experiences: a no-login QR-code web flow for residents (live weather, AQI, Wi-Fi connect), an authenticated React 19 + Vite dashboard for authorities (fleet monitoring, LED control, announcements), and a React Native + Expo mobile app for maintenance crews with push alerts and photo attachments.",
         tech: ["React 19", "Vite", "Tailwind CSS", "React Native", "Expo", "Laravel"],
-      },
-    ],
-  },
-  {
-    id: "INS · 006",
-    codename: "HAPPISAFE",
-    title: "HappiSafe Insurtech Platform",
-    tagline: "Multi-underwriter insurance & loyalty ecosystem",
-    description:
-      "A Malaysian insurtech platform (HappiSafe Ai Sdn Bhd) built over 6+ months with 400+ backend commits — two live insurer integrations, two payment gateways with RSA card tokenization, a loyalty coin engine, and a production AI chatbot with a two-agent verification pattern.",
-    tags: ["Java", "Spring Boot", "MySQL", "Redis", "Vue 3", "uni-app", "OpenAI GPT-4o-mini"],
-    link: "#",
-    video: "/images/happi/video/happi.mp4",
-    screenshots: [
-      "/images/happi/image/h1.png",
-      "/images/happi/image/h2.png",
-      "/images/happi/image/h3.png",
-      "/images/happi/image/h4.jpeg",
-      "/images/happi/image/h5.jpeg",
-      "/images/happi/image/h6.jpeg",
-      "/images/happi/image/h7.png",
-    ],
-    Icon: Shield,
-    details: [
-      {
-        title: "Project Overview",
-        body: "A Malaysian insurtech platform (HappiSafe Ai Sdn Bhd) built over 6+ months with 400+ backend commits — combining two live insurer integrations, two payment gateways with RSA card tokenization, a loyalty coin engine, and a production AI chatbot built on a two-agent verification pattern.",
-      },
-      {
-        title: "Dual Insurer Integration",
-        groups: [
-          {
-            heading: "Two live third-party insurers",
-            items: [
-              { label: "Chubb", text: "REST, JWT + Azure API Management key — travel insurance" },
-              { label: "Pacific / Rexit", text: "SOAP + XML, mutual TLS, e-Cover Motor API v1.7 — motor insurance" },
-              "Strategy-pattern dispatch with per-insurer quote → bind → pay → finalize state machines",
-            ],
-          },
-        ],
-      },
-      {
-        title: "Payment Security Layer",
-        groups: [
-          {
-            heading: "Two gateways, hardened end-to-end",
-            items: [
-              { label: "RSA tokenization", text: "asymmetric encryption of card data with hex-hashed payment references" },
-              { label: "Razer Pay & PayDollar", text: "signature-verified async webhooks, Redis-backed duplicate-submission locks" },
-              "Rebuilt the entire Jenkins CI/CD pipeline from scratch after the previous vendor team and nine custom JARs disappeared",
-            ],
-          },
-        ],
-      },
-      {
-        title: "AI Chatbot — Creamy",
-        groups: [
-          {
-            heading: "Two-agent GPT-4o-mini with RAG",
-            items: [
-              { label: "Two-agent pattern", text: "primary responder + independent validator on OpenAI GPT-4o-mini" },
-              { label: "Hybrid knowledge base", text: "database table + live Google Sheet with 5-minute Redis cache" },
-              "Per-session conversation memory; prototyped earlier on n8n / LangChain / Gemini",
-            ],
-          },
-        ],
-      },
-    ],
-    phases: [
-      {
-        num: "01",
-        title: "Dual Insurer Integration",
-        subtitle: "Chubb REST/JWT + Pacific SOAP/mTLS",
-        body: "Implemented two live third-party insurer integrations: Chubb (REST, JWT + Azure API Management key) for travel insurance and Pacific/Rexit (SOAP + XML, mutual TLS, e-Cover Motor API v1.7) for motor insurance — each with its own quote → bind → pay → finalize state machine and a strategy-pattern dispatch layer.",
-        tech: ["Java", "Spring Boot", "REST API", "SOAP", "mTLS", "JWT"],
-      },
-      {
-        num: "02",
-        title: "Payment Security Layer",
-        subtitle: "RSA tokenization · Razer Pay · PayDollar",
-        body: "Engineered payment security across two gateways: RSA asymmetric tokenization for card data, hex-hashed cover-note payment references, signature-verified async webhooks, and Redis-backed duplicate-submission locks. Rebuilt the entire Jenkins CI/CD pipeline from scratch after the previous vendor team and nine custom JARs disappeared.",
-        tech: ["Razer Pay", "PayDollar", "RSA", "Redis", "Jenkins", "AWS EC2"],
-      },
-      {
-        num: "03",
-        title: "AI Chatbot — Creamy",
-        subtitle: "Two-agent GPT-4o-mini with RAG knowledge base",
-        body: "Built the production AI chatbot using a primary responder + independent validator two-agent pattern powered by OpenAI GPT-4o-mini, backed by a hybrid knowledge base (database table + live Google Sheet with 5-minute Redis cache), per-session conversation memory, and a prior n8n/LangChain/Gemini prototype as proof-of-concept.",
-        tech: ["OpenAI GPT-4o-mini", "Java", "Redis", "Google Sheets API", "n8n"],
       },
     ],
   },
